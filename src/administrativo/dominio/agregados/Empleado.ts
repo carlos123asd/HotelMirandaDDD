@@ -20,6 +20,12 @@ export class Empleado{
     tienePermisoGE(){
         return this.permisosExtra?.some(permiso => permiso.equals('GE'))
     }
+    tienePermisoGR(){
+        return this.permisosExtra?.some(permiso => permiso.equals('GR'))
+    }
+    tienePermisoGH(){
+        return this.permisosExtra?.some(permiso => permiso.equals('GH'))
+    }
     consultarNivelPermiso(nivel:NivelPermisos):boolean{
         switch(nivel){
           case NivelPermisos.CREAR: return this.permisosExtra?.some(permiso => permiso.puedeCrear()) ?? false;
@@ -29,14 +35,35 @@ export class Empleado{
         } 
     }
 
+    //PermisoEmpleado
     puedeDarAltaEmpleado(){
-        return (this.esAdmin() || this.tienePermisoGE()) && this.consultarNivelPermiso(NivelPermisos.CREAR)
+        return this.esAdmin() || (this.tienePermisoGE() && this.consultarNivelPermiso(NivelPermisos.CREAR))
     }
     puedeModificarEmpleado(){
-        return (this.esAdmin() || this.tienePermisoGE()) && this.consultarNivelPermiso(NivelPermisos.MODIFICAR)
+        return this.esAdmin() || (this.tienePermisoGE() && this.consultarNivelPermiso(NivelPermisos.MODIFICAR))
     }
     puedeEliminarEmpleado(){
-        return (this.esAdmin() || this.tienePermisoGE()) && this.consultarNivelPermiso(NivelPermisos.ELIMINAR)
+        return this.esAdmin() || (this.tienePermisoGE() && this.consultarNivelPermiso(NivelPermisos.ELIMINAR))
+    }
+    //PermisoReserva
+    puedeDarAltaReserva(){
+        return this.esAdmin() || ( this.tienePermisoGR() && this.consultarNivelPermiso(NivelPermisos.CREAR))
+    }
+    puedeModificarReserva(){
+        return this.esAdmin() || (this.tienePermisoGR() && this.consultarNivelPermiso(NivelPermisos.MODIFICAR))
+    }
+    puedeEliminarReserva(){
+        return this.esAdmin() || this.tienePermisoGR() && this.consultarNivelPermiso(NivelPermisos.ELIMINAR)
+    }
+    //PermisoHabitacion
+    puedeDarAltaHabitacion(){
+        return this.esAdmin() || (this.tienePermisoGH() && this.consultarNivelPermiso(NivelPermisos.CREAR))
+    }
+    puedeModificarHabitacion(){
+        return this.esAdmin() || (this.tienePermisoGH() && this.consultarNivelPermiso(NivelPermisos.MODIFICAR))
+    }
+    puedeEliminarHabitacion(){
+        return this.esAdmin() || (this.tienePermisoGH() && this.consultarNivelPermiso(NivelPermisos.ELIMINAR))
     }
 
     darAltaEmpleado(){
@@ -61,8 +88,8 @@ export class Empleado{
         throw new Error(`Empleado ${this.id} no tiene permisos para eliminar otros empleados`);
     }
 }
-
+/*
 const empleado:Empleado = new Empleado("1","carlos-medin@hotmail.com","06192698","Carlos","@qwerty",Rol.STAFF,[new Permiso("GE",3,"Permiso de gestion Empleado")]);
 empleado.modificarEmpleado()
 empleado.darAltaEmpleado()
-empleado.eliminarEmpleado()
+empleado.eliminarEmpleado()*/
