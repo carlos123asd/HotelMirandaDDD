@@ -1,4 +1,4 @@
-import { Permisos } from "../agregados/Empleado";
+
 import { Permiso } from "./Permiso";
 
 export type CodigoRol = 'admin' | 'staff'
