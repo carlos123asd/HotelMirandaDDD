@@ -44,7 +44,7 @@ export class ReservaAdministrativa{
 }
 
 const empleado:Empleado = new Empleado("1","carlos-medin@hotmail.com","06192698","Carlos","@qwerty",Rol.ADMIN);
-const habitacion:Habitacion = new Habitacion();
+const habitacion:Habitacion = new Habitacion("1","suite roma","Habitacion suite de lujo",150,5,"Suite",[],[]);
 const cliente:Cliente = new Cliente();
 const reserva = new ReservaAdministrativa(
     "1",

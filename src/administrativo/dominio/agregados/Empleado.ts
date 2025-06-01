@@ -1,17 +1,16 @@
+import { DTOEmpleado } from "../../aplicacion/dtos/DTOEmpleado";
 import { NivelPermisos, Permiso } from "../value-objects/Permiso";
 import { Rol } from "../value-objects/Rol";
 
-export type EmpleadoID = string;
-
 export class Empleado{
     constructor(
-        public readonly id:EmpleadoID,
-        public readonly email:string,
+        public readonly id:string,
+        public email:string,
         public readonly codigo:string,
-        public readonly nombre:string,
-        public readonly password:string,
-        public readonly rol:Rol,
-        public readonly permisosExtra?:Permiso[]
+        public nombre:string,
+        public password:string,
+        public rol:Rol,
+        public permisosExtra?:Permiso[]
     ){}
 
     esAdmin(){
@@ -66,26 +65,27 @@ export class Empleado{
         return this.esAdmin() || (this.tienePermisoGH() && this.consultarNivelPermiso(NivelPermisos.ELIMINAR))
     }
 
-    darAltaEmpleado(){
-        if(this.puedeDarAltaEmpleado()){
-            console.log("Crear Empleado")
-            return
-        }
-        throw new Error(`Empleado ${this.id} no tiene permisos para dar de alta a otros empleados`);
+    //Si quisieramos en el futuro formatear los campos o validar campos lo hacemos desde aqui
+    static crearDesdeDTO(dto: DTOEmpleado):Empleado{
+        return new Empleado(
+            dto.id,
+            dto.email,
+            dto.codigo,
+            dto.nombre,
+            dto.password,
+            dto.rol,
+            dto.permisosExtra
+        );
     }
-    modificarEmpleado(){
-        if(this.puedeModificarEmpleado()){
-            console.log(`Usuario ${this.id} modificado`)
-            return
+    modificarDesdeDTO(dto: DTOEmpleado):void{
+        if(dto.id !== this.id){
+            throw new Error("No se puede cambiar el ID empleado")
         }
-        throw new Error(`Empleado ${this.id} no tiene permisos para modificar otros empleados`);
-    }
-    eliminarEmpleado(){
-        if(this.puedeEliminarEmpleado()){
-            console.log(`Usuario ${this.id} eliminado`)
-            return
-        }
-        throw new Error(`Empleado ${this.id} no tiene permisos para eliminar otros empleados`);
+        this.email = dto.email
+        this.nombre = dto.nombre
+        this.password = dto.password
+        this.rol = dto.rol
+        this.permisosExtra = dto.permisosExtra
     }
 }
 /*
