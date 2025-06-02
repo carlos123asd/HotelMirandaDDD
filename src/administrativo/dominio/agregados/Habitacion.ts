@@ -15,12 +15,4 @@ export class Habitacion{
         public readonly imagenes:ImagenesHabitacion[]
         //CODIGO HABITACION GENERARLO
     ){}
-
-    estaDisponible(){
-
-    }
-
-    calcularPrecioTotal(){
-        
-    }
 }

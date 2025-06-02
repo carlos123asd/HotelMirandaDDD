@@ -88,8 +88,3 @@ export class Empleado{
         this.permisosExtra = dto.permisosExtra
     }
 }
-/*
-const empleado:Empleado = new Empleado("1","carlos-medin@hotmail.com","06192698","Carlos","@qwerty",Rol.STAFF,[new Permiso("GE",3,"Permiso de gestion Empleado")]);
-empleado.modificarEmpleado()
-empleado.darAltaEmpleado()
-empleado.eliminarEmpleado()*/
