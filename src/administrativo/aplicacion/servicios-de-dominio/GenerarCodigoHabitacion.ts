@@ -11,7 +11,7 @@ export class GenerarCodigoHabitacion{
     }
 
     async generar(piso: string):Promise<String>{
-        const letras = ['A','B','C','D']
+        const letras = ['A','B','C','D','E','F','G','H','I','J'] //10 habitaciones por piso
         const habitaciones = await this.repoHabitacion.todasLasHabitaciones();
         let numeroHabitaciones = (habitaciones?.length ?? 0) + 1;
 
