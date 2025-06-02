@@ -4,5 +4,6 @@ export interface IEmpleadoRepo {
     guardar(empleado:Empleado):Promise<void>;
     buscarPorId(id:string):Promise<Empleado | null>;
     buscarPorEmail(email:string):Promise<Empleado | null>;
+    buscarPorCodigo(codigo:string):Promise<Empleado | null>;
     eliminar(id:string):Promise<void>;
 }

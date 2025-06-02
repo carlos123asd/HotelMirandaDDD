@@ -42,19 +42,3 @@ export class ReservaAdministrativa{
         throw new Error(`Empleado ${this.responsable.id} no tiene permisos para eliminar una reserva`);
     }
 }
-
-const empleado:Empleado = new Empleado("1","carlos-medin@hotmail.com","06192698","Carlos","@qwerty",Rol.ADMIN);
-const habitacion:Habitacion = new Habitacion("1","suite roma","Habitacion suite de lujo",150,5,"Suite",[],[]);
-const cliente:Cliente = new Cliente();
-const reserva = new ReservaAdministrativa(
-    "1",
-    "pendiente",
-    cliente,
-    habitacion,
-    new Date(),
-    new Date(),
-    empleado
-)
-reserva.darAltaReserva()
-reserva.modificarReserva()
-reserva.eliminarReserva()
