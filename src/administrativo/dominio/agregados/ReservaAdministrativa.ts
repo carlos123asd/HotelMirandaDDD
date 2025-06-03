@@ -1,6 +1,5 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
-import { Permiso } from "../value-objects/Permiso";
-import { Rol } from "../value-objects/Rol";
+import { DTOReserva } from "../../aplicacion/dtos/DTOReserva";
 import { ServiciosExtras } from "../value-objects/ServiciosExtras";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
@@ -9,36 +8,41 @@ import { NotasInternas } from "./NotasInternas";
 export type estados = 'pendiente' | 'aceptada' | 'en curso' | 'cancelada'
 export class ReservaAdministrativa{
     constructor(
-        public readonly id:string,
-        public readonly estado:estados,
-        public readonly asignacion:Cliente,
-        public readonly habitacion:Habitacion,
-        public readonly checkIn:Date,
-        public readonly checkOut:Date,
-        public readonly responsable:Empleado,
-        public readonly extras?:ServiciosExtras[],
-        public readonly notasInternas?:NotasInternas[],
+        public readonly id:String,
+        public estado:estados,
+        public asignacion:Cliente,
+        public habitacion:Habitacion,
+        public checkIn:Date,
+        public checkOut:Date,
+        public responsable:Empleado,
+        public extras?:ServiciosExtras[],
+        public notasInternas?:NotasInternas[],
     ){}
 
-    darAltaReserva(){
-        if(this.responsable.puedeDarAltaReserva()){
-            console.log("Reserva hecha")
-            return
-        }
-        throw new Error(`Empleado ${this.responsable.id} no tiene permisos para dar de alta una reserva`);
+    static crearDesdeDTO(dto:DTOReserva){
+        return new ReservaAdministrativa(
+            dto.id,
+            dto.estado,
+            dto.asignacion,
+            dto.habitacion,
+            dto.checkIn,
+            dto.checkOut,
+            dto.responsable,
+            dto.extras,
+            dto.notasInternas,
+        )
     }
-    modificarReserva(){
-        if(this.responsable.puedeModificarReserva()){
-            console.log(`Reserva ${this.id} modificada`)
-            return
+    modificarDesdeDTO(dto:DTOReserva){
+        if(dto.id !== this.id){
+             throw new Error("El id de una Reserva no se pueden modificar")
         }
-        throw new Error(`Empleado ${this.responsable.id} no tiene permisos para modificar una reserva`);
-    }
-    eliminarReserva(){
-        if(this.responsable.puedeEliminarReserva()){
-            console.log(`Reserva ${this.id} eliminada`)
-            return
-        }
-        throw new Error(`Empleado ${this.responsable.id} no tiene permisos para eliminar una reserva`);
+        this.estado = dto.estado;
+        this.asignacion = dto.asignacion;
+        this.habitacion = dto.habitacion;
+        this.checkIn = dto.checkIn;
+        this.checkOut = dto.checkOut;
+        this.responsable = dto.responsable;
+        this.extras = dto.extras;
+        this.notasInternas = dto.notasInternas;
     }
 }
