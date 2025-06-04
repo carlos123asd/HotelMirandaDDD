@@ -1,5 +1,6 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
 import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaCliente";
+import { DTONotasInternas } from "../../aplicacion/dtos/DTONotasInternas";
 import { DatoAgregado } from "../value-objects/DatoAgregado";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
@@ -10,14 +11,44 @@ export type tiposNotasInternas = 'Habitacion' | 'Cliente' | 'Reserva'
 export class NotasInternas{
     constructor(
         public readonly id:string,
-        public readonly responsable:Empleado,
-        public readonly tipo:tiposNotasInternas,
-        public readonly fecha:Date,
-        public readonly titulo:string,
-        public readonly descripcion:string,
-        public readonly datosAgregados:DatoAgregado[],
-        public readonly cliente?:Cliente,
-        public readonly reserva?:ReservaAdministrativa|ReservaCliente,
-        public readonly habitacion?:Habitacion,
+        public responsable:Empleado,
+        public tipo:tiposNotasInternas,
+        public fecha:Date,
+        public titulo:string,
+        public descripcion:string,
+        public datosAgregados?:DatoAgregado[],
+        public cliente?:Cliente,
+        public reserva?:ReservaAdministrativa|ReservaCliente,
+        public habitacion?:Habitacion,
     ){}
+    
+    static crearDesdeDTO(dto:DTONotasInternas){
+        return  new NotasInternas(
+            dto.id,
+            dto.responsable,
+            dto.tipo,
+            dto.fecha,
+            dto.titulo,
+            dto.descripcion,
+            dto?.datosAgregados,
+            dto?.cliente,
+            dto?.reserva,
+            dto?.habitacion,
+        )
+    }
+
+    modificarDesdeDTO(dto:DTONotasInternas){
+        if(this.id !== dto.id){
+            throw new Error("No se puede modificar el ID de una Nota Interna")
+        }
+        this.responsable=dto.responsable
+        this.tipo=dto.tipo
+        this.fecha=dto.fecha
+        this.titulo=dto.titulo
+        this.descripcion=dto.descripcion
+        this.datosAgregados=dto?.datosAgregados
+        this.cliente=dto?.cliente
+        this.reserva=dto?.reserva
+        this.habitacion=dto?.habitacion
+    }
 } 
