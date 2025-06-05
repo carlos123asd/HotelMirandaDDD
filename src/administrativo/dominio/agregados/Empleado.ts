@@ -2,15 +2,21 @@ import { DTOEmpleado } from "../../aplicacion/dtos/DTOEmpleado";
 import { NivelPermisos, Permiso } from "../value-objects/Permiso";
 import { Rol } from "../value-objects/Rol";
 
+export type statusType = 'inactivo' | 'activo'
+
 export class Empleado{
     constructor(
         public readonly id:string,
         public email:string,
+        public photo:string,
+        public startDate:Date,
+        public telefono:string,
         public readonly codigo:string,
         public nombre:string,
         public password:string,
         public rol:Rol,
-        public permisosExtra?:Permiso[]
+        public status:statusType,
+        public permisosExtra?:Permiso[],
     ){}
 
     esAdmin(){
@@ -70,21 +76,29 @@ export class Empleado{
         return new Empleado(
             dto.id,
             dto.email,
+            dto.photo,
+            dto.startDate,
+            dto.telefono,
             dto.codigo,
             dto.nombre,
             dto.password,
             dto.rol,
-            dto.permisosExtra
+            dto.status,
+            dto.permisosExtra,
         );
     }
     modificarDesdeDTO(dto: DTOEmpleado):void{
         if(dto.id !== this.id){
             throw new Error("No se puede cambiar el ID empleado")
         }
-        this.email = dto.email
-        this.nombre = dto.nombre
-        this.password = dto.password
-        this.rol = dto.rol
+        this.email = dto.email,
+        this.photo = dto.photo,
+        this.startDate = dto.startDate,
+        this.telefono = dto.telefono,
+        this.nombre = dto.nombre,
+        this.password = dto.password,
+        this.rol = dto.rol,
+        this.status = dto.status,
         this.permisosExtra = dto.permisosExtra
     }
 }
