@@ -6,7 +6,7 @@ const PermisoSchema = new Schema({
   nivel: { type: Number, enum: [1, 2, 3], required: true }
 }, { _id: false });
 
-export const empleadoSchema = new Schema<IEmpleado>({
+export const SchemaEmpleado = new Schema<IEmpleado>({
   _id: { type: String, required: true },
   email: { type: String, required: true },
   photo: {type: String, required: true},
