@@ -1,5 +1,4 @@
 import { DTOHabitacion } from "../../aplicacion/dtos/DTOHabitacion";
-import { ImagenesHabitacion } from "../value-objects/ImagenesHabitacion";
 import { Servicios } from "../value-objects/Servicios";
 
 export type categoriaHabitacion = 'Habitacion Simple' | 'Doble Habitacion' | 'Suite'
@@ -13,7 +12,7 @@ export class Habitacion{
         public oferta:number,
         public categoria:categoriaHabitacion,
         public servicios:Servicios[],
-        public imagenes:ImagenesHabitacion[],
+        public imagenes:string[],
         public readonly piso:String,
         public readonly codigo:String
     ){}

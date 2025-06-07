@@ -1,7 +1,6 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
 import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaCliente";
 import { DTONotasInternas } from "../../aplicacion/dtos/DTONotasInternas";
-import { DatoAgregado } from "../value-objects/DatoAgregado";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
 import { ReservaAdministrativa } from "./ReservaAdministrativa";
@@ -16,7 +15,7 @@ export class NotasInternas{
         public fecha:Date,
         public titulo:string,
         public descripcion:string,
-        public datosAgregados?:DatoAgregado[],
+        public datosAgregados?:string[],
         public cliente?:Cliente,
         public reserva?:ReservaAdministrativa|ReservaCliente,
         public habitacion?:Habitacion,
