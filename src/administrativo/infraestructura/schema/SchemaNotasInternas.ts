@@ -1,21 +1,18 @@
 import { Schema } from "mongoose";
 import { INotasInternas } from "../interfaces/INotasInternas";
 import { SchemaEmpleado } from "./SchemaEmpleado";
-import { SchemaHabitacion } from "./SchemaHabitacion";
-import { SchemaCliente } from "../../../cliente/infraestructura/schema/SchemaCliente";
-import { SchemaReservaAdministrativa } from "./SchemaReservaAdministrativa";
-import { SchemaReservaCliente } from "../../../cliente/infraestructura/schema/SchemaReservaCliente";
 
 export const SchemaNotasInternas = new Schema<INotasInternas>({
-    _id: { type:String, required:true },
-    responsable: { type:SchemaEmpleado, required:true },
+    _id: { type:String, required:true, unique:true },
+    tipoReserva: {type:String, enum:['cliente','administrativa'], required:true},
+    idResponsable: { type:String, required:true },
     tipo: { type:String, enum:['Habitacion', 'Cliente', 'Reserva'], required:true },
     fecha: { type:Date, required:true },
     titulo: { type:String, required:true },
     descripcion: { type:String, required:true },
     datosAgregados: { type:String, required:false },
-    cliente: { type:SchemaCliente, required:false },
-    reservaCliente: { type:SchemaReservaAdministrativa, required:false },
-    reservaAdministrativa: { type:SchemaReservaCliente, required:false },
-    habitacion: { type:SchemaHabitacion, required:false },
+    idCliente: { type:String, required:false },
+    idReservaCliente: { type:String, required:false },
+    idReservaAdministrativa: { type:String, required:false },
+    idHabitacion: { type:String, required:false },
 })

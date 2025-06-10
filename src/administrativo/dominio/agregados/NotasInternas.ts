@@ -16,9 +16,9 @@ export class NotasInternas{
         public titulo:string,
         public descripcion:string,
         public datosAgregados?:string[],
-        public cliente?:Cliente,
-        public reserva?:ReservaAdministrativa|ReservaCliente,
-        public habitacion?:Habitacion,
+        public cliente?:Cliente | null,
+        public reserva?:ReservaAdministrativa|ReservaCliente | null,
+        public habitacion?:Habitacion | null,
     ){}
     
     static crearDesdeDTO(dto:DTONotasInternas){

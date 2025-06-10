@@ -7,12 +7,12 @@ const PermisoSchema = new Schema({
 }, { _id: false });
 
 export const SchemaEmpleado = new Schema<IEmpleado>({
-  _id: { type: String, required: true },
-  email: { type: String, required: true },
+  _id: { type: String, required: true, unique:true },
+  email: { type: String, required: true, unique:true },
   photo: {type: String, required: true},
   startDate: {type: Date, required:true},
   telefono: {type: String, require:true},
-  codigo: { type: String, required: true },
+  codigo: { type: String, required: true, unique:true },
   nombre: { type: String, required: true },
   password: { type: String, required: true },
   rol: { type: String, enum: ['admin', 'staff'], required: true },

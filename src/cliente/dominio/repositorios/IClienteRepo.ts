@@ -1,6 +1,6 @@
 import { Cliente } from "../agregados/Cliente";
 
-export interface ClienteRepo {
+export interface IClienteRepo {
     guardar(cliente:Cliente):Promise<void>
     eliminar(id:string):Promise<void>
     buscarPorId(id:string):Promise<Cliente | null>

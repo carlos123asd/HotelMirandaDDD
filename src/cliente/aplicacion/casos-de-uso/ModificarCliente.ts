@@ -1,4 +1,4 @@
-import { ClienteRepo } from "../../dominio/repositorios/ClienteRepo";
+import { ClienteRepo } from "../../dominio/repositorios/IClienteRepo";
 import { DTOCliente } from "../dtos/DTOCliente";
 
 export class ModificaCliente{

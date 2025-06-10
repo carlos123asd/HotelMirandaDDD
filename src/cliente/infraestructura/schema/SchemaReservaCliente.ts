@@ -9,7 +9,7 @@ export const ServiciosExtras = new Schema({
 })
 
 export const SchemaReservaCliente = new Schema<IReservaCliente>({
-    id: { type:String, required:true },
+    id: { type:String, required:true, unique:true },
     asignacion: { type:SchemaCliente, required:true },
     habitacion: { type:SchemaHabitacion, required:true },
     checkIn: { type:Date, required:true },

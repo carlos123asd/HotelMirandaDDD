@@ -11,7 +11,7 @@ export const SchemaExtras = new Schema({
 })
 
 export const SchemaReservaAdministrativa: Schema<IReservaAdministrativa> = new Schema<IReservaAdministrativa>({
-    _id: { type:String, required:true },
+    _id: { type:String, required:true, unique:true },
     estado: { type:String, enum:['pendiente', 'aceptada', 'en curso', 'cancelada'], required:true },
     asignacion: { type:SchemaCliente, required:true },
     habitacion: { type:SchemaHabitacion, required:true },

@@ -1,18 +1,9 @@
-import { Empleado, StatusType } from "../../dominio/agregados/Empleado";
+import { Empleado } from "../../dominio/agregados/Empleado";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
-import { Permiso } from "../../dominio/value-objects/Permiso";
-import { Rol } from "../../dominio/value-objects/Rol";
+import { EmpleadoMapper } from "../mappers/EmpleadoMapper";
 import { MEmpleado } from "../models/EmpleadoModelo";
 
 export class EmpleadoRepoMongo implements IEmpleadoRepo{
-    private checkStatusType = (value:string) => {
-        switch(value){
-            case 'activo': return StatusType.ACTIVO;
-            case 'inactivo': return StatusType.INACTIVO;
-            case 'suspendido': return StatusType.SUSPENDIDO;
-            default: throw new Error('Status inválido');
-        }
-    }
     async guardar(empleado: Empleado):Promise<void> {
         const doc = new MEmpleado(empleado)
         await doc.save();
@@ -22,57 +13,21 @@ export class EmpleadoRepoMongo implements IEmpleadoRepo{
         if(!doc){
             return null
         }
-        return new Empleado(
-                doc._id?.toString(),
-                doc.email,
-                doc.photo,
-                doc.startDate,
-                doc.telefono,
-                doc.codigo,
-                doc.nombre,
-                doc.password,
-                Rol.fromString(doc.rol),
-                this.checkStatusType(doc.status),
-                Permiso.fromPrimitive(doc.permisosExtra),
-            )
+        return EmpleadoMapper.desdeDocumento(doc)
     }
     async buscarPorEmail(email: string): Promise<Empleado | null> {
         const doc = await MEmpleado.findOne({ email: email })
         if(!doc){
             return null
         }
-        return new Empleado(
-                doc._id?.toString(),
-                doc.email,
-                doc.photo,
-                doc.startDate,
-                doc.telefono,
-                doc.codigo,
-                doc.nombre,
-                doc.password,
-                Rol.fromString(doc.rol),
-                this.checkStatusType(doc.status),
-                Permiso.fromPrimitive(doc.permisosExtra),
-            )   
+        return EmpleadoMapper.desdeDocumento(doc) 
     }
     async buscarPorCodigo(codigo: string): Promise<Empleado | null> {
         const doc = await MEmpleado.findOne({ codigo: codigo })
         if(!doc){
             return null
         }
-        return new Empleado(
-                doc._id?.toString(),
-                doc.email,
-                doc.photo,
-                doc.startDate,
-                doc.telefono,
-                doc.codigo,
-                doc.nombre,
-                doc.password,
-                Rol.fromString(doc.rol),
-                this.checkStatusType(doc.status),
-                Permiso.fromPrimitive(doc.permisosExtra),
-            )
+        return EmpleadoMapper.desdeDocumento(doc)
     }
     async eliminar(id: string): Promise<void> {
         try {

@@ -1,4 +1,4 @@
-import { ReservaClienteRepo } from "../../dominio/repositorios/ReservaClienteRepo";
+import { ReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
 import { DTOReservaCliente } from "../dtos/DTOReservaCliente";
 
 export class ModificarReservaCliente{
