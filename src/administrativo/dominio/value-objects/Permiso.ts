@@ -29,4 +29,21 @@ export class Permiso {
     equals(codigo:CodigosPermisos):boolean{
         return codigo === this.codigo
     }
+
+    static fromPrimitive(value:any[]):Permiso[]{
+        if(!Array.isArray(value)){
+            throw new Error("Permiso extra invalido")
+        }
+
+        return value.map((permiso:Permiso,i) => {
+            if(!permiso.codigo || !permiso.descripcion || !permiso.nivel){
+                throw new Error(`Permisos numero ${i} EXTRAS Invalidos`)
+            }
+            return new Permiso(
+                permiso.codigo,
+                permiso.nivel,
+                permiso.descripcion
+            )
+        })
+    }
 }

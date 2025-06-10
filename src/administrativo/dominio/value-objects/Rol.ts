@@ -14,4 +14,12 @@ export class Rol{
         public readonly nombre:String,
         public readonly permisos:Permiso[]
     ){}
+
+    static fromString(value:string):Rol{
+      switch(value){
+        case Rol.ADMIN.codigo: return Rol.ADMIN
+        case Rol.STAFF.codigo: return Rol.STAFF
+        default: throw new Error(`Rol invalido: ${value}`)
+        }  
+    }
 }

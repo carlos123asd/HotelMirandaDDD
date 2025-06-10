@@ -2,7 +2,11 @@ import { DTOEmpleado } from "../../aplicacion/dtos/DTOEmpleado";
 import { NivelPermisos, Permiso } from "../value-objects/Permiso";
 import { Rol } from "../value-objects/Rol";
 
-export type statusType = 'inactivo' | 'activo'
+export enum StatusType {
+  ACTIVO = 'activo',
+  INACTIVO = 'inactivo',
+  SUSPENDIDO = 'suspendido',
+}
 
 export class Empleado{
     constructor(
@@ -15,7 +19,7 @@ export class Empleado{
         public nombre:string,
         public password:string,
         public rol:Rol,
-        public status:statusType,
+        public status:StatusType,
         public permisosExtra?:Permiso[],
     ){}
 
