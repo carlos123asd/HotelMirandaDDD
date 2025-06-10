@@ -49,14 +49,44 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    async buscarPorHabitacion(habitacion: Habitacion): Promise<NotasInternas | null> {
-        throw new Error("Method not implemented.");
+    async buscarPorHabitacion(idHabitacion: string): Promise<NotasInternas | null> {
+        const doc = await MNotasInternas.findOne({ idHabitacion: idHabitacion })
+        if(!doc){
+            return null
+        }
+        return await NotasInternasMapper.desdeDocumento(doc, {
+            empleadoRepo: this.empleadoRepo,
+            clienteRepo: this.clienteRepo,
+            reservaClienteRepo: this.reservaClienteRepo,
+            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            habitacionRepo: this.habitacionRepo
+        })
     }
-    async buscarPorCliente(cliente: Cliente): Promise<NotasInternas | null> {
-        throw new Error("Method not implemented.");
+    async buscarPorCliente(idCliente: string): Promise<NotasInternas | null> {
+        const doc = await MNotasInternas.findOne({ idHabitacion: idCliente })
+        if(!doc){
+            return null
+        }
+        return await NotasInternasMapper.desdeDocumento(doc, {
+            empleadoRepo: this.empleadoRepo,
+            clienteRepo: this.clienteRepo,
+            reservaClienteRepo: this.reservaClienteRepo,
+            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            habitacionRepo: this.habitacionRepo
+        })
     }
-    async buscarPorReserva(reserva: ReservaAdministrativa | ReservaCliente): Promise<NotasInternas | null> {
-        throw new Error("Method not implemented.");
+    async buscarPorReserva(idReserva: string | ReservaCliente): Promise<NotasInternas | null> {
+        const doc = await MNotasInternas.findOne({ idHabitacion: idReserva })
+        if(!doc){
+            return null
+        }
+        return await NotasInternasMapper.desdeDocumento(doc, {
+            empleadoRepo: this.empleadoRepo,
+            clienteRepo: this.clienteRepo,
+            reservaClienteRepo: this.reservaClienteRepo,
+            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            habitacionRepo: this.habitacionRepo
+        })
     }
     
 }
