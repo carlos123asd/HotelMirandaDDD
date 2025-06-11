@@ -1,6 +1,8 @@
 import { Empleado, StatusType } from "../../dominio/agregados/Empleado";
 import { Permiso } from "../../dominio/value-objects/Permiso";
 import { Rol } from "../../dominio/value-objects/Rol";
+import { HydratedDocument } from "mongoose";
+import IEmpleado from "../interfaces/IEmpleado";
 
 export class EmpleadoMapper{
     private static checkStatusType = (value:string) => {
@@ -11,7 +13,7 @@ export class EmpleadoMapper{
                 default: throw new Error('Status inválido');
             }
     }
-    static desdeDocumento(doc:any):Empleado{
+    static desdeDocumento(doc:HydratedDocument<IEmpleado>):Empleado{
         return new Empleado(
             doc._id.toString(),
             doc.email,

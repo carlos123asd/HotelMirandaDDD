@@ -1,7 +1,9 @@
+import { HydratedDocument } from "mongoose";
 import { Habitacion } from "../../dominio/agregados/Habitacion";
+import IHabitacion from "../interfaces/IHabitacion";
 
 export class HabitacionMapper{
-    static desdeDocumento(doc:any):Habitacion{
+    static desdeDocumento(doc:HydratedDocument<IHabitacion>):Habitacion{
         return new Habitacion(
             doc._id.toString(),
             doc.nombre,
@@ -15,20 +17,7 @@ export class HabitacionMapper{
             doc.codigo
         )
     }
-    static arrayDocumento(doc:any):Habitacion[]{
-        return doc.map((habitacion:any) => {
-            return new Habitacion(
-                habitacion._id.toString(),
-                habitacion.nombre,
-                habitacion.descripcion,
-                habitacion.precio,
-                habitacion.oferta,
-                habitacion.categoria,
-                habitacion.servicios,
-                habitacion.imagenes,
-                habitacion.piso,
-                habitacion.codigo
-            )
-        }) 
+    static arrayDocumento(doc:HydratedDocument<IHabitacion>[]):Habitacion[]{
+        return doc.map((habitacion:HydratedDocument<IHabitacion>) => this.desdeDocumento(habitacion)) 
     }
 }

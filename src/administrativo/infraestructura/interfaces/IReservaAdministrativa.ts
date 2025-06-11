@@ -6,7 +6,7 @@ export type ServiciosExtras = {
 }
 
 export interface IReservaAdministrativa {
-    _id:String,
+    _id:string,
     estado:estados,
     idCliente:string,
     idHabitacion:string,

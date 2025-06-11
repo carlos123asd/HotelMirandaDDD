@@ -1,3 +1,4 @@
+import { HydratedDocument } from "mongoose";
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
 import { estados, ReservaAdministrativa, tipoReserva } from "../../dominio/agregados/ReservaAdministrativa";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
@@ -5,6 +6,7 @@ import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { Servicios } from "../../dominio/value-objects/Servicios";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
+import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
 
 export class ReservaAdministrativaMapper{
 
@@ -24,7 +26,7 @@ export class ReservaAdministrativaMapper{
         }
     }
 
-    private static servicionsExtras(values:string[]):ServiciosExtras[]{
+    private static serviciosExtras(values:string[]):ServiciosExtras[]{
         return values.map((servicio:string) => {
             return this.comprobarServicio(servicio)    
         })
@@ -53,7 +55,7 @@ export class ReservaAdministrativaMapper{
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
-    },doc:any):Promise<ReservaAdministrativa>{
+    },doc:HydratedDocument<IReservaAdministrativa>):Promise<ReservaAdministrativa>{
         const cliente = await deps.clienteRepo.buscarPorId(doc.idCliente)
         const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
         const empleado = await deps.empleadoRepo.buscarPorId(doc.idEmpleado)
@@ -61,7 +63,7 @@ export class ReservaAdministrativaMapper{
         if(!cliente || !habitacion || !empleado){
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
-        const serviciosExtras = this.servicionsExtras(doc.extras)
+        const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
         const notasInternas = await deps.notasInternasRepo.buscarPorReserva(doc._id)
         
         return new ReservaAdministrativa(
@@ -82,31 +84,7 @@ export class ReservaAdministrativaMapper{
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
-    },docs:any):Promise<ReservaAdministrativa[]>{
-        return Promise.all(docs.map(async (doc:any) => {
-                const cliente = await deps.clienteRepo.buscarPorId(doc.idCliente)
-                const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
-                const empleado = await deps.empleadoRepo.buscarPorId(doc.idEmpleado)
-                
-                if(!cliente || !habitacion || !empleado){
-                    throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
-                }
-                const serviciosExtras = this.servicionsExtras(doc.extras)
-                const notasInternas = await deps.notasInternasRepo.buscarPorReserva(doc._id)
-
-                return new ReservaAdministrativa(
-                doc._id.toString(),
-                this.checkEstado(doc.estado),
-                cliente,
-                habitacion,
-                doc.checkIn,
-                doc.checkOut,
-                empleado,
-                this.checkTipoReserva(doc.tipoReserva),
-                serviciosExtras,
-                notasInternas,
-                )
-            })
-        )
+    },docs:HydratedDocument<IReservaAdministrativa>[]):Promise<ReservaAdministrativa[]>{
+        return Promise.all(docs.map(async (doc:any) => this.desdeDocumento(deps,doc)))
     }
 }
