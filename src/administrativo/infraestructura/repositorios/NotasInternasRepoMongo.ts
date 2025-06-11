@@ -49,12 +49,12 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    async buscarPorHabitacion(idHabitacion: string): Promise<NotasInternas | null> {
-        const doc = await MNotasInternas.findOne({ idHabitacion: idHabitacion })
-        if(!doc){
+    async buscarPorHabitacion(idHabitacion: string): Promise<NotasInternas[] | null> {
+        const docs = await MNotasInternas.find({ idHabitacion: idHabitacion })
+        if(!docs || docs.length === 0){
             return null
         }
-        return await NotasInternasMapper.desdeDocumento(doc, {
+        return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
             reservaClienteRepo: this.reservaClienteRepo,
@@ -62,12 +62,12 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    async buscarPorCliente(idCliente: string): Promise<NotasInternas | null> {
-        const doc = await MNotasInternas.findOne({ idHabitacion: idCliente })
-        if(!doc){
+    async buscarPorCliente(idCliente: string): Promise<NotasInternas[] | null> {
+        const docs = await MNotasInternas.find({ idCliente: idCliente })
+        if(!docs || docs.length === 0){
             return null
         }
-        return await NotasInternasMapper.desdeDocumento(doc, {
+        return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
             reservaClienteRepo: this.reservaClienteRepo,
@@ -75,12 +75,12 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    async buscarPorReserva(idReserva: string | ReservaCliente): Promise<NotasInternas | null> {
-        const doc = await MNotasInternas.findOne({ idHabitacion: idReserva })
-        if(!doc){
+    async buscarPorReserva(idReserva: string): Promise<NotasInternas[] | null> {
+        const docs = await MNotasInternas.find({ idReserva: idReserva })
+        if (!docs || docs.length === 0) {
             return null
         }
-        return await NotasInternasMapper.desdeDocumento(doc, {
+        return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
             reservaClienteRepo: this.reservaClienteRepo,

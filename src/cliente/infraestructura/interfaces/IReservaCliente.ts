@@ -8,5 +8,6 @@ export interface IReservaCliente {
     habitacion:IHabitacion,
     checkIn:Date,
     checkOut:Date,
+    tipoReserva:string,
     extras?:ServiciosExtras[],
 }

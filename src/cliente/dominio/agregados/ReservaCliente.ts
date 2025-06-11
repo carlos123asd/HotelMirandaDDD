@@ -1,4 +1,5 @@
 import { Habitacion } from "../../../administrativo/dominio/agregados/Habitacion";
+import { tipoReserva } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
 import { ServiciosExtras } from "../../../administrativo/dominio/value-objects/ServiciosExtras";
 import { DTOReservaCliente } from "../../aplicacion/dtos/DTOReservaCliente";
 import { Cliente } from "./Cliente";
@@ -10,7 +11,8 @@ export class ReservaCliente{
             public habitacion:Habitacion,
             public checkIn:Date,
             public checkOut:Date,
-            public extras?:ServiciosExtras[],
+            public readonly tipoReserva:tipoReserva,
+            public extras?:ServiciosExtras[] | null,
     ){}
     
     static crearDesdeDTO(dto:DTOReservaCliente):ReservaCliente{
@@ -20,6 +22,7 @@ export class ReservaCliente{
             dto.habitacion,
             dto.checkIn,
             dto.checkOut,
+            dto.tipoReserva,
             dto.extras
         )
     }

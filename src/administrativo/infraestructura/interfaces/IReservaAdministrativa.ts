@@ -1,8 +1,3 @@
-import { ICliente } from "../../../cliente/infraestructura/interfaces/ICliente";
-import IEmpleado from "./IEmpleado";
-import IHabitacion from "./IHabitacion";
-import { INotasInternas } from "./INotasInternas";
-
 export type estados = 'pendiente' | 'aceptada' | 'en curso' | 'cancelada'
 
 export type ServiciosExtras = {
@@ -13,11 +8,12 @@ export type ServiciosExtras = {
 export interface IReservaAdministrativa {
     _id:String,
     estado:estados,
-    asignacion:ICliente,
-    habitacion:IHabitacion,
+    idCliente:string,
+    idHabitacion:string,
     checkIn:Date,
     checkOut:Date,
-    responsable:IEmpleado,
-    extras?:ServiciosExtras[],
-    notasInternas?:INotasInternas[],
+    idEmpleado:string,
+    tipoReserva:string,
+    extras?:string[],
+    idNotasInternas?:string[],
 }

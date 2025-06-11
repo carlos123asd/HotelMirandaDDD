@@ -14,5 +14,6 @@ export const SchemaReservaCliente = new Schema<IReservaCliente>({
     habitacion: { type:SchemaHabitacion, required:true },
     checkIn: { type:Date, required:true },
     checkOut: { type:Date, required:true },
+    tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
     extras: { type:ServiciosExtras, required:false },
 })

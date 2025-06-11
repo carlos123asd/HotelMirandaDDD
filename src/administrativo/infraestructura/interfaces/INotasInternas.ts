@@ -13,7 +13,6 @@ export interface INotasInternas {
     descripcion:string,
     datosAgregados?:string[],
     idCliente?:string,
-    idReservaCliente?:string,
-    idReservaAdministrativa?:string
+    idReserva?:string
     idHabitacion?:string,
 }

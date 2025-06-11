@@ -1,9 +1,5 @@
 import { Schema } from "mongoose";
 import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
-import { SchemaCliente } from "../../../cliente/infraestructura/schema/SchemaCliente";
-import { SchemaHabitacion } from "./SchemaHabitacion";
-import { SchemaEmpleado } from "./SchemaEmpleado";
-import { SchemaNotasInternas } from "./SchemaNotasInternas";
 
 export const SchemaExtras = new Schema({
     nombre: { type:String, require:true },
@@ -13,11 +9,12 @@ export const SchemaExtras = new Schema({
 export const SchemaReservaAdministrativa: Schema<IReservaAdministrativa> = new Schema<IReservaAdministrativa>({
     _id: { type:String, required:true, unique:true },
     estado: { type:String, enum:['pendiente', 'aceptada', 'en curso', 'cancelada'], required:true },
-    asignacion: { type:SchemaCliente, required:true },
-    habitacion: { type:SchemaHabitacion, required:true },
+    idCliente: { type:String, required:true },
+    idHabitacion: { type:String, required:true },
     checkIn: { type:Date, required:true },
     checkOut: { type:Date, required:true },
-    responsable: { type:SchemaEmpleado, required:true },
-    extras: { type:[SchemaExtras], required:false },
-    notasInternas: { type:SchemaNotasInternas, required:false },
+    idEmpleado: { type:String, required:true },
+    tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
+    extras: { type:[String], required:false },
+    idNotasInternas: { type:String, required:false },
 })

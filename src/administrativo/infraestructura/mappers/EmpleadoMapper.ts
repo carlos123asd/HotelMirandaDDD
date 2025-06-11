@@ -13,7 +13,7 @@ export class EmpleadoMapper{
     }
     static desdeDocumento(doc:any):Empleado{
         return new Empleado(
-            doc._id?.toString(),
+            doc._id.toString(),
             doc.email,
             doc.photo,
             doc.startDate,

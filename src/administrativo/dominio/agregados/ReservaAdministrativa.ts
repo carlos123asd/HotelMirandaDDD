@@ -5,7 +5,8 @@ import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
 import { NotasInternas } from "./NotasInternas";
 
-export type estados = 'pendiente' | 'aceptada' | 'en curso' | 'cancelada'
+export enum estados{ 'pendiente' , 'aceptada' , 'en curso' , 'cancelada'}
+export enum tipoReserva { 'administracion' , 'cliente' }
 export class ReservaAdministrativa{
     constructor(
         public readonly id:String,
@@ -15,8 +16,9 @@ export class ReservaAdministrativa{
         public checkIn:Date,
         public checkOut:Date,
         public responsable:Empleado,
-        public extras?:ServiciosExtras[],
-        public notasInternas?:NotasInternas[],
+        public readonly tipoReserva:tipoReserva,
+        public extras?:ServiciosExtras[] | null,
+        public notasInternas?:NotasInternas[] | null
     ){}
 
     static crearDesdeDTO(dto:DTOReserva){
@@ -28,6 +30,7 @@ export class ReservaAdministrativa{
             dto.checkIn,
             dto.checkOut,
             dto.responsable,
+            dto.tipoReserva,
             dto.extras,
             dto.notasInternas,
         )

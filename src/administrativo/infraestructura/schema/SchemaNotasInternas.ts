@@ -1,6 +1,5 @@
 import { Schema } from "mongoose";
 import { INotasInternas } from "../interfaces/INotasInternas";
-import { SchemaEmpleado } from "./SchemaEmpleado";
 
 export const SchemaNotasInternas = new Schema<INotasInternas>({
     _id: { type:String, required:true, unique:true },
@@ -12,7 +11,6 @@ export const SchemaNotasInternas = new Schema<INotasInternas>({
     descripcion: { type:String, required:true },
     datosAgregados: { type:String, required:false },
     idCliente: { type:String, required:false },
-    idReservaCliente: { type:String, required:false },
-    idReservaAdministrativa: { type:String, required:false },
+    idReserva: { type:String, required:false },
     idHabitacion: { type:String, required:false },
 })
