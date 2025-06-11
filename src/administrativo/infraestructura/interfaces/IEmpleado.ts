@@ -1,3 +1,5 @@
+import { PermisoPrimitivo } from "../../dominio/value-objects/Permiso";
+
 export default interface IEmpleado {
     _id:string,
     email:string,
@@ -8,6 +10,6 @@ export default interface IEmpleado {
     nombre:string,
     password:string,
     rol:string,
-    permisosExtra:Array<object>,
+    permisosExtra:PermisoPrimitivo[],
     status:string
 }

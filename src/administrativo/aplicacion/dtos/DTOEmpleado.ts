@@ -1,4 +1,4 @@
-import { statusType } from "../../dominio/agregados/Empleado";
+import { StatusType } from "../../dominio/agregados/Empleado";
 import { Permiso } from "../../dominio/value-objects/Permiso";
 import { Rol } from "../../dominio/value-objects/Rol";
 
@@ -13,5 +13,5 @@ export type DTOEmpleado = {
     password:string;
     rol:Rol;
     permisosExtra?:Permiso[];
-    status:statusType;
+    status:StatusType;
 }
