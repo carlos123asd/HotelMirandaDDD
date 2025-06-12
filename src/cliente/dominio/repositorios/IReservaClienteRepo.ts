@@ -4,4 +4,5 @@ export interface IReservaClienteRepo {
     guardar(reservaCliente:ReservaCliente):Promise<void>
     eliminar(id:string):Promise<void>
     buscarPorId(id:string):Promise<ReservaCliente | null>
+    buscarPorCliente(idCliente:string):Promise<ReservaCliente[] | null>
 }

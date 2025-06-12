@@ -13,5 +13,6 @@ export const SchemaReservaCliente = new Schema<IReservaCliente>({
     checkIn: { type:Date, required:true },
     checkOut: { type:Date, required:true },
     tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
+    estado: { type:String, enum: ['pendiente' , 'aceptada' , 'en curso' , 'cancelada'], required:true },
     extras: { type:ServiciosExtras, required:false },
 })

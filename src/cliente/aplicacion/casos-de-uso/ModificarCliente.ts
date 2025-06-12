@@ -1,9 +1,10 @@
-import { ClienteRepo } from "../../dominio/repositorios/IClienteRepo";
+
+import { IClienteRepo } from "../../dominio/repositorios/IClienteRepo";
 import { DTOCliente } from "../dtos/DTOCliente";
 
 export class ModificaCliente{
     constructor(
-        private readonly clienteRepo:ClienteRepo
+        private readonly clienteRepo:IClienteRepo
     ){}
 
     async ejecutar(dtoCliente:DTOCliente):Promise<void>{
