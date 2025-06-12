@@ -1,9 +1,9 @@
-import { ReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
-import { DTOReservaCliente } from "../dtos/DTOReservaCliente";
+import { IReservaClienteRepo } from "../../../cliente/dominio/repositorios/IReservaClienteRepo";
+import { DTOReservaCliente } from "../../../cliente/aplicacion/dtos/DTOReservaCliente";
 
 export class ModificarReservaCliente{
     constructor(
-        private readonly reservaRepo:ReservaClienteRepo 
+        private readonly reservaRepo:IReservaClienteRepo
     ){}
 
     async ejecutar(dtoReserva:DTOReservaCliente):Promise<void>{

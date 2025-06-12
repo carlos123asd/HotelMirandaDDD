@@ -1,7 +1,5 @@
 import { Schema } from "mongoose";
 import { IReservaCliente } from "../interfaces/IReservaCliente";
-import { SchemaCliente } from "./SchemaCliente";
-import { SchemaHabitacion } from "../../../administrativo/infraestructura/schema/SchemaHabitacion";
 
 export const ServiciosExtras = new Schema({
     nombre: { type:String, required:true },
@@ -10,8 +8,8 @@ export const ServiciosExtras = new Schema({
 
 export const SchemaReservaCliente = new Schema<IReservaCliente>({
     id: { type:String, required:true, unique:true },
-    asignacion: { type:SchemaCliente, required:true },
-    habitacion: { type:SchemaHabitacion, required:true },
+    idCliente: { type:String, required:true },
+    idHabitacion: { type:String, required:true },
     checkIn: { type:Date, required:true },
     checkOut: { type:Date, required:true },
     tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
