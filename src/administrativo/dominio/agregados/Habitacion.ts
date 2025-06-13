@@ -1,23 +1,56 @@
 import { DTOHabitacion } from "../../aplicacion/dtos/DTOHabitacion";
 import { Servicios } from "../value-objects/Servicios";
 
-export type categoriaHabitacion = 'Habitacion Simple' | 'Doble Habitacion' | 'Suite'
+export enum categoriaHabitacion {
+    'Habitacion Simple' = 'Habitacion Simple' ,
+    'Doble Habitacion' = 'Doble Habitacion' ,
+    Suite = 'Suite'
+}
 
 export class Habitacion{
     constructor(
-        public readonly id:String,
-        public nombre:String,
-        public descripcion:String,
+        public readonly id:string,
+        public nombre:string,
+        public descripcion:string,
         public precio:number,
         public oferta:number,
         public categoria:categoriaHabitacion,
         public servicios:Servicios[],
         public imagenes:string[],
-        public readonly piso:String,
-        public readonly codigo:String
+        public readonly piso:string,
+        public readonly codigo:string
     ){}
 
-    static crearDesdeDTO(dto:DTOHabitacion,codigo:String){
+    static crearDesdePersistencia(params:{
+        id:string,
+        nombre:string,
+        descripcion:string,
+        precio:number,
+        oferta:number,
+        categoria:string,
+        servicios:Servicios[],
+        imagenes:string[],
+        piso:string,
+        codigo:string
+    }):Habitacion{
+        if(!Object.values(categoriaHabitacion).includes(params.categoria as categoriaHabitacion)){
+            throw new Error("Categoria de habitacion invalida")
+        }
+        return new Habitacion(
+            params.id,
+            params.nombre,
+            params.descripcion,
+            params.precio,
+            params.oferta,
+            params.categoria as categoriaHabitacion,
+            params.servicios,
+            params.imagenes,
+            params.piso,
+            params.codigo
+        )
+    }
+
+    static crearDesdeDTO(dto:DTOHabitacion,codigo:string){
         return new Habitacion(
             dto.id,
             dto.nombre,

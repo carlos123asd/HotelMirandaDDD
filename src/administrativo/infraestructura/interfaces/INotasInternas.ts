@@ -1,18 +1,13 @@
-import IEmpleado from "./IEmpleado";
-
-export type tiposNotasInternas = 'Habitacion' | 'Cliente' | 'Reserva'
-export type tiposReservas = 'cliente' | 'administrativa'
-
 export interface INotasInternas {
     _id:string,
-    tipoReserva:tiposReservas,
     idResponsable:string,
-    tipo:tiposNotasInternas,
+    tipo:string,
     fecha:Date,
     titulo:string,
     descripcion:string,
-    datosAgregados?:string[],
-    idCliente?:string,
-    idReserva?:string
-    idHabitacion?:string,
+    tipoReserva?:string | null,
+    datosAgregados?:string[] | null,
+    idCliente?:string | null,
+    idReserva?:string | null
+    idHabitacion?:string | null,
 }

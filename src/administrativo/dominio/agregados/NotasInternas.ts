@@ -5,7 +5,10 @@ import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
 import { ReservaAdministrativa } from "./ReservaAdministrativa";
 
-export type tiposNotasInternas = 'Habitacion' | 'Cliente' | 'Reserva'
+export enum tiposNotasInternas { 
+    Habitacion = 'Habitacion' , 
+    Cliente = 'Cliente' , 
+    Reserva = 'Reserva' }
 
 export class NotasInternas{
     constructor(
@@ -15,11 +18,40 @@ export class NotasInternas{
         public fecha:Date,
         public titulo:string,
         public descripcion:string,
-        public datosAgregados?:string[],
+        public datosAgregados?:string[] | null,
         public cliente?:Cliente | null,
-        public reserva?:ReservaAdministrativa|ReservaCliente | null,
+        public reserva?:(ReservaAdministrativa|ReservaCliente) | null,
         public habitacion?:Habitacion | null,
     ){}
+
+    static crearDesdePersistencia(params:{
+        id:string,
+        responsable:Empleado,
+        tipo:string,
+        fecha:Date,
+        titulo:string,
+        descripcion:string,
+        datosAgregados?:string[] | null,
+        cliente?:Cliente | null,
+        reserva?:(ReservaAdministrativa|ReservaCliente) | null,
+        habitacion?:Habitacion | null,
+    }):NotasInternas{
+        if(!Object.values(tiposNotasInternas).includes(params.tipo as tiposNotasInternas)){
+            throw new Error("Tipo de Nota Interna invalida")
+        }
+        return new NotasInternas(
+            params.id,
+            params.responsable,
+            params.tipo as tiposNotasInternas,
+            params.fecha,
+            params.titulo,
+            params.descripcion,
+            params.datosAgregados,
+            params.cliente,
+            params.reserva,
+            params.habitacion,
+        )
+    }
     
     static crearDesdeDTO(dto:DTONotasInternas){
         return  new NotasInternas(

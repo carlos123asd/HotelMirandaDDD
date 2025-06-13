@@ -12,8 +12,8 @@ export type DTONotasInternas = {
     fecha:Date,
     titulo:string,
     descripcion:string,
-    datosAgregados?:string[],
-    cliente?:Cliente,
-    reserva?:ReservaAdministrativa|ReservaCliente,
-    habitacion?:Habitacion,
+    datosAgregados?:string[] | null,
+    cliente?:Cliente | null,
+    reserva?:(ReservaAdministrativa|ReservaCliente) | null,
+    habitacion?:Habitacion | null,
 }

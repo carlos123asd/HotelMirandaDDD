@@ -33,7 +33,7 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
     }
    
     async guardar(habitacion: Habitacion): Promise<void> {
-        const doc = new MHabitacion(habitacion)
+        const doc = HabitacionMapper.aDocumento(habitacion)
         await doc.save()
     }
     async buscarPorId(id: String): Promise<Habitacion | null> {

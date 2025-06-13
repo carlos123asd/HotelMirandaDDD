@@ -11,4 +11,5 @@ export type DTOHabitacion = {
     servicios:Servicios[],
     imagenes:string[],
     piso:string,
+    codigo:string
 }

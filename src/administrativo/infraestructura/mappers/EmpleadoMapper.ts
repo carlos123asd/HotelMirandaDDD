@@ -30,7 +30,8 @@ export class EmpleadoMapper{
             Permiso.fromPrimitive(doc.permisosExtra),
         )   
     }
-    static aDocumento(dto:DTOEmpleado){
+    //Inverso de objeto dominio o agregado a Documento Mongo
+    static aDocumento(dto:Empleado){
         const doc:Partial<IEmpleado> = {
             _id: dto.id,
             email: dto.email,

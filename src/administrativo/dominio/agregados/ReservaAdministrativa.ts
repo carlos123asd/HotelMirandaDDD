@@ -5,8 +5,16 @@ import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
 import { NotasInternas } from "./NotasInternas";
 
-export enum estados{ 'pendiente' , 'aceptada' , 'en curso' , 'cancelada'}
-export enum tipoReserva { 'administracion' , 'cliente' }
+export enum estados{ 
+    pendiente = 'pendiente' , 
+    aceptada = 'aceptada' , 
+    'en curso' = 'en curso' , 
+    cancelada = 'cancelada'}
+
+export enum tipoReserva { 
+    administracion = 'administracion' , 
+    cliente = 'cliente' }
+    
 export class ReservaAdministrativa{
     constructor(
         public readonly id:String,
