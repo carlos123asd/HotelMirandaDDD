@@ -5,6 +5,15 @@ import { HabitacionMapper } from "../mappers/HabitacionMapper";
 import { MHabitacion } from "../models/HabitacionModelo";
 
 export class HabitacionRepoMongo implements IHabitacionRepo{
+    async ContarHabitaciones(): Promise<number> {
+        try {
+            const numHabitaciones = await MHabitacion.countDocuments({});
+            return numHabitaciones;
+        } catch (err) {
+            throw new Error(`Error al contar habitaciones: ${err}`);
+        }
+    }
+
     async buscarConFiltros(filtros:FiltroHabitacionesDTO, desde: number): Promise<Habitacion[] | null> {
        const query:any = {}
         if (filtros.categorias && filtros.categorias.length > 0) {

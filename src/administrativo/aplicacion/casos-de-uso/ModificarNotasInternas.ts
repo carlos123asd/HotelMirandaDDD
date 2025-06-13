@@ -11,7 +11,7 @@ export class ModificarNotasInternas{
         if(!notaEncontrada){
             throw new Error(`No se encontor ninguna Nota Interna con esta ID:${dtoNotas.id}`)
         }
-        notaEncontrada.modificarDesdeDTO(notaEncontrada)
+        notaEncontrada.modificarDesdeDTO(dtoNotas)
         await this.notasrepo.guardar(notaEncontrada)
     }
 }
