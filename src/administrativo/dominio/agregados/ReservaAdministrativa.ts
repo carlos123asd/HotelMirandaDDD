@@ -1,5 +1,7 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
 import { DTOReserva } from "../../aplicacion/dtos/DTOReserva";
+import { INotasInternasRepo } from "../repositorios/INotasInternasRepo";
+import { Servicios } from "../value-objects/Servicios";
 import { ServiciosExtras } from "../value-objects/ServiciosExtras";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
@@ -28,6 +30,35 @@ export class ReservaAdministrativa{
         public extras?:ServiciosExtras[] | null,
         public notasInternas?:NotasInternas[] | null
     ){}
+
+    static crearDesdePersistencia(params:{
+        id:string,
+        estado:string,
+        asignacion:Cliente,
+        habitacion:Habitacion,
+        checkIn:Date,
+        checkOut:Date,
+        responsable:Empleado,
+        tipoReserva:string,
+        extras?:ServiciosExtras[] | null,
+        notasInternas?:NotasInternas[] | null
+    }):ReservaAdministrativa{
+        if(!Object.values(estados).includes(params.estado as estados)){
+            throw new Error("Estado de reserva invalida")
+        }
+        return new ReservaAdministrativa(
+            params.id,
+            params.estado as estados,
+            params.asignacion,
+            params.habitacion,
+            params.checkIn,
+            params.checkOut,
+            params.responsable,
+            params.tipoReserva as tipoReserva,
+            params.extras,
+            params.notasInternas
+        )
+    }
 
     static crearDesdeDTO(dto:DTOReserva){
         return new ReservaAdministrativa(

@@ -7,6 +7,8 @@ import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRep
 import { Servicios } from "../../dominio/value-objects/Servicios";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
+import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
+import { ReservaAdministrativaRepoMongo } from "../repositorios/ReservaAdministrativaRepoMongo";
 
 export class ReservaAdministrativaMapper{
 
@@ -86,5 +88,22 @@ export class ReservaAdministrativaMapper{
         notasInternasRepo:INotasInternasRepo
     },docs:HydratedDocument<IReservaAdministrativa>[]):Promise<ReservaAdministrativa[]>{
         return Promise.all(docs.map(async (doc:any) => this.desdeDocumento(deps,doc)))
+    }
+
+    static aDocumento(dto:ReservaAdministrativa){
+        const doc:Partial<IReservaAdministrativa> =
+            {
+                _id:dto.id.toString(),
+                estado: dto.estado,
+                idCliente:dto.asignacion.id,
+                idHabitacion:dto.habitacion.id,
+                checkIn:dto.checkIn,
+                checkOut:dto.checkOut,
+                idEmpleado:dto.responsable.id,
+                tipoReserva:dto.tipoReserva,
+                extras:dto.extras?.map((extra) => extra.nombre),
+                idNotasInternas:dto.notasInternas?.map((notas) => notas.id),
+            } 
+        return new MReservaAdministrativa(doc)
     }
 }

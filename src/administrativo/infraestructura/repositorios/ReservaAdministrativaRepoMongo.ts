@@ -4,8 +4,6 @@ import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
-import { Servicios } from "../../dominio/value-objects/Servicios";
-import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 import { ReservaAdministrativaMapper } from "../mappers/ReservaAdministrativaMapper";
 import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
 
@@ -55,7 +53,7 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
         },docs)
     }
     async guardar(reserva: ReservaAdministrativa): Promise<void> {
-        const doc = new MReservaAdministrativa(reserva)
+        const doc = ReservaAdministrativaMapper.aDocumento(reserva)
         await doc.save()
     }
     async eliminar(id: String): Promise<void> {

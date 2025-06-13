@@ -8,7 +8,6 @@ import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
 import { INotasInternas } from "../interfaces/INotasInternas";
-import { DTONotasInternas } from "../../aplicacion/dtos/DTONotasInternas";
 import { MNotasInternas } from "../models/NotasInternas";
 
 export class NotasInternasMapper {
@@ -63,7 +62,7 @@ export class NotasInternasMapper {
         )
     }
 
-    static async aDocumento(dto:DTONotasInternas){
+    static aDocumento(dto:NotasInternas){
         const doc:Partial<INotasInternas> = {
             _id: dto.id,
             idResponsable: dto.responsable.id,
@@ -72,7 +71,7 @@ export class NotasInternasMapper {
             titulo: dto.titulo,
             descripcion: dto.descripcion,
             tipoReserva: dto.reserva?.tipoReserva ?? null,
-            datosAgregados: dto.datosAgregados ?? null,
+            datosAgregados: dto.datosAgregados ? dto.datosAgregados : null,
             idCliente: dto.cliente ? dto.cliente.id : null,
             idReserva: dto.reserva ? dto.reserva.id.toString() : null,
             idHabitacion: dto.habitacion ? dto.habitacion.id.toString() : null,

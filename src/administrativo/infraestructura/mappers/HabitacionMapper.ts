@@ -25,7 +25,7 @@ export class HabitacionMapper{
 
     static aDocumento(dto:Habitacion){
         const doc:Partial<IHabitacion> = {
-            _id: dto.id,
+            _id: dto.id.toString(),
             nombre: dto.nombre,
             descripcion: dto.descripcion,
             precio: dto.precio,
