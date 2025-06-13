@@ -8,7 +8,7 @@ export class EliminarReserva{
     ){}
 
     async ejecutar(responsable:Empleado,dto:DTOReserva):Promise<void>{
-        if(!responsable.puedeEliminarHabitacion()){
+        if(!responsable.puedeEliminarReserva()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para eliminar reservas`);
         }
         const existeReserva = await this.reservaRepo.buscarPorID(dto.id)

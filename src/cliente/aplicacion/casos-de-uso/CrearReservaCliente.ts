@@ -1,10 +1,10 @@
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
-import { ReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
+import { IReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
 import { DTOReservaCliente } from "../dtos/DTOReservaCliente";
 
 export class CrearReservaCliente{
     constructor(
-        private readonly reservaRepo:ReservaClienteRepo
+        private readonly reservaRepo:IReservaClienteRepo
     ){}
 
     async ejecutar(dtoReserva:DTOReservaCliente):Promise<void>{

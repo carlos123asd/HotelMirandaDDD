@@ -59,9 +59,17 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
         await doc.save()
     }
     async eliminar(id: String): Promise<void> {
-        const result =  await MReservaAdministrativa.deleteOne({ _id:id })
-        if(result.deletedCount === 0){
-            throw new Error(`No se pudo eliminar ninguna Reserva con este ID: ${id}`)
+        const doc = await MReservaAdministrativa.findById(id)
+        if(!doc){
+            throw new Error("No se encontro ninguna reserva con este ID para su eliminacion")
+        }
+        if(doc.estado === "cancelada"){
+            const result = await MReservaAdministrativa.deleteOne({ _id:id })
+            if(result.deletedCount === 0){
+                throw new Error("No se pudo eliminar esta reserva")
+            }
+        }else{
+            throw new Error("La reseva no se puede eliminar porque ya esta aceptada o en curso")
         }
     }
    
