@@ -12,7 +12,7 @@ export class ReservaClienteRepoMongo implements IReservaClienteRepo{
     ){}
 
     async guardar(reservaCliente: ReservaCliente): Promise<void> {
-        const doc = new ReservaClienteModelo(reservaCliente)
+        const doc = ReservaClienteMapper.aDocumento(reservaCliente)
         await doc.save()
     }
     async eliminar(id: string): Promise<void> {
@@ -20,7 +20,7 @@ export class ReservaClienteRepoMongo implements IReservaClienteRepo{
         if(!doc){
             throw new Error("No se encontro ninguna reserva con este ID para su eliminacion")
         }
-        if(doc.estado === "cancelada"){
+        if(doc.estadoReserva === "cancelada"){
             const result = await ReservaClienteModelo.deleteOne({ _id:id })
             if(result.deletedCount === 0){
                 throw new Error("No se pudo eliminar esta reserva")

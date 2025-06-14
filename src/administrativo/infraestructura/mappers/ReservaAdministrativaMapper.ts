@@ -8,7 +8,6 @@ import { Servicios } from "../../dominio/value-objects/Servicios";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
 import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
-import { ReservaAdministrativaRepoMongo } from "../repositorios/ReservaAdministrativaRepoMongo";
 
 export class ReservaAdministrativaMapper{
 

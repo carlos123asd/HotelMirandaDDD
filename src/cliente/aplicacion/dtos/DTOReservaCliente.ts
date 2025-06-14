@@ -1,5 +1,5 @@
 import { Habitacion } from "../../../administrativo/dominio/agregados/Habitacion";
-import { tipoReserva } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
+import { estados, tipoReserva } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
 import { ServiciosExtras } from "../../../administrativo/dominio/value-objects/ServiciosExtras";
 import { Cliente } from "../../dominio/agregados/Cliente";
 
@@ -10,5 +10,6 @@ export type DTOReservaCliente = {
     checkIn:Date,
     checkOut:Date,
     tipoReserva:tipoReserva,
+    estadoReserva:estados,
     extras?:ServiciosExtras[],
 }

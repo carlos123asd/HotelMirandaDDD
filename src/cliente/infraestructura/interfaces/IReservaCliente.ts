@@ -5,6 +5,6 @@ export interface IReservaCliente {
     checkIn:Date,
     checkOut:Date,
     tipoReserva:string,
-    estado:string,
-    extras?:string[],
+    estadoReserva:string,
+    extras?:string[] | null,
 }

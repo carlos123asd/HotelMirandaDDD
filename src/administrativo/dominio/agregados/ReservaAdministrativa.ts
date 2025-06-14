@@ -1,7 +1,5 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
 import { DTOReserva } from "../../aplicacion/dtos/DTOReserva";
-import { INotasInternasRepo } from "../repositorios/INotasInternasRepo";
-import { Servicios } from "../value-objects/Servicios";
 import { ServiciosExtras } from "../value-objects/ServiciosExtras";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";

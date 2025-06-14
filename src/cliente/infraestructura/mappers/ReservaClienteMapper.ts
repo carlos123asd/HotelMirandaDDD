@@ -3,19 +3,11 @@ import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IReservaCliente } from "../interfaces/IReservaCliente";
 import { IClienteRepo } from "../../dominio/repositorios/IClienteRepo";
 import { IHabitacionRepo } from "../../../administrativo/dominio/repositorios/IHabitacionRepo";
-import { tipoReserva } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
 import { ServiciosExtras } from "../../../administrativo/dominio/value-objects/ServiciosExtras";
 import { Servicios } from "../../../administrativo/dominio/value-objects/Servicios";
+import { ReservaClienteModelo } from "../models/ReservaClienteModelo";
 
 export class ReservaClienteMapper{
-
-    private static checkTipoReserva(value:string){
-        switch(value){
-            case 'administracion': return tipoReserva.administracion
-            case 'cliente': return tipoReserva.cliente
-            default: throw new Error("Tipo de Reserva invalida")
-        }
-    }
 
     private static comprobarServicio(value:string):Servicios{
         switch(value){
@@ -50,15 +42,16 @@ export class ReservaClienteMapper{
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion")
         }
         const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
-        return new ReservaCliente(
-            doc._id.toString(),
-            cliente,
-            habitacion,
-            doc.checkIn,
-            doc.checkOut,
-            this.checkTipoReserva(doc.tipoReserva),
-            serviciosExtras,
-        )
+        return ReservaCliente.crearDesdePersistencia({
+            id:doc._id.toString(),
+            asignacion:cliente,
+            habitacion:habitacion,
+            checkIn:doc.checkIn,
+            checkOut:doc.checkOut,
+            tipoReserva:doc.tipoReserva,
+            estadoReserva:doc.estadoReserva,
+            extras:serviciosExtras,
+        })
     }
 
     static async desdeDocumentoArray(deps:{
@@ -66,5 +59,21 @@ export class ReservaClienteMapper{
             habitacionRepo:IHabitacionRepo,
         },docs:HydratedDocument<IReservaCliente>[]):Promise<ReservaCliente[]>{
         return Promise.all(docs.map((doc) => this.desdeDocumento(deps,doc)));
+    }
+
+    static aDocumento(reserva:ReservaCliente){
+        let extras = reserva.extras?.length ? reserva.extras.map((extra) => extra.nombre) : null
+
+        const doc:Partial<IReservaCliente> = {
+            _id:reserva.id.toString(),
+            idCliente:reserva.asignacion.id.toString(),
+            idHabitacion:reserva.habitacion.id.toString(),
+            checkIn:reserva.checkIn,
+            checkOut:reserva.checkOut,
+            tipoReserva:reserva.tipoReserva,
+            estadoReserva:reserva.estadoReserva,
+            extras:extras,
+        }   
+        return new ReservaClienteModelo(doc)
     }
 }
