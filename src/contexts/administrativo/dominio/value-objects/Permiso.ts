@@ -5,18 +5,17 @@ export enum NivelPermisos {
 }
 
 export type CodigosPermisos = 'ADM' | 'GR' | 'GE' | 'GH';
-export type NivelPermiso = 1 | 2 | 3;
 
 export type PermisoPrimitivo = {
     codigo: CodigosPermisos;
-    nivel: NivelPermiso;
+    nivel: NivelPermisos;
     descripcion: string;
 };
 
 export class Permiso {
     constructor(
         public readonly codigo: CodigosPermisos,
-        public readonly nivel: NivelPermiso,
+        public readonly nivel: NivelPermisos,
         public readonly descripcion: string
     ) {}
 
