@@ -5,7 +5,7 @@ import { ClienteModelo } from "../models/ClienteModelo";
 
 export class ClienteRepoMongo implements IClienteRepo{
     async guardar(cliente: Cliente): Promise<void> {
-        const doc = new ClienteModelo(cliente)
+        const doc = ClienteMapper.aDocumento(cliente)
         await doc.save()
     }
     async eliminar(id: string): Promise<void> {

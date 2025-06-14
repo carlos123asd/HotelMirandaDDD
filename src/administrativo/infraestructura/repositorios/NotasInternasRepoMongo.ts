@@ -19,7 +19,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
     ){}
 
     async guardar(notaInterna: NotasInternas): Promise<void> {
-        const doc = new MNotasInternas(notaInterna)
+        const doc = NotasInternasMapper.aDocumento(notaInterna)
         await doc.save()
     }
     async eliminar(id: string): Promise<void> {

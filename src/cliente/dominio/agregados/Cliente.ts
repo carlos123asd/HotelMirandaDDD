@@ -1,6 +1,8 @@
 import { DTOCliente } from "../../aplicacion/dtos/DTOCliente";
 
-export type metodoPago = 'Tarjeta' | 'Metalico'
+export enum metodoPago {
+    Tarjeta = 'Tarjeta' , 
+    Metalico = 'Metalico'}
 
 export class Cliente{
     constructor(
@@ -11,6 +13,27 @@ export class Cliente{
         public password:string,
         public metodoPago:metodoPago
     ){}
+
+    static crearDesdePersistencia(params:{
+        id:string,
+        nombre:string,
+        email:string,
+        direccion:string,
+        password:string,
+        metodoPago:string
+    }):Cliente{
+        if(!Object.values(metodoPago).includes(params.metodoPago as metodoPago)){
+            throw new Error("Metodo de pago invalido")
+        }
+        return new Cliente(
+            params.id,
+            params.nombre,
+            params.email,
+            params.direccion,
+            params.password,
+            params.metodoPago as metodoPago
+        )
+    }
 
     static crearDesdeDTO(dto:DTOCliente):Cliente{
         return new Cliente(
