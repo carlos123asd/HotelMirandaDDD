@@ -1,5 +1,5 @@
 import { ReservaAdministrativa } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
-import { IReservaRepo } from "../../../administrativo/dominio/repositorios/IReservaRepo";
+import { IReservaRepo } from "../../../../contexts/administrativo/dominio/repositorios/IReservaRepo";
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
 import { DTOCliente } from "../dtos/DTOCliente";

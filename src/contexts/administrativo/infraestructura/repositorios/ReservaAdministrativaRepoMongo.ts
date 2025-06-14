@@ -1,5 +1,5 @@
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { ReservaAdministrativa, tipoReserva } from "../../dominio/agregados/ReservaAdministrativa";
+import { ReservaAdministrativa } from "../../dominio/agregados/ReservaAdministrativa";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";

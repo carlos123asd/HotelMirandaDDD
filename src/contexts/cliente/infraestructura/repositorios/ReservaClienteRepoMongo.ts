@@ -1,4 +1,4 @@
-import { IHabitacionRepo } from "../../../administrativo/dominio/repositorios/IHabitacionRepo";
+import { IHabitacionRepo } from "../../../../contexts/administrativo/dominio/repositorios/IHabitacionRepo";
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IClienteRepo } from "../../dominio/repositorios/IClienteRepo";
 import { IReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";

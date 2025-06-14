@@ -2,9 +2,9 @@ import { HydratedDocument } from "mongoose";
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IReservaCliente } from "../interfaces/IReservaCliente";
 import { IClienteRepo } from "../../dominio/repositorios/IClienteRepo";
-import { IHabitacionRepo } from "../../../administrativo/dominio/repositorios/IHabitacionRepo";
-import { ServiciosExtras } from "../../../administrativo/dominio/value-objects/ServiciosExtras";
-import { Servicios } from "../../../administrativo/dominio/value-objects/Servicios";
+import { IHabitacionRepo } from "../../../../contexts/administrativo/dominio/repositorios/IHabitacionRepo";
+import { ServiciosExtras } from "../../../../contexts/administrativo/dominio/value-objects/ServiciosExtras";
+import { Servicios } from "../../../../contexts/administrativo/dominio/value-objects/Servicios";
 import { ReservaClienteModelo } from "../models/ReservaClienteModelo";
 
 export class ReservaClienteMapper{

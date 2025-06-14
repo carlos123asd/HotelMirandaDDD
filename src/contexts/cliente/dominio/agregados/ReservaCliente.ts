@@ -1,6 +1,6 @@
-import { Habitacion } from "../../../administrativo/dominio/agregados/Habitacion";
-import { estados, tipoReserva } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
-import { ServiciosExtras } from "../../../administrativo/dominio/value-objects/ServiciosExtras";
+import { Habitacion } from "../../../../contexts/administrativo/dominio/agregados/Habitacion";
+import { estados, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa";
+import { ServiciosExtras } from "../../../../contexts/administrativo/dominio/value-objects/ServiciosExtras";
 import { DTOReservaCliente } from "../../aplicacion/dtos/DTOReservaCliente";
 import { Cliente } from "./Cliente";
 
