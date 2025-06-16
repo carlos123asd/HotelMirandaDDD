@@ -6,49 +6,55 @@ import { Rol } from "../../../../contexts/administrativo/dominio/value-objects/R
 describe("Casos de uso Empleado", () => {
     const empleadoRepo: IEmpleadoRepo = {
         buscarPorId: jest.fn().mockResolvedValue(
-            new Empleado(
-                "1",
-                "juan.perez@example.com",
-                "photo.com",
-                new Date(),
-                "12345",
-                "1998CM",
-                "Juan Perez",
-                "password123",
-                Rol.STAFF,
-                StatusType.ACTIVO,
-                [new Permiso('GE', 2, "staff")]
+            Promise.resolve(
+                new Empleado(
+                    "1",
+                    "juan.perez@example.com",
+                    "photo.com",
+                    new Date(),
+                    "12345",
+                    "1998CM",
+                    "Juan Perez",
+                    "password123",
+                    Rol.STAFF,
+                    StatusType.ACTIVO,
+                    [new Permiso('GE', 2, "staff")]
+                )
             )
         ),
         guardar: jest.fn(),
         buscarPorEmail: jest.fn().mockResolvedValue(
-            new Empleado(
-                "1",
-                "juan.perez@example.com",
-                "photo.com",
-                new Date(),
-                "12345",
-                "1998CM",
-                "Juan Perez",
-                "password123",
-                Rol.STAFF,
-                StatusType.ACTIVO,
-                [new Permiso('GE', 2, "staff")]
+            Promise.resolve(
+                new Empleado(
+                    "1",
+                    "juan.perez@example.com",
+                    "photo.com",
+                    new Date(),
+                    "12345",
+                    "1998CM",
+                    "Juan Perez",
+                    "password123",
+                    Rol.STAFF,
+                    StatusType.ACTIVO,
+                    [new Permiso('GE', 2, "staff")]
+                )
             )
         ),
         buscarPorCodigo: jest.fn().mockResolvedValue(
-            new Empleado(
-                "1",
-                "juan.perez@example.com",
-                "photo.com",
-                new Date(),
-                "12345",
-                "1998CM",
-                "Juan Perez",
-                "password123",
-                Rol.STAFF,
-                StatusType.ACTIVO,
-                [new Permiso('GE', 2, "staff")]
+            Promise.resolve(
+                new Empleado(
+                    "1",
+                    "juan.perez@example.com",
+                    "photo.com",
+                    new Date(),
+                    "12345",
+                    "1998CM",
+                    "Juan Perez",
+                    "password123",
+                    Rol.STAFF,
+                    StatusType.ACTIVO,
+                    [new Permiso('GE', 2, "staff")]
+                )
             )
         ),
         eliminar: jest.fn()
