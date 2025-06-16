@@ -4,7 +4,10 @@ import { Servicios } from "../value-objects/Servicios";
 export enum categoriaHabitacion {
     'Habitacion Simple' = 'Habitacion Simple' ,
     'Doble Habitacion' = 'Doble Habitacion' ,
-    Suite = 'Suite'
+    Suite = 'Suite',
+    Deluxe = 'Deluxe',
+    Familiar = 'Familiar',
+    Presidencial = 'Presidencial'
 }
 
 export class Habitacion{
