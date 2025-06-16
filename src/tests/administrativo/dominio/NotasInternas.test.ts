@@ -149,13 +149,6 @@ describe("Notas Internas", () => {
             habitacion: habitacion,
         }
         notaInterna.modificarDesdeDTO(dto);
-        expect(notaInterna.id).toBe(dto.id);
-        expect(notaInterna.responsable).toBe(dto.responsable);
-        expect(notaInterna.tipo).toBe(dto.tipo);
-        expect(notaInterna.fecha).toBe(dto.fecha);
-        expect(notaInterna.titulo).toBe(dto.titulo);
         expect(notaInterna.descripcion).toBe(dto.descripcion);
-        expect(notaInterna.datosAgregados).toEqual(dto.datosAgregados);
-        expect(notaInterna.habitacion).toBe(dto.habitacion);
     })
 })

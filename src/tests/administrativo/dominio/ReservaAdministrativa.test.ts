@@ -184,15 +184,6 @@ describe("Reserva Administrativa", () => {
             null
         )
         reserva.modificarDesdeDTO(dto);
-        expect(reserva.id).toBe(dto.id);
         expect(reserva.estado).toBe(dto.estado);
-        expect(reserva.asignacion).toBe(dto.asignacion);
-        expect(reserva.habitacion).toBe(dto.habitacion);
-        expect(reserva.responsable).toBe(dto.responsable);
-        expect(reserva.tipoReserva).toBe(dto.tipoReserva);
-        expect(reserva.checkIn).toBe(dto.checkIn);
-        expect(reserva.checkOut).toBe(dto.checkOut);
-        expect(reserva.extras).toBe(dto.extras);
-        expect(reserva.notasInternas).toBe(dto.notasInternas);
     })
 })

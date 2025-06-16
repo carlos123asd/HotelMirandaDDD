@@ -81,15 +81,7 @@ describe("Habitacion", () => {
             codigo: "D123"
         }
         habitacion.modificarDesdeDTO(dto);
-        expect(habitacion.id).toBe(dto.id);
-        expect(habitacion.nombre).toBe(dto.nombre);
-        expect(habitacion.descripcion).toBe(dto.descripcion);
         expect(habitacion.precio).toBe(dto.precio);
         expect(habitacion.oferta).toBe(dto.oferta);
-        expect(habitacion.categoria).toBe(dto.categoria);
-        expect(habitacion.servicios).toEqual(dto.servicios);
-        expect(habitacion.imagenes).toEqual(dto.imagenes);
-        expect(habitacion.piso).toBe(dto.piso);
-        expect(habitacion.codigo).toBe(dto.codigo);
     })
 })

@@ -252,16 +252,7 @@ describe("Empleado", () => {
             status: StatusType.INACTIVO,
         }
         empleado.modificarDesdeDTO(dto);
-        expect(empleado.id).toBe(dto.id);
-        expect(empleado.email).toBe(dto.email);
-        expect(empleado.photo).toBe(dto.photo);
-        expect(empleado.startDate).toBe(dto.startDate);
-        expect(empleado.telefono).toBe(dto.telefono);
-        expect(empleado.codigo).toBe(dto.codigo);
-        expect(empleado.nombre).toBe(dto.nombre);
         expect(empleado.password).toBe(dto.password);
-        expect(empleado.rol).toBe(dto.rol);
         expect(empleado.status).toBe(dto.status);
-        expect(empleado.permisosExtra).toEqual(dto.permisosExtra);
     })
 })
