@@ -76,6 +76,7 @@ export class Empleado{
     }
 
     //Si quisieramos en el futuro formatear los campos o validar campos lo hacemos desde aqui
+    //HAY QUE USAR Y CREAR EL SERVICIO GENERAR CODIGO EMPLEADO (FALTA)
     static crearDesdeDTO(dto: DTOEmpleado):Empleado{
         return new Empleado(
             dto.id,
