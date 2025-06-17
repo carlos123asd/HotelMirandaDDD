@@ -13,7 +13,7 @@ export class CrearReservaCliente{
         if(reservaEncontrada){
             throw new Error("Ya existe una reserva con este ID")
         }
-        const totalReserva = new CalculadorPrecioReserva(dtoReserva.habitacion.precio, dtoReserva.extras, recargo).calcular()
+        const totalReserva = new CalculadorPrecioReserva(dtoReserva.habitacion.precio, dtoReserva.extras, recargo, dtoReserva.habitacion.oferta).calcular()
         const nuevaReserva = ReservaCliente.crearDesdeDTO(dtoReserva, totalReserva)
         await this.reservaRepo.guardar(nuevaReserva)
     }
