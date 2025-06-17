@@ -25,6 +25,7 @@ export class ReservaAdministrativa{
         public checkOut:Date,
         public responsable:Empleado,
         public readonly tipoReserva:tipoReserva,
+        public totalReserva:number,
         public extras?:ServiciosExtras[] | null,
         public notasInternas?:NotasInternas[] | null
     ){}
@@ -38,6 +39,7 @@ export class ReservaAdministrativa{
         checkOut:Date,
         responsable:Empleado,
         tipoReserva:string,
+        totalReserva:number,
         extras?:ServiciosExtras[] | null,
         notasInternas?:NotasInternas[] | null
     }):ReservaAdministrativa{
@@ -53,12 +55,13 @@ export class ReservaAdministrativa{
             params.checkOut,
             params.responsable,
             params.tipoReserva as tipoReserva,
+            params.totalReserva,
             params.extras,
             params.notasInternas
         )
     }
 
-    static crearDesdeDTO(dto:DTOReserva){
+    static crearDesdeDTO(dto:DTOReserva, totalReserva:number){
         return new ReservaAdministrativa(
             dto.id,
             dto.estado,
@@ -68,6 +71,7 @@ export class ReservaAdministrativa{
             dto.checkOut,
             dto.responsable,
             dto.tipoReserva,
+            totalReserva,
             dto.extras,
             dto.notasInternas,
         )
@@ -84,5 +88,6 @@ export class ReservaAdministrativa{
         this.responsable = dto.responsable;
         this.extras = dto.extras;
         this.notasInternas = dto.notasInternas;
+        this.totalReserva = dto.totalReserva ? dto.totalReserva : this.totalReserva;
     }
 }

@@ -50,6 +50,7 @@ export class ReservaClienteMapper{
             checkOut:doc.checkOut,
             tipoReserva:doc.tipoReserva,
             estadoReserva:doc.estadoReserva,
+            totalReserva:doc.totalReserva,
             extras:serviciosExtras,
         })
     }
@@ -72,6 +73,7 @@ export class ReservaClienteMapper{
             checkOut:reserva.checkOut,
             tipoReserva:reserva.tipoReserva,
             estadoReserva:reserva.estadoReserva,
+            totalReserva:reserva.totalReserva,
             extras:extras,
         }   
         return new ReservaClienteModelo(doc)

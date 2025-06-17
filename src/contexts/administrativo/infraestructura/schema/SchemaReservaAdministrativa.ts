@@ -10,6 +10,7 @@ export const SchemaReservaAdministrativa: Schema<IReservaAdministrativa> = new S
     checkOut: { type:Date, required:true },
     idEmpleado: { type:String, required:true },
     tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
+    totalReserva: { type:Number, required:true },
     extras: { type:[String], required:false },
     idNotasInternas: { type:String, required:false },
 })

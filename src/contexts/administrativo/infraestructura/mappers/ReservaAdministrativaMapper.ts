@@ -76,6 +76,7 @@ export class ReservaAdministrativaMapper{
             doc.checkOut,
             empleado,
             this.checkTipoReserva(doc.tipoReserva),
+            doc.totalReserva,
             serviciosExtras,
             notasInternas,
         )
@@ -100,6 +101,7 @@ export class ReservaAdministrativaMapper{
                 checkOut:dto.checkOut,
                 idEmpleado:dto.responsable.id,
                 tipoReserva:dto.tipoReserva,
+                totalReserva:dto.totalReserva,
                 extras:dto.extras?.map((extra) => extra.nombre),
                 idNotasInternas:dto.notasInternas?.map((notas) => notas.id),
             } 

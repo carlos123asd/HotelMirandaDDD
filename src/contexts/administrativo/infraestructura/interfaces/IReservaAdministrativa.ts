@@ -7,6 +7,7 @@ export interface IReservaAdministrativa {
     checkOut:Date,
     idEmpleado:string,
     tipoReserva:string,
+    totalReserva:number,
     extras?:string[] | null,
     idNotasInternas?:string[] | null,
 }

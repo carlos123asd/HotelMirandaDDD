@@ -1,5 +1,4 @@
 import { CalculadorPrecioReserva } from "../../../administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva";
-import { IHabitacionRepo } from "../../../administrativo/dominio/repositorios/IHabitacionRepo";
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";
 import { DTOReservaCliente } from "../dtos/DTOReservaCliente";
