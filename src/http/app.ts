@@ -6,6 +6,7 @@ import routerHabitacion from './routes/Habitacion.router'
 import routerCliente from './routes/Cliente.routes'
 import routerNotasInternas from './routes/NotasInternas.routes'
 import routerReserva from './routes/Reserva.routes'
+import { MongooseConnection } from '../db/MongooseConnection'
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use(apiPaths.reserva,routerReserva)
 
 const startServer = async () => {
     try {
+        await MongooseConnection.connect();
         const port = process.env?.PORT ? Number(process.env.PORT) : 3000;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);
@@ -45,3 +47,8 @@ const startServer = async () => {
 }
 
 startServer()
+
+process.on('SIGINT', async () => {
+    await MongooseConnection.disconnect()
+    process.exit()
+})
