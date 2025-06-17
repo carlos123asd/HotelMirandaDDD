@@ -4,9 +4,9 @@
   "description": "backend Hotel Miranda",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec ts-node src/app.ts",
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/http/app.ts",
     "build": "tsc",
-    "start": "node dist/app.js",
+    "start": "node dist/http/app.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
