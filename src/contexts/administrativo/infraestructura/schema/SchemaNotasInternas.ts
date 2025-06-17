@@ -3,7 +3,7 @@ import { INotasInternas } from "../interfaces/INotasInternas";
 
 export const SchemaNotasInternas = new Schema<INotasInternas>({
     _id: { type:String, required:true, unique:true },
-    tipoReserva: {type:String, enum:['cliente','administrativa'], required:true},
+    tipoReserva: {type:String, enum:['cliente','administrativa'], required:false},
     idResponsable: { type:String, required:true },
     tipo: { type:String, enum:['Habitacion', 'Cliente', 'Reserva'], required:true },
     fecha: { type:Date, required:true },
