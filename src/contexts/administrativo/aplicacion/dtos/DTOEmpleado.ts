@@ -8,10 +8,10 @@ export type DTOEmpleado = {
     photo:string;
     startDate:Date;
     telefono:string;
-    codigo:string;
+    codigo?:string | null;
     nombre:string;
     password:string;
     rol:Rol;
-    permisosExtra?:Permiso[];
+    permisosExtra?:Permiso[] | null;
     status:StatusType;
 }

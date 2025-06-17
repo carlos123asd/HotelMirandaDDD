@@ -20,7 +20,7 @@ export class Empleado{
         public password:string,
         public rol:Rol,
         public status:StatusType,
-        public permisosExtra?:Permiso[],
+        public permisosExtra?:Permiso[] |  null,
     ){}
 
     esAdmin(){
@@ -77,19 +77,19 @@ export class Empleado{
 
     //Si quisieramos en el futuro formatear los campos o validar campos lo hacemos desde aqui
     //HAY QUE USAR Y CREAR EL SERVICIO GENERAR CODIGO EMPLEADO (FALTA)
-    static crearDesdeDTO(dto: DTOEmpleado):Empleado{
+    static crearDesdeDTO(dto: DTOEmpleado, codigoEmpleado:string):Empleado{
         return new Empleado(
             dto.id,
             dto.email,
             dto.photo,
             dto.startDate,
             dto.telefono,
-            dto.codigo,
+            codigoEmpleado,
             dto.nombre,
             dto.password,
             dto.rol,
             dto.status,
-            dto.permisosExtra,
+            dto.permisosExtra ? dto.permisosExtra : null,
         );
     }
     modificarDesdeDTO(dto: DTOEmpleado):void{
@@ -104,6 +104,6 @@ export class Empleado{
         this.password = dto.password,
         this.rol = dto.rol,
         this.status = dto.status,
-        this.permisosExtra = dto.permisosExtra
+        this.permisosExtra = dto.permisosExtra ? dto.permisosExtra : null
     }
 }
