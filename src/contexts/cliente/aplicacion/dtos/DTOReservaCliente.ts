@@ -11,5 +11,6 @@ export type DTOReservaCliente = {
     checkOut:Date,
     tipoReserva:tipoReserva,
     estadoReserva:estados,
+    totalReserva?:number | null,
     extras?:ServiciosExtras[] | null,
 }

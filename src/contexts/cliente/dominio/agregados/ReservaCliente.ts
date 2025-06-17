@@ -13,6 +13,7 @@ export class ReservaCliente{
             public checkOut:Date,
             public readonly tipoReserva:tipoReserva,
             public estadoReserva:estados,
+            public totalReserva:number,
             public extras?:ServiciosExtras[] | null,
     ){}
 
@@ -24,6 +25,7 @@ export class ReservaCliente{
         checkOut:Date,
         tipoReserva:string,
         estadoReserva:string,
+        totalReserva:number,
         extras?:ServiciosExtras[] | null,
     }){
         if(!Object.values(tipoReserva).includes(params.tipoReserva as tipoReserva)
@@ -39,11 +41,12 @@ export class ReservaCliente{
             params.checkOut,
             params.tipoReserva as tipoReserva,
             params.estadoReserva as estados,
+            params.totalReserva,
             params.extras,
         )
     }
     
-    static crearDesdeDTO(dto:DTOReservaCliente):ReservaCliente{
+    static crearDesdeDTO(dto:DTOReservaCliente,totalReserva:number):ReservaCliente{
         return new ReservaCliente(
             dto.id,
             dto.asignacion,
@@ -52,6 +55,7 @@ export class ReservaCliente{
             dto.checkOut,
             dto.tipoReserva,
             dto.estadoReserva,
+            totalReserva,
             dto.extras
         )
     }
@@ -60,11 +64,12 @@ export class ReservaCliente{
         if(this.id !== dto.id){
             throw new Error("ID del cliente no se puede modificar")
         }
-        this.asignacion=dto.asignacion,
-        this.habitacion=dto.habitacion,
-        this.checkIn=dto.checkIn,
-        this.checkOut=dto.checkOut,
+        this.asignacion=dto.asignacion
+        this.habitacion=dto.habitacion
+        this.checkIn=dto.checkIn
+        this.checkOut=dto.checkOut
         this.estadoReserva=dto.estadoReserva
+        this.totalReserva=dto.totalReserva ? dto.totalReserva : this.totalReserva
         this.extras=dto.extras
     }
 }

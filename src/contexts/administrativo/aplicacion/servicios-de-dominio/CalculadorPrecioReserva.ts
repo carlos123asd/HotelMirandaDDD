@@ -3,11 +3,11 @@ import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 export class CalculadorPrecioReserva{
     constructor(
         private readonly precioBase:number,
-        private readonly extras:ServiciosExtras[],
+        private readonly extras?:ServiciosExtras[] | null,
         private readonly recargoDiaEspecial:number=0
     ){}
     calcular():number{
-        const precioExtra= this.extras.reduce((sumTotal:number,servicio:ServiciosExtras) => sumTotal + servicio.precio,0)
-        return this.precioBase + precioExtra + this.recargoDiaEspecial
+        const precioExtra= this.extras?.reduce((sumTotal:number,servicio:ServiciosExtras) => sumTotal + servicio.precio,0)
+        return this.precioBase + (precioExtra ? precioExtra : 0) + this.recargoDiaEspecial
     }
 }
