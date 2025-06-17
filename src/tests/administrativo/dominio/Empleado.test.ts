@@ -1,4 +1,5 @@
 import { DTOEmpleado } from "../../../contexts/administrativo/aplicacion/dtos/DTOEmpleado"
+import { GenerarCodigoEmpleado } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/GenerarCodigoEmpleado"
 import { Empleado, StatusType } from "../../../contexts/administrativo/dominio/agregados/Empleado"
 import { NivelPermisos, Permiso } from "../../../contexts/administrativo/dominio/value-objects/Permiso"
 import { Rol } from "../../../contexts/administrativo/dominio/value-objects/Rol"
@@ -208,13 +209,14 @@ describe("Empleado", () => {
             ],
             status: StatusType.ACTIVO,
         }
-        const staff = Empleado.crearDesdeDTO(dto);
+         const codigoEmppleado = GenerarCodigoEmpleado(dto.email,dto.telefono);
+        const staff = Empleado.crearDesdeDTO(dto,codigoEmppleado);
         expect(staff.id).toBe(dto.id);
         expect(staff.email).toBe(dto.email);
         expect(staff.photo).toBe(dto.photo);
         expect(staff.startDate).toBe(dto.startDate);
         expect(staff.telefono).toBe(dto.telefono);
-        expect(staff.codigo).toBe(dto.codigo);
+        expect(staff.codigo).toBe(codigoEmppleado);
         expect(staff.nombre).toBe(dto.nombre);
         expect(staff.password).toBe(dto.password);
         expect(staff.rol).toBe(dto.rol);

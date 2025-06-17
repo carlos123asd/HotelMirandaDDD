@@ -50,7 +50,7 @@ describe("Casos de uso - Reserva Administrativa", () => {
         new Date(),
         admin,
         tipoReserva.administracion,
-        null,
+        150,
         null
     )
     const reservaRrepo:IReservaRepo = {

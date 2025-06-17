@@ -35,6 +35,7 @@ describe("Casos de uso - Reserva Cliente", () => {
         new Date(),
         tipoReserva.cliente,
         estados.pendiente,
+        150,
         null
     )
 

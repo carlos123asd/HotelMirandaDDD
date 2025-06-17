@@ -1,3 +1,4 @@
+import { CalculadorPrecioReserva } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva"
 import { categoriaHabitacion, Habitacion } from "../../../contexts/administrativo/dominio/agregados/Habitacion"
 import { estados, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
 import { Servicios } from "../../../contexts/administrativo/dominio/value-objects/Servicios"
@@ -35,6 +36,7 @@ describe("Reserva en el Cliente", () => {
             new Date(),
             tipoReserva.cliente,
             estados.pendiente,
+            new CalculadorPrecioReserva(habitacion.precio, null, 0, habitacion.oferta).calcular(),
             null
         )
         const reservaDesdePersistencia = ReservaCliente.crearDesdePersistencia({
@@ -45,6 +47,7 @@ describe("Reserva en el Cliente", () => {
             checkOut: reserva.checkOut,
             tipoReserva: reserva.tipoReserva,
             estadoReserva: reserva.estadoReserva,
+            totalReserva: reserva.totalReserva,
             extras: reserva.extras
         })
         expect(reservaDesdePersistencia).toEqual(reserva)
@@ -80,6 +83,7 @@ describe("Reserva en el Cliente", () => {
             estadoReserva: estados.pendiente,
             extras: null
         }
+        const totalReserva = new CalculadorPrecioReserva(reservaDTO.habitacion.precio, reservaDTO.extras, 0, reservaDTO.habitacion.oferta).calcular()
         const reserva = new ReservaCliente(
             "1",
             cliente,
@@ -88,9 +92,10 @@ describe("Reserva en el Cliente", () => {
             new Date(),
             tipoReserva.cliente,
             estados.pendiente,
+            totalReserva,
             null
         )
-        const reservaDesdeDTO = ReservaCliente.crearDesdeDTO(reservaDTO)
+        const reservaDesdeDTO = ReservaCliente.crearDesdeDTO(reservaDTO , totalReserva)
         expect(reservaDesdeDTO).toEqual(reserva)
     })
     it("modificar desde DTO (ESTADO)", () => {
@@ -124,7 +129,8 @@ describe("Reserva en el Cliente", () => {
             estadoReserva: estados.pendiente,
             extras: null
         }
-        const reservaDesdeDTO = ReservaCliente.crearDesdeDTO(reservaDTO)
+        const totalReserva = new CalculadorPrecioReserva(reservaDTO.habitacion.precio, reservaDTO.extras, 0, reservaDTO.habitacion.oferta).calcular()
+        const reservaDesdeDTO = ReservaCliente.crearDesdeDTO(reservaDTO, totalReserva)
         const nuevoDTO:DTOReservaCliente = {
             id: "1",
             asignacion: cliente,

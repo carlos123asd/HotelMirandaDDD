@@ -15,13 +15,15 @@ beforeAll(async () => {
 // Son metodos de jest que se ejecutan despues de cada prueba it o test individual
 afterEach(async () => {
     const collections = await mongoose.connection.db?.collections();
-    collections?.forEach(async (collection) => {
-        await collection.deleteMany({});
-    });
+    if(collections){
+        for(const collection of collections) {
+            await collection.deleteMany({});
+        }
+    }
 })
 
 // Son metodos de jest que se ejecutan despues de todas las pruebas
 afterAll(async () => {
-    await mongoose.disconnect();
+    await mongoose.connection.close();
     await mongo.stop()
 })

@@ -1,4 +1,5 @@
 import { DTOReserva } from "../../../contexts/administrativo/aplicacion/dtos/DTOReserva"
+import { CalculadorPrecioReserva } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva"
 import { Empleado, StatusType } from "../../../contexts/administrativo/dominio/agregados/Empleado"
 import { categoriaHabitacion, Habitacion } from "../../../contexts/administrativo/dominio/agregados/Habitacion"
 import { estados, ReservaAdministrativa, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
@@ -51,6 +52,7 @@ describe("Reserva Administrativa", () => {
             checkOut: new Date("2023-10-05"),
             responsable: responsable,
             tipoReserva: "administracion",
+            totalReserva: 150,
             extras: null,
             notasInternas: null
         })
@@ -112,7 +114,8 @@ describe("Reserva Administrativa", () => {
             extras: null,
             notasInternas: null
         }
-        const reserva = ReservaAdministrativa.crearDesdeDTO(dto);
+        const totalReserva = new CalculadorPrecioReserva(dto.habitacion.precio, dto.extras, 10, dto.habitacion.oferta).calcular()
+        const reserva = ReservaAdministrativa.crearDesdeDTO(dto, totalReserva);
         expect(reserva.id).toBe(dto.id);
         expect(reserva.estado).toBe(dto.estado);
         expect(reserva.asignacion).toBe(dto.asignacion);
@@ -171,6 +174,7 @@ describe("Reserva Administrativa", () => {
             extras: null,
             notasInternas: null
         }
+        const totalReserva = new CalculadorPrecioReserva(dto.habitacion.precio, dto.extras, 10, dto.habitacion.oferta).calcular()
         const reserva = new ReservaAdministrativa(
             "1",
             estados.aceptada,
@@ -180,7 +184,7 @@ describe("Reserva Administrativa", () => {
             new Date(),
             admin,
             tipoReserva.administracion,
-            null,
+            totalReserva,
             null
         )
         reserva.modificarDesdeDTO(dto);
