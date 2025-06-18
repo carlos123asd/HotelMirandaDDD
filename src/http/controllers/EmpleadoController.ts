@@ -42,7 +42,17 @@ export class EmpleadoController{
         }
     }
 
-    static async eliminarEmpleado(req:Request,res:Response){
+    static async eliminarEmpleado(req:Request,res:Response):Promise<void>{
+
+    }
+
+    static async buscarPorID(req:Request,res:Response):Promise<void>{
+
+    }
+    static async buscarPorEmail(req:Request,res:Response):Promise<void>{
+
+    }
+    static async buscarPorCodigo(req:Request,res:Response):Promise<void>{
 
     }
 }
