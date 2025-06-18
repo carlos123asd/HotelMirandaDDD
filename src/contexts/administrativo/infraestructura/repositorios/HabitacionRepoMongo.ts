@@ -32,9 +32,13 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         return HabitacionMapper.arrayDocumento(docs)
     }
    
-    async guardar(habitacion: Habitacion): Promise<void> {
+    async guardar(habitacion: Habitacion, modificar=false): Promise<void> {
         const doc = HabitacionMapper.aDocumento(habitacion)
-        await doc.save()
+        if(modificar){
+            MHabitacion.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+        }else{
+            await doc.save()
+        }
     }
     async buscarPorId(id: String): Promise<Habitacion | null> {
         const doc = await MHabitacion.findById(id);

@@ -52,9 +52,13 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
             notasInternasRepo:this.notasInternasRepo
         },docs)
     }
-    async guardar(reserva: ReservaAdministrativa): Promise<void> {
+    async guardar(reserva: ReservaAdministrativa, modificar=false): Promise<void> {
         const doc = ReservaAdministrativaMapper.aDocumento(reserva)
-        await doc.save()
+        if(modificar){
+            MReservaAdministrativa.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+        }else{
+            await doc.save()
+        }
     }
     async eliminar(id: String): Promise<void> {
         const doc = await MReservaAdministrativa.findById(id)

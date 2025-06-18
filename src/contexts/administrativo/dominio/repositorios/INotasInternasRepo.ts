@@ -1,7 +1,7 @@
 import { NotasInternas } from "../agregados/NotasInternas";
 
 export interface INotasInternasRepo {
-    guardar(notaInterna:NotasInternas):Promise<void>;
+    guardar(notaInterna:NotasInternas,modificar:boolean):Promise<void>;
     eliminar(id:string):Promise<void>;
     buscarId(id:string):Promise<NotasInternas | null>;
     buscarPorHabitacion(idHabitacion:string):Promise<NotasInternas[] | null>;

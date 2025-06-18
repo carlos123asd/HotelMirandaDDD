@@ -7,7 +7,7 @@ export class ModificarHabitacion{
         private readonly habitacionRepo:IHabitacionRepo
     ){}
 
-    async ejecutar(responsable:Empleado,dto:DTOHabitacion):Promise<void>{
+    async ejecutar(responsable:Empleado,dto:DTOHabitacion, modificar=false):Promise<void>{
         if(!responsable.puedeModificarHabitacion()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para modificar habitaciones`)
         }
@@ -16,6 +16,6 @@ export class ModificarHabitacion{
             throw new Error("Habitacion no encontrada")
         }
         habitacion.modificarDesdeDTO(dto)
-        await this.habitacionRepo.guardar(habitacion)
+        await this.habitacionRepo.guardar(habitacion, modificar)
     }
 }
