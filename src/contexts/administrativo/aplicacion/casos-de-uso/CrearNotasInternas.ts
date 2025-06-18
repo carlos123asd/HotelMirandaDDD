@@ -13,6 +13,6 @@ export class CrearNotasInternas{
             throw new Error("Ya existe una Nota Interna con ese ID")
         }
         const notaInterna = NotasInternas.crearDesdeDTO(dtoNotas)
-        await this.notasRepo.guardar(notaInterna)
+        await this.notasRepo.guardar(notaInterna,false)
     }
 }

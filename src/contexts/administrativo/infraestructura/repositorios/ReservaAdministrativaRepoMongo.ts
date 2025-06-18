@@ -8,18 +8,25 @@ import { ReservaAdministrativaMapper } from "../mappers/ReservaAdministrativaMap
 import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
 
 export class ReservaAdministrativaRepoMongo implements IReservaRepo{
+    private notasInternasRepo?:INotasInternasRepo
 
     constructor(
         private readonly clienteRepo:IClienteRepo,
         private readonly habitacionRepo:IHabitacionRepo,
         private readonly empleadoRepo:IEmpleadoRepo,
-        private readonly notasInternasRepo:INotasInternasRepo
     ){}
+
+    setNotasInternasRepo(repo: INotasInternasRepo) {
+        this.notasInternasRepo = repo;
+    }
 
     async buscarPorID(id: string): Promise<ReservaAdministrativa | null> {
         const doc = await MReservaAdministrativa.findById(id)
         if(!doc){
             return null
+        }
+        if (!this.notasInternasRepo) {
+            throw new Error("notasInternasRepo is not set");
         }
         return ReservaAdministrativaMapper.desdeDocumento({
             clienteRepo:this.clienteRepo,
@@ -30,8 +37,11 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
     }
     async buscarPorCliente(idCliente: string): Promise<ReservaAdministrativa[] | null> {
         const docs = await MReservaAdministrativa.find({ idCliente:idCliente })
-        if(!docs){
-            return null
+        if (!this.notasInternasRepo) {
+            throw new Error("notasInternasRepo is not set");
+        }
+        if (!this.notasInternasRepo) {
+            throw new Error("notasInternasRepo is not set");
         }
         return ReservaAdministrativaMapper.desdeDocumentoArray({
             clienteRepo:this.clienteRepo,
@@ -44,6 +54,9 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
         const docs = await MReservaAdministrativa.find({ idHabitacion:idHabitacion })
         if(!docs){
             return null
+        }
+        if (!this.notasInternasRepo) {
+            throw new Error("notasInternasRepo is not set");
         }
          return ReservaAdministrativaMapper.desdeDocumentoArray({
             clienteRepo:this.clienteRepo,
