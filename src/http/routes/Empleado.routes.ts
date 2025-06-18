@@ -4,10 +4,10 @@ import { EmpleadoController } from "../controllers/EmpleadoController";
 const routerEmpleado = Router()
 
 routerEmpleado.post('/crear',EmpleadoController.crearEmpleado)
-routerEmpleado.post('/modificar',EmpleadoController.modificarEmpleado)
-routerEmpleado.post('/eliminar',EmpleadoController.eliminarEmpleado)
-routerEmpleado.get('/buscarPorId:id',EmpleadoController.buscarPorID)
-routerEmpleado.get('/buscarPorEmail:email',EmpleadoController.buscarPorEmail)
-routerEmpleado.get('/buscarPorCodigo:codigo',EmpleadoController.buscarPorCodigo)
+routerEmpleado.put('/modificar',EmpleadoController.modificarEmpleado)
+routerEmpleado.delete('/eliminar',EmpleadoController.eliminarEmpleado)
+routerEmpleado.get('/buscar/id/:id',EmpleadoController.buscarPorID)
+routerEmpleado.get('/buscar/email/:email',EmpleadoController.buscarPorEmail)
+routerEmpleado.get('/buscar/codigo/:codigo',EmpleadoController.buscarPorCodigo)
 
 export default routerEmpleado

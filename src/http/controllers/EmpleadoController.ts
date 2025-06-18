@@ -3,6 +3,8 @@ import { CrearEmpleado } from "../../contexts/administrativo/aplicacion/casos-de
 import { EmpleadoRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/EmpleadoRepoMongo";
 import { EmpleadoMapper } from "../../contexts/administrativo/infraestructura/mappers/EmpleadoMapper";
 import { ModificarEmpleado } from "../../contexts/administrativo/aplicacion/casos-de-uso/ModificarEmpleado";
+import { EliminarEmpleado } from "../../contexts/administrativo/aplicacion/casos-de-uso/EliminarEmpleado";
+import { BuscarEmpleado } from "../../contexts/administrativo/aplicacion/casos-de-uso/BuscarEmpleado";
 
 export class EmpleadoController{
     static async crearEmpleado(req:Request,res:Response):Promise<void>{
@@ -43,16 +45,66 @@ export class EmpleadoController{
     }
 
     static async eliminarEmpleado(req:Request,res:Response):Promise<void>{
-
+        const {responsable,empleado} = req.body
+        try {
+            const repoMongoEmpleado = new EmpleadoRepoMongo()
+            const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
+            const empleadoObj = EmpleadoMapper.desdeDocumento(empleado)
+            const casoDeUso = new EliminarEmpleado(repoMongoEmpleado)
+            await casoDeUso.ejecutar(responsableObj,empleadoObj)
+            res.status(201).json({ mensaje: "Empleado eliminado correctamente" })
+        } catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
     }
 
     static async buscarPorID(req:Request,res:Response):Promise<void>{
-
+        const {id} = req.params
+        try {
+            const repoMongoEmpleado = new EmpleadoRepoMongo()
+            const casoDeUso = new BuscarEmpleado(repoMongoEmpleado)
+            const empleadoEncontrado = await casoDeUso.buscarPorId(id)
+            res.status(201).json(empleadoEncontrado)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
     }
     static async buscarPorEmail(req:Request,res:Response):Promise<void>{
-
+        const {email} = req.params
+        try {
+            const repoMongoEmpleado = new EmpleadoRepoMongo()
+            const casoDeUso = new BuscarEmpleado(repoMongoEmpleado)
+            const empleadoEncontrado = await casoDeUso.buscarPorEmail(email)
+            res.status(201).json(empleadoEncontrado)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
     }
     static async buscarPorCodigo(req:Request,res:Response):Promise<void>{
-
+        const {codigo} = req.params
+        try {
+            const repoMongoEmpleado = new EmpleadoRepoMongo()
+            const casoDeUso = new BuscarEmpleado(repoMongoEmpleado)
+            const empleadoEncontrado = await casoDeUso.buscarPorCodigo(codigo)
+            res.status(201).json(empleadoEncontrado)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
     }
 }
