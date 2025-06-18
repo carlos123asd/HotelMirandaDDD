@@ -7,7 +7,7 @@ export class ModificarEmpleado{
         private readonly empleadoRepo:IEmpleadoRepo
     ){}
 
-    async ejecutar(responsable:Empleado, dto:DTOEmpleado):Promise<void>{
+    async ejecutar(responsable:Empleado, dto:DTOEmpleado, modificar=false):Promise<void>{
         if(!responsable.puedeModificarEmpleado()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para modificar otros empleados`);
         }
@@ -16,6 +16,6 @@ export class ModificarEmpleado{
             throw new Error("Empleado no encontrado")
         }
        empleadoExistente.modificarDesdeDTO(dto)
-       await this.empleadoRepo.guardar(empleadoExistente)
+       await this.empleadoRepo.guardar(empleadoExistente,modificar)
     }
 }

@@ -30,9 +30,9 @@ export class EmpleadoMapper{
         )   
     }
     //Inverso de objeto dominio o agregado a Documento Mongo
-    static aDocumento(dto:Empleado){
+    static async aDocumento(dto:Empleado,modificar=false){
         const doc:Partial<IEmpleado> = {
-           
+            _id: dto.id,
             email: dto.email,
             photo: dto.photo,
             startDate: dto.startDate,
@@ -44,6 +44,10 @@ export class EmpleadoMapper{
             permisosExtra: dto.permisosExtra ? Permiso.toPrimitive(dto.permisosExtra) : [],
             status: dto.status
         }
-        return new MEmpleado(doc)
+        if(!modificar){
+            return new MEmpleado(doc)
+        }else{
+            await MEmpleado.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+        }
     }
 }

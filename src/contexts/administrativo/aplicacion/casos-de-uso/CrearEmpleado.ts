@@ -8,7 +8,7 @@ export class CrearEmpleado{
         private readonly empleadoRepo: IEmpleadoRepo
     ){}
 
-    async ejecutar(responsable:Empleado, nuevoEmpleadoDTO:DTOEmpleado):Promise<void>{
+    async ejecutar(responsable:Empleado, nuevoEmpleadoDTO:DTOEmpleado, modificar=false):Promise<void>{
         if(!responsable.puedeDarAltaEmpleado()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para dar de alta a otros empleados`);
         }
@@ -19,6 +19,6 @@ export class CrearEmpleado{
         if(existeEmpleado){ 
             throw new Error("Ya existe un empleado con este correo electronico")
         }
-        await this.empleadoRepo.guardar(nuevoEmpleado)
+        await this.empleadoRepo.guardar(nuevoEmpleado,modificar)
     }
 }

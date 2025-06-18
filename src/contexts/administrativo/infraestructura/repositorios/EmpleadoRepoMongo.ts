@@ -4,9 +4,11 @@ import { EmpleadoMapper } from "../mappers/EmpleadoMapper";
 import { MEmpleado } from "../models/EmpleadoModelo";
 
 export class EmpleadoRepoMongo implements IEmpleadoRepo{
-    async guardar(empleado: Empleado):Promise<void> {
-        const doc = EmpleadoMapper.aDocumento(empleado)
-        await doc.save();
+    async guardar(empleado: Empleado, modificar=false):Promise<void> {
+        const doc = await EmpleadoMapper.aDocumento(empleado,modificar)
+        if(doc){
+            await doc.save()
+        }
     }
     async buscarPorId(id: string): Promise<Empleado | null> {
         const doc = await MEmpleado.findById(id)
