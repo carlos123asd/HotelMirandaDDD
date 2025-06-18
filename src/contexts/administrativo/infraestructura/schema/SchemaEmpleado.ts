@@ -7,7 +7,6 @@ const PermisoSchema = new Schema({
 }, { _id: false });
 
 export const SchemaEmpleado = new Schema<IEmpleado>({
-  _id: { type: String, required: true, unique:true },
   email: { type: String, required: true, unique:true },
   photo: {type: String, required: true},
   startDate: {type: Date, required:true},

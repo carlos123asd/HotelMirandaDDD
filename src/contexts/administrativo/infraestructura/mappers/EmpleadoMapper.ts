@@ -26,13 +26,13 @@ export class EmpleadoMapper{
             doc.password,
             Rol.fromString(doc.rol),
             this.checkStatusType(doc.status),
-            Permiso.fromPrimitive(doc.permisosExtra),
+            doc.permisosExtra ? Permiso.fromPrimitive(doc.permisosExtra) : null,
         )   
     }
     //Inverso de objeto dominio o agregado a Documento Mongo
     static aDocumento(dto:Empleado){
         const doc:Partial<IEmpleado> = {
-            _id: dto.id,
+           
             email: dto.email,
             photo: dto.photo,
             startDate: dto.startDate,

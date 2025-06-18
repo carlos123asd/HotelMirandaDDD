@@ -2,7 +2,6 @@ import { Schema } from "mongoose"
 import IHabitacion from "../interfaces/IHabitacion"
 
 export const SchemaHabitacion = new Schema<IHabitacion>({
-    _id: { type:String, required:true, unique:true },
     nombre: { type:String, required:true },
     descripcion: { type:String, required:true },
     precio: { type:Number, required:true },
