@@ -5,8 +5,10 @@ import { MEmpleado } from "../models/EmpleadoModelo";
 
 export class EmpleadoRepoMongo implements IEmpleadoRepo{
     async guardar(empleado: Empleado, modificar=false):Promise<void> {
-        const doc = await EmpleadoMapper.aDocumento(empleado,modificar)
-        if(doc){
+        const doc = await EmpleadoMapper.aDocumento(empleado)
+        if(modificar){
+            MEmpleado.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+        }else{
             await doc.save()
         }
     }
