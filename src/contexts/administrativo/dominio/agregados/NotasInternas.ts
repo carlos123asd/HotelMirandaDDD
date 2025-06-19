@@ -69,9 +69,6 @@ export class NotasInternas{
     }
 
     modificarDesdeDTO(dto:DTONotasInternas){
-        if(this.id !== dto.id){
-            throw new Error("No se puede modificar el ID de una Nota Interna")
-        }
         this.responsable=dto.responsable
         this.tipo=dto.tipo
         this.fecha=dto.fecha

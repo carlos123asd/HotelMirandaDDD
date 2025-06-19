@@ -23,40 +23,43 @@ export class NotasInternasController{
         return { empleado, habitacion, cliente, reservaCliente, reservaAdmin, notas }
     }
 
-    static async crearNotaInterna(req:Request,res:Response):Promise<void>{
-        const {nuevaNotaInterna} = req.body
-        try{
-            const casoDeUso = new CrearNotasInternas(this.construirRepos().notas)
-            const nuevaNotaInternaDomain = await NotasInternasMapper.desdeDocumento(nuevaNotaInterna,{
-                empleadoRepo:this.construirRepos().empleado,
-                clienteRepo:this.construirRepos().cliente,
-                reservaClienteRepo:this.construirRepos().reservaCliente,
-                reservaAdministrativaRepo:this.construirRepos().reservaAdmin,
-                habitacionRepo:this.construirRepos().habitacion
+    static async crearNotaInterna(req: Request, res: Response): Promise<void> {
+        const { nuevaNotaInterna } = req.body;
+        try {
+            const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new CrearNotasInternas(repos.notas);
+            const nuevaNotaInternaDomain = await NotasInternasMapper.desdeDocumento(nuevaNotaInterna, {
+                empleadoRepo: repos.empleado,
+                clienteRepo: repos.cliente,
+                reservaClienteRepo: repos.reservaCliente,
+                reservaAdministrativaRepo: repos.reservaAdmin,
+                habitacionRepo: repos.habitacion
             });
-            await casoDeUso.ejecutar(nuevaNotaInternaDomain)
-            res.status(201).json({ mensaje: 'Nota Interna creada correctamente' })
-        }catch(err){
+            await casoDeUso.ejecutar(nuevaNotaInternaDomain);
+            res.status(201).json({ mensaje: 'Nota Interna creada correctamente' });
+        } catch (err) {
             if (err instanceof Error) {
                 res.status(400).json({ error: err.message });
             } else {
                 res.status(400).json({ error: String(err) });
             }
         }
-    }
+    }   
+
 
     static async modificarNotaInterna(req:Request,res:Response):Promise<void>{
         const {notasInternasMod} = req.body
         try {
+            const repos = NotasInternasController.construirRepos();
             const notasInternasModObj =  await NotasInternasMapper.desdeDocumento(notasInternasMod,{
-                empleadoRepo:this.construirRepos().empleado,
-                clienteRepo:this.construirRepos().cliente,
-                reservaClienteRepo:this.construirRepos().reservaCliente,
-                reservaAdministrativaRepo:this.construirRepos().reservaAdmin,
-                habitacionRepo:this.construirRepos().habitacion
+                empleadoRepo:repos.empleado,
+                clienteRepo:repos.cliente,
+                reservaClienteRepo:repos.reservaCliente,
+                reservaAdministrativaRepo:repos.reservaAdmin,
+                habitacionRepo:repos.habitacion
             })
-            const casoDeUso = new ModificarNotasInternas(this.construirRepos().notas)
-            await casoDeUso.ejecutar(notasInternasModObj)
+            const casoDeUso = new ModificarNotasInternas(repos.notas)
+            await casoDeUso.ejecutar(notasInternasModObj,true)
             res.status(201).json({ mensaje: 'Nota Interna modificada correctamente' })
         } catch (error) {
             if(error instanceof Error){
@@ -70,14 +73,15 @@ export class NotasInternasController{
     static async eliminarNotaInterna(req:Request,res:Response):Promise<void>{
         const {notaInterna} = req.body
         try {
+            const repos = NotasInternasController.construirRepos();
             const notasInternasObj =  await NotasInternasMapper.desdeDocumento(notaInterna,{
-                empleadoRepo:this.construirRepos().empleado,
-                clienteRepo:this.construirRepos().cliente,
-                reservaClienteRepo:this.construirRepos().reservaCliente,
-                reservaAdministrativaRepo:this.construirRepos().reservaAdmin,
-                habitacionRepo:this.construirRepos().habitacion
+                empleadoRepo:repos.empleado,
+                clienteRepo:repos.cliente,
+                reservaClienteRepo:repos.reservaCliente,
+                reservaAdministrativaRepo:repos.reservaAdmin,
+                habitacionRepo:repos.habitacion
             })
-            const casoDeUso = new EliminarNotasInternas(this.construirRepos().notas)
+            const casoDeUso = new EliminarNotasInternas(repos.notas)
             await casoDeUso.ejecutar(notasInternasObj)
             res.status(201).json({ mensaje: "Nota Interna eliminada correctamente" })
         } catch (error) {
@@ -92,7 +96,8 @@ export class NotasInternasController{
     static async buscarPorID(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
-            const casoDeUso = new BuscarNotasInternas(this.construirRepos().notas)
+            const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new BuscarNotasInternas(repos.notas)
             const notaInternaEncontrada = await casoDeUso.buscarPorID(id)
             res.status(201).json(notaInternaEncontrada)
         }catch (error) {
@@ -106,7 +111,8 @@ export class NotasInternasController{
     static async buscarPorHabitacion(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
-            const casoDeUso = new BuscarNotasInternas(this.construirRepos().notas)
+            const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new BuscarNotasInternas(repos.notas)
             const notaInternaEncontrada = await casoDeUso.buscarPorHabitacion(id)
             res.status(201).json(notaInternaEncontrada)
         }catch (error) {
@@ -120,7 +126,8 @@ export class NotasInternasController{
     static async buscarPorCliente(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
-            const casoDeUso = new BuscarNotasInternas(this.construirRepos().notas)
+            const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new BuscarNotasInternas(repos.notas)
             const notaInternaEncontrada = await casoDeUso.buscarPorCliente(id)
             res.status(201).json(notaInternaEncontrada)
         }catch (error) {
@@ -134,7 +141,8 @@ export class NotasInternasController{
     static async buscarPorReserva(req:Request,res:Response):Promise<void>{
          const {id} = req.params
         try {
-            const casoDeUso = new BuscarNotasInternas(this.construirRepos().notas)
+             const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new BuscarNotasInternas(repos.notas)
             const notaInternaEncontrada = await casoDeUso.buscarPorReserva(id)
             res.status(201).json(notaInternaEncontrada)
         }catch (error) {

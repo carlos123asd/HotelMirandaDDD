@@ -18,10 +18,10 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
         private readonly clienteRepo:IClienteRepo
     ){}
 
-    async guardar(notaInterna: NotasInternas, modificar=false): Promise<void> {
+    async guardar(notaInterna: NotasInternas, modificar:boolean): Promise<void> {
         const doc = NotasInternasMapper.aDocumento(notaInterna)
         if(modificar){
-            MNotasInternas.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+            await MNotasInternas.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
         }else{
             await doc.save()
         }

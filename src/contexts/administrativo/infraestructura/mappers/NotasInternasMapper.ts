@@ -33,9 +33,13 @@ export class NotasInternasMapper {
         } else if (doc.idReserva) {
             reserva = await deps.reservaAdministrativaRepo.buscarPorID(doc.idReserva);
         }
+        
+        if(!cliente && !habitacion && !reserva){
+            throw new Error("No hay referencia ID para este tipo de nota")
+        }
 
         return NotasInternas.crearDesdePersistencia({
-            id:doc._id.toString(),
+            id:doc._id,
             responsable:responsable,
             tipo:doc.tipo,
             fecha:doc.fecha,
@@ -64,7 +68,7 @@ export class NotasInternasMapper {
 
     static aDocumento(dto:NotasInternas){
         const doc:Partial<INotasInternas> = {
-            _id: dto.id,
+            _id:dto.id,
             idResponsable: dto.responsable.id,
             tipo: dto.tipo,
             fecha: dto.fecha,
