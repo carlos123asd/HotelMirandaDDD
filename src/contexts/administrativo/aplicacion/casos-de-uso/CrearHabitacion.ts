@@ -15,6 +15,6 @@ export class CrearHabitacion{
         }
         const codigo:String = await new GenerarCodigoHabitacion(this.habitacionRepo).generar(nuevaHabitacionDTO.piso)
         const nuevaHabitacion = Habitacion.crearDesdeDTO(nuevaHabitacionDTO,codigo.toString())
-        await this.habitacionRepo.guardar(nuevaHabitacion)
+        await this.habitacionRepo.guardar(nuevaHabitacion,false)
     }
 }
