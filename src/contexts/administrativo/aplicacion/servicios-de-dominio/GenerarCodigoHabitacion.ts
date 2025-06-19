@@ -10,7 +10,7 @@ export class GenerarCodigoHabitacion{
         return numero.padStart(2,'0');
     }
 
-    async generar(piso: string):Promise<String>{
+    async generar(piso: string):Promise<string>{
         const letras = ['A','B','C','D','E','F','G','H','I','J'] //10 habitaciones por piso
         const numeroHabitaciones = await this.repoHabitacion.ContarHabitaciones();
 

@@ -23,8 +23,8 @@ export class BuscarHabitacion{
         return habitacion
     }
 
-    async buscarPorFiltro(filtros:FiltroHabitacionesDTO, desde:number):Promise<Habitacion[]>{
-        const habitaciones = await this.habitacionRepo.buscarConFiltros(filtros, desde)
+    async buscarPorFiltro(filtros:FiltroHabitacionesDTO):Promise<Habitacion[]>{
+        const habitaciones = await this.habitacionRepo.buscarConFiltros(filtros)
         if(!habitaciones){
             throw new Error("Habitaciones sin ninguna coincidencia")
         }
@@ -32,7 +32,7 @@ export class BuscarHabitacion{
     }
 
     async buscarTodasLasHabitaciones():Promise<Habitacion[]>{
-        const habitaciones = await this.buscarTodasLasHabitaciones()
+        const habitaciones = await this.habitacionRepo.todasLasHabitaciones()
         if(!habitaciones){
             throw new Error("No hay habitaciones que mostrar")
         }

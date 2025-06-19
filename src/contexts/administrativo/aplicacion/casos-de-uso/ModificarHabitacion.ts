@@ -7,7 +7,7 @@ export class ModificarHabitacion{
         private readonly habitacionRepo:IHabitacionRepo
     ){}
 
-    async ejecutar(responsable:Empleado,dto:DTOHabitacion, modificar=false):Promise<void>{
+    async ejecutar(responsable:Empleado,dto:DTOHabitacion, modificar:boolean):Promise<void>{
         if(!responsable.puedeModificarHabitacion()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para modificar habitaciones`)
         }

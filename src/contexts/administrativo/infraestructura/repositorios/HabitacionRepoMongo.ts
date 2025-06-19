@@ -14,8 +14,8 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         }
     }
 
-    async buscarConFiltros(filtros:FiltroHabitacionesDTO, desde: number): Promise<Habitacion[] | null> {
-       const query:any = {}
+    async buscarConFiltros(filtros:FiltroHabitacionesDTO): Promise<Habitacion[] | null> {
+        const query:any = {}
         if (filtros.categorias && filtros.categorias.length > 0) {
             query.categoria = { $in: filtros.categorias };
         }
@@ -25,17 +25,17 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         if (filtros.servicios && filtros.servicios.length > 0) {
             query.servicios = { $all: filtros.servicios };
         }
-        const docs = await MHabitacion.find(query).skip(desde).limit(10)
+        const docs = await MHabitacion.find(query)
         if(!docs){
             return null
         }
         return HabitacionMapper.arrayDocumento(docs)
     }
    
-    async guardar(habitacion: Habitacion, modificar=false): Promise<void> {
+    async guardar(habitacion: Habitacion, modificar:boolean): Promise<void> {
         const doc = HabitacionMapper.aDocumento(habitacion)
         if(modificar){
-            MHabitacion.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+           await MHabitacion.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
         }else{
             await doc.save()
         }
@@ -54,8 +54,8 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         }
         return HabitacionMapper.desdeDocumento(doc)
     }
-    async todasLasHabitaciones(desde:number): Promise<Habitacion[] | null> {
-        const doc = await MHabitacion.find().skip(desde).limit(10);
+    async todasLasHabitaciones(): Promise<Habitacion[] | null> {
+        const doc = await MHabitacion.find();
         if(!doc){
             return null
         }

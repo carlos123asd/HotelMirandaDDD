@@ -22,7 +22,7 @@ export class HabitacionMapper{
 
     static desdeDocumento(doc:HydratedDocument<IHabitacion>):Habitacion{
         return Habitacion.crearDesdePersistencia({
-            id:doc._id.toString(),
+            id:doc._id,
             nombre:doc.nombre,
             descripcion:doc.descripcion,
             precio:doc.precio,
@@ -41,7 +41,7 @@ export class HabitacionMapper{
 
     static aDocumento(dto:Habitacion){
         const doc:Partial<IHabitacion> = {
-            _id: dto.id.toString(),
+            _id: dto.id,
             nombre: dto.nombre,
             descripcion: dto.descripcion,
             precio: dto.precio,

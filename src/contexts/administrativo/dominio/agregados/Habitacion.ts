@@ -69,9 +69,7 @@ export class Habitacion{
     }
 
     modificarDesdeDTO(dto:DTOHabitacion){
-        if(dto.id !== this.id || dto.piso !== this.piso){
-            throw new Error("El id y el piso de una Habitacion no se pueden modificar")
-        }
+        //id y piso no se modifica
         this.nombre=dto.nombre
         this.descripcion=dto.descripcion
         this.precio=dto.precio

@@ -33,7 +33,7 @@ export class HabitacionControllers{
             const habitacionModObj = HabitacionMapper.desdeDocumento(habitacionMod)
             const casoDeUso = new ModificarHabitacion(repoMongoHabitacion)
             await casoDeUso.ejecutar(responsableObj,habitacionModObj,true)
-            res.status(201).json({ mensaje: 'Empleado modificado correctamente' })
+            res.status(201).json({ mensaje: 'Habitacion modificada correctamente' })
         } catch (error) {
             if(error instanceof Error){
                 res.status(404).json({ error: error.message })
@@ -90,17 +90,16 @@ export class HabitacionControllers{
         }
     }
     static async buscarPorFiltro(req:Request,res:Response):Promise<void>{
-        const {categorias,precioMaximo,servicios,desde} = req.params
-        const categoriasArray = categorias.split(",")
-        const serviciosArray = servicios.split(",")
+        const {filtro} = req.params
+        const filtroArray = filtro.split("-")
         try {
             const repoMongoHabitacion = new HabitacionRepoMongo()
             const casoDeUso = new BuscarHabitacion(repoMongoHabitacion)
             const habitacionEncontrada = await casoDeUso.buscarPorFiltro({
-                categorias: categoriasArray ? categoriasArray : null,
-                precioMaximo: precioMaximo ? Number(precioMaximo) : null,
-                servicios: serviciosArray ? serviciosArray : null
-            },Number(desde))
+                categorias: filtroArray[0] ? filtroArray[0].split(",") : null,
+                precioMaximo: filtroArray[1] ? Number(filtroArray[1]) : null,
+                servicios: filtroArray[2] ? filtroArray[2].split(",") : null
+            })
             res.status(201).json(habitacionEncontrada)
         }catch (error) {
             if(error instanceof Error){

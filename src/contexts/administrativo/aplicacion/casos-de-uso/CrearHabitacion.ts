@@ -13,8 +13,8 @@ export class CrearHabitacion{
         if(!responsable.puedeDarAltaHabitacion()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para dar de alta a habitaciones`)
         }
-        const codigo:String = await new GenerarCodigoHabitacion(this.habitacionRepo).generar(nuevaHabitacionDTO.piso)
-        const nuevaHabitacion = Habitacion.crearDesdeDTO(nuevaHabitacionDTO,codigo.toString())
+        const codigo = await new GenerarCodigoHabitacion(this.habitacionRepo).generar(nuevaHabitacionDTO.piso)
+        const nuevaHabitacion = Habitacion.crearDesdeDTO(nuevaHabitacionDTO,codigo)
         await this.habitacionRepo.guardar(nuevaHabitacion,false)
     }
 }
