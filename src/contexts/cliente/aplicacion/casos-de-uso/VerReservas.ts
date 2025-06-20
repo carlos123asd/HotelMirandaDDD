@@ -1,4 +1,4 @@
-import { ReservaAdministrativa } from "../../../administrativo/dominio/agregados/ReservaAdministrativa";
+import { ReservaAdministrativa } from "../../../administrativo/dominio/agregados/Reserva";
 import { IReservaRepo } from "../../../../contexts/administrativo/dominio/repositorios/IReservaRepo";
 import { ReservaCliente } from "../../dominio/agregados/ReservaCliente";
 import { IReservaClienteRepo } from "../../dominio/repositorios/IReservaClienteRepo";

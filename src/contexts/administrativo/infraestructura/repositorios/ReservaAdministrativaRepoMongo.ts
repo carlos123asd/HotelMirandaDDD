@@ -1,10 +1,13 @@
+import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaCliente";
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { ReservaAdministrativa } from "../../dominio/agregados/ReservaAdministrativa";
+import { ReservaClienteMapper } from "../../../cliente/infraestructura/mappers/ReservaClienteMapper";
+import { ReservaClienteModelo } from "../../../cliente/infraestructura/models/ReservaClienteModelo";
+import { ReservaAdministrativa } from "../../dominio/agregados/Reserva";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
-import { ReservaAdministrativaMapper } from "../mappers/ReservaAdministrativaMapper";
+import { ReservaAdministrativaMapper } from "../mappers/ReservaMapper";
 import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
 
 export class ReservaAdministrativaRepoMongo implements IReservaRepo{
@@ -20,20 +23,28 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
         this.notasInternasRepo = repo;
     }
 
-    async buscarPorID(id: string): Promise<ReservaAdministrativa | null> {
-        const doc = await MReservaAdministrativa.findById(id)
-        if(!doc){
+    async buscarPorID(id: string): Promise<(ReservaAdministrativa|ReservaCliente) | null> {
+        const docAdmin = await MReservaAdministrativa.findById(id)
+        const docCliente = await ReservaClienteModelo.findById(id)
+        if(!docAdmin && !docCliente){
             return null
         }
         if (!this.notasInternasRepo) {
             throw new Error("notasInternasRepo is not set");
         }
-        return ReservaAdministrativaMapper.desdeDocumento({
-            clienteRepo:this.clienteRepo,
-            habitacionRepo:this.habitacionRepo,
-            empleadoRepo:this.empleadoRepo,
-            notasInternasRepo:this.notasInternasRepo
-        },doc)
+        if(docAdmin){
+            return ReservaAdministrativaMapper.desdeDocumento({
+                clienteRepo:this.clienteRepo,
+                habitacionRepo:this.habitacionRepo,
+                empleadoRepo:this.empleadoRepo,
+                notasInternasRepo:this.notasInternasRepo
+            },docAdmin)
+        }else{
+            return ReservaClienteMapper.desdeDocumento({
+                clienteRepo:this.clienteRepo,
+                habitacionRepo:this.habitacionRepo
+            },docAdmin)
+        }
     }
     async buscarPorCliente(idCliente: string): Promise<ReservaAdministrativa[] | null> {
         const docs = await MReservaAdministrativa.find({ idCliente:idCliente })
@@ -65,10 +76,10 @@ export class ReservaAdministrativaRepoMongo implements IReservaRepo{
             notasInternasRepo:this.notasInternasRepo
         },docs)
     }
-    async guardar(reserva: ReservaAdministrativa, modificar=false): Promise<void> {
+    async guardar(reserva: ReservaAdministrativa, modificar:boolean): Promise<void> {
         const doc = ReservaAdministrativaMapper.aDocumento(reserva)
         if(modificar){
-            MReservaAdministrativa.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
+            await MReservaAdministrativa.findByIdAndUpdate(doc._id,doc,{ upsert:true, new:true })
         }else{
             await doc.save()
         }

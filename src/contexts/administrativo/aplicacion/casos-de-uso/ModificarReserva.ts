@@ -16,6 +16,6 @@ export class ModificarReserva{
             throw new Error("Reserva no encontrada")
         }
         reserva.modificarDesdeDTO(dto)
-        await this.reservaRepo.guardar(reserva)
+        await this.reservaRepo.guardar(reserva,true)
     }
 }

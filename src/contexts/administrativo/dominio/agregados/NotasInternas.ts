@@ -3,7 +3,7 @@ import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaClient
 import { DTONotasInternas } from "../../aplicacion/dtos/DTONotasInternas";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
-import { ReservaAdministrativa } from "./ReservaAdministrativa";
+import { ReservaAdministrativa } from "./Reserva";
 
 export enum tiposNotasInternas { 
     Habitacion = 'Habitacion' , 

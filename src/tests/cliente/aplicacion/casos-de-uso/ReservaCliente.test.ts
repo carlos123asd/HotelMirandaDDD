@@ -1,5 +1,5 @@
 import { categoriaHabitacion, Habitacion } from "../../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
+import { estados, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
 import { Servicios } from "../../../../contexts/administrativo/dominio/value-objects/Servicios"
 import { Cliente, metodoPago } from "../../../../contexts/cliente/dominio/agregados/Cliente"
 import { ReservaCliente } from "../../../../contexts/cliente/dominio/agregados/ReservaCliente"

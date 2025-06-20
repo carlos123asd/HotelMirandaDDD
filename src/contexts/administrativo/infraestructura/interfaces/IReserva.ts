@@ -1,4 +1,4 @@
-export interface IReservaAdministrativa {
+export interface IReserva {
     _id:string,
     estado:string,
     idCliente:string,

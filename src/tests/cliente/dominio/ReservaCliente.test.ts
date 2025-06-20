@@ -1,6 +1,6 @@
 import { CalculadorPrecioReserva } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva"
 import { categoriaHabitacion, Habitacion } from "../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
+import { estados, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/Reserva"
 import { Servicios } from "../../../contexts/administrativo/dominio/value-objects/Servicios"
 import { DTOReservaCliente } from "../../../contexts/cliente/aplicacion/dtos/DTOReservaCliente"
 import { Cliente, metodoPago } from "../../../contexts/cliente/dominio/agregados/Cliente"

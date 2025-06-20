@@ -1,6 +1,6 @@
 import { Empleado, StatusType } from "../../../../contexts/administrativo/dominio/agregados/Empleado"
 import { categoriaHabitacion, Habitacion } from "../../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, ReservaAdministrativa, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
+import { estados, ReservaAdministrativa, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
 import { IReservaRepo } from "../../../../contexts/administrativo/dominio/repositorios/IReservaRepo"
 import { Permiso } from "../../../../contexts/administrativo/dominio/value-objects/Permiso"
 import { Rol } from "../../../../contexts/administrativo/dominio/value-objects/Rol"

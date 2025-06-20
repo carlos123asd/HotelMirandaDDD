@@ -3,7 +3,7 @@ import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaClient
 import { Empleado } from "../../dominio/agregados/Empleado";
 import { Habitacion } from "../../dominio/agregados/Habitacion";
 import { tiposNotasInternas } from "../../dominio/agregados/NotasInternas";
-import { ReservaAdministrativa } from "../../dominio/agregados/ReservaAdministrativa";
+import { ReservaAdministrativa } from "../../dominio/agregados/Reserva";
 
 export type DTONotasInternas = {
     id:string,

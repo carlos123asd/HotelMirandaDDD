@@ -1,5 +1,5 @@
 import {faker} from "@faker-js/faker"
-import { IReservaAdministrativa } from "../../../contexts/administrativo/infraestructura/interfaces/IReservaAdministrativa"
+import { IReservaAdministrativa } from "../../../contexts/administrativo/infraestructura/interfaces/IReserva"
 import { MReservaAdministrativa } from "../../../contexts/administrativo/infraestructura/models/ReservaAdministrativa"
 
 describe("Infraestructura - Test de Integracion Notas Internas", () => {

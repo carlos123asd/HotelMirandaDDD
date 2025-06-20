@@ -1,4 +1,4 @@
-import { ReservaAdministrativa } from "../../dominio/agregados/ReservaAdministrativa";
+import { Reserva } from "../../dominio/agregados/Reserva";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
 
 export class BuscarReserva{
@@ -6,7 +6,7 @@ export class BuscarReserva{
         private readonly reservaRepo:IReservaRepo
     ){}
 
-    async buscarPorId(reservaId:string):Promise<ReservaAdministrativa>{
+    async buscarPorId(reservaId:string):Promise<Reserva>{
         const reserva = await this.reservaRepo.buscarPorID(reservaId)
         if(!reserva){
             throw new Error("No se encontro ninguna Reserva con este ID")
@@ -14,7 +14,7 @@ export class BuscarReserva{
         return reserva
     }
 
-     async buscarPorCliente(clienteId:string):Promise<ReservaAdministrativa[]>{
+     async buscarPorCliente(clienteId:string):Promise<Reserva[]>{
         const reservas = await this.reservaRepo.buscarPorCliente(clienteId)
         if(!reservas){
             throw new Error("No se encontro ninguna Reserva para este Cliente")
@@ -22,7 +22,7 @@ export class BuscarReserva{
         return reservas
     }
 
-    async buscarPorHabitacion(habitacionId:string):Promise<ReservaAdministrativa[]>{
+    async buscarPorHabitacion(habitacionId:string):Promise<Reserva[]>{
         const reservas = await this.reservaRepo.buscarPorHabitacion(habitacionId)
         if(!reservas){
             throw new Error("No se encontro Reservas para esta habitacion")

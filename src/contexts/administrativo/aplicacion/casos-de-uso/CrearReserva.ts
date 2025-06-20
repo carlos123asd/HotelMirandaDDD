@@ -1,5 +1,5 @@
 import { Empleado } from "../../dominio/agregados/Empleado";
-import { ReservaAdministrativa } from "../../dominio/agregados/ReservaAdministrativa";
+import { Reserva } from "../../dominio/agregados/Reserva";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
 import { DTOReserva } from "../dtos/DTOReserva";
 import { CalculadorPrecioReserva } from "../servicios-de-dominio/CalculadorPrecioReserva";
@@ -18,7 +18,7 @@ export class CrearReserva{
             throw new Error("Ya existe un reserva con esta id")
         }
         const totalReserva = new CalculadorPrecioReserva(nuevoReservaDTO.habitacion.precio, nuevoReservaDTO.extras, recargo, nuevoReservaDTO.habitacion.oferta).calcular()
-        const nuevaReserva = ReservaAdministrativa.crearDesdeDTO(nuevoReservaDTO, totalReserva)
-        await this.reservaRepo.guardar(nuevaReserva)
+        const nuevaReserva = Reserva.crearDesdeDTO(nuevoReservaDTO, totalReserva)
+        await this.reservaRepo.guardar(nuevaReserva,false)
     }
 }

@@ -1,4 +1,4 @@
-import { ReservaAdministrativa } from "../agregados/ReservaAdministrativa";
+import { ReservaAdministrativa } from "../agregados/Reserva";
 
 export interface IReservaRepo {
     buscarPorID(id:String):Promise<ReservaAdministrativa|null>;

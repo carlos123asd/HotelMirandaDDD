@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import { SchemaReservaAdministrativa } from "../schema/SchemaReservaAdministrativa";
-import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
+import { SchemaReserva } from "../schema/SchemaReservaAdministrativa";
+import { IReserva } from "../interfaces/IReserva";
 
-export const MReservaAdministrativa = model<IReservaAdministrativa>('ReservaAdministrativa',SchemaReservaAdministrativa)
+export const MReserva = model<IReserva>('ReservaAdministrativa',SchemaReserva)

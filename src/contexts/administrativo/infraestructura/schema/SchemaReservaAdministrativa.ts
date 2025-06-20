@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
-import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
+import { IReserva } from "../interfaces/IReserva";
 
-export const SchemaReservaAdministrativa: Schema<IReservaAdministrativa> = new Schema<IReservaAdministrativa>({
+export const SchemaReserva: Schema<IReserva> = new Schema<IReserva>({
     estado: { type:String, enum:['pendiente', 'aceptada', 'en curso', 'cancelada'], required:true },
     idCliente: { type:String, required:true },
     idHabitacion: { type:String, required:true },

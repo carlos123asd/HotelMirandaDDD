@@ -15,7 +15,7 @@ export enum tipoReserva {
     administracion = 'administracion' , 
     cliente = 'cliente' }
     
-export class ReservaAdministrativa{
+export class Reserva{
     constructor(
         public readonly id:String,
         public estado:estados,
@@ -42,11 +42,11 @@ export class ReservaAdministrativa{
         totalReserva:number,
         extras?:ServiciosExtras[] | null,
         notasInternas?:NotasInternas[] | null
-    }):ReservaAdministrativa{
+    }):Reserva{
         if(!Object.values(estados).includes(params.estado as estados)){
             throw new Error("Estado de reserva invalida")
         }
-        return new ReservaAdministrativa(
+        return new Reserva(
             params.id,
             params.estado as estados,
             params.asignacion,
@@ -62,7 +62,7 @@ export class ReservaAdministrativa{
     }
 
     static crearDesdeDTO(dto:DTOReserva, totalReserva:number){
-        return new ReservaAdministrativa(
+        return new Reserva(
             dto.id,
             dto.estado,
             dto.asignacion,

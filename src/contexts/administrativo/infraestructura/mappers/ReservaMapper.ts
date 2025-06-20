@@ -1,15 +1,15 @@
 import { HydratedDocument } from "mongoose";
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { estados, ReservaAdministrativa, tipoReserva } from "../../dominio/agregados/ReservaAdministrativa";
+import { estados, Reserva, tipoReserva } from "../../dominio/agregados/Reserva";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { Servicios } from "../../dominio/value-objects/Servicios";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
-import { IReservaAdministrativa } from "../interfaces/IReservaAdministrativa";
-import { MReservaAdministrativa } from "../models/ReservaAdministrativa";
+import { IReserva } from "../interfaces/IReserva";
+import { MReserva } from "../models/ReservaAdministrativa";
 
-export class ReservaAdministrativaMapper{
+export class ReservaMapper{
 
     private static comprobarServicio(value:string):Servicios{
         switch(value){
@@ -56,7 +56,7 @@ export class ReservaAdministrativaMapper{
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
-    },doc:HydratedDocument<IReservaAdministrativa>):Promise<ReservaAdministrativa>{
+    },doc:HydratedDocument<IReserva>):Promise<Reserva>{
         const cliente = await deps.clienteRepo.buscarPorId(doc.idCliente)
         const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
         const empleado = await deps.empleadoRepo.buscarPorId(doc.idEmpleado)
@@ -67,7 +67,7 @@ export class ReservaAdministrativaMapper{
         const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
         const notasInternas = await deps.notasInternasRepo.buscarPorReserva(doc._id)
         
-        return new ReservaAdministrativa(
+        return new Reserva(
             doc._id.toString(),
             this.checkEstado(doc.estado),
             cliente,
@@ -86,12 +86,12 @@ export class ReservaAdministrativaMapper{
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
-    },docs:HydratedDocument<IReservaAdministrativa>[]):Promise<ReservaAdministrativa[]>{
+    },docs:HydratedDocument<IReserva>[]):Promise<Reserva[]>{
         return Promise.all(docs.map(async (doc:any) => this.desdeDocumento(deps,doc)))
     }
 
-    static aDocumento(dto:ReservaAdministrativa){
-        const doc:Partial<IReservaAdministrativa> =
+    static aDocumento(dto:Reserva){
+        const doc:Partial<IReserva> =
             {
                 _id:dto.id.toString(),
                 estado: dto.estado,
@@ -105,6 +105,6 @@ export class ReservaAdministrativaMapper{
                 extras:dto.extras?.map((extra) => extra.nombre),
                 idNotasInternas:dto.notasInternas?.map((notas) => notas.id),
             } 
-        return new MReservaAdministrativa(doc)
+        return new MReserva(doc)
     }
 }

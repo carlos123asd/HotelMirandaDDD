@@ -2,7 +2,7 @@ import { DTOReserva } from "../../../contexts/administrativo/aplicacion/dtos/DTO
 import { CalculadorPrecioReserva } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva"
 import { Empleado, StatusType } from "../../../contexts/administrativo/dominio/agregados/Empleado"
 import { categoriaHabitacion, Habitacion } from "../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, ReservaAdministrativa, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/ReservaAdministrativa"
+import { estados, ReservaAdministrativa, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/Reserva"
 import { Permiso } from "../../../contexts/administrativo/dominio/value-objects/Permiso"
 import { Rol } from "../../../contexts/administrativo/dominio/value-objects/Rol"
 import { Servicios } from "../../../contexts/administrativo/dominio/value-objects/Servicios"
