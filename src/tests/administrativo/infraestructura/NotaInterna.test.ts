@@ -1,17 +1,17 @@
 import {faker} from "@faker-js/faker"
 import { INotasInternas } from "../../../contexts/administrativo/infraestructura/interfaces/INotasInternas"
 import { MNotasInternas } from "../../../contexts/administrativo/infraestructura/models/NotasInternas"
+import mongoose from "mongoose"
 
 describe("Infraestructura - Test de Integracion Notas Internas", () => {
     it("Debe crear una nota interna y recuperarla", async () => {
         const fakeNotaInterna:INotasInternas = {
-            _id: faker.string.uuid(),
+            _id: new mongoose.Types.ObjectId().toString(),
             idResponsable: faker.string.uuid(),
             tipo: "Habitacion",
             fecha: faker.date.recent(),
             titulo: faker.lorem.sentence(),
             descripcion: faker.lorem.paragraph(),
-            tipoReserva: null,
             datosAgregados: null,
             idCliente: null,
             idReserva: null,
@@ -27,13 +27,12 @@ describe("Infraestructura - Test de Integracion Notas Internas", () => {
 
     it("Debe actualizar una nota interna", async () => {
         const fakeNotaInterna:INotasInternas = {
-            _id: faker.string.uuid(),
+            _id: new mongoose.Types.ObjectId().toString(),
             idResponsable: faker.string.uuid(),
             tipo: "Habitacion",
             fecha: faker.date.recent(),
             titulo: faker.lorem.sentence(),
             descripcion: faker.lorem.paragraph(),
-            tipoReserva: null,
             datosAgregados: null,
             idCliente: null,
             idReserva: null,
@@ -52,13 +51,12 @@ describe("Infraestructura - Test de Integracion Notas Internas", () => {
 
     it("Debe eliminar una nota interna", async () => {
         const fakeNotaInterna:INotasInternas = {
-            _id: faker.string.uuid(),
+            _id: new mongoose.Types.ObjectId().toString(),
             idResponsable: faker.string.uuid(),
             tipo: "Habitacion",
             fecha: faker.date.recent(),
             titulo: faker.lorem.sentence(),
             descripcion: faker.lorem.paragraph(),
-            tipoReserva: null,
             datosAgregados: null,
             idCliente: null,
             idReserva: null,

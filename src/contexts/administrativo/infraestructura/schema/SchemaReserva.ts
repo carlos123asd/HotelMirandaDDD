@@ -7,9 +7,8 @@ export const SchemaReserva: Schema<IReserva> = new Schema<IReserva>({
     idHabitacion: { type:String, required:true },
     checkIn: { type:Date, required:true },
     checkOut: { type:Date, required:true },
-    idEmpleado: { type:String, required:true },
-    tipoReserva: { type:String, enum:['administracion','cliente'], required:true },
     totalReserva: { type:Number, required:true },
+    idEmpleado: { type:String, required:false },
     extras: { type:[String], required:false },
     idNotasInternas: { type:[String], required:false },
 })

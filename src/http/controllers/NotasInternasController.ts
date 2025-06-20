@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { NotasInternasRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/NotasInternasRepoMongo";
 import { EmpleadoRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/EmpleadoRepoMongo";
-import { ReservaAdministrativaRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ReservaAdministrativaRepoMongo";
+import { ReservaAdministrativaRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ReservaRepoMongo";
 import { ReservaClienteRepoMongo } from "../../contexts/cliente/infraestructura/repositorios/ReservaClienteRepoMongo";
 import { HabitacionRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/HabitacionRepoMongo";
 import { ClienteRepoMongo } from "../../contexts/cliente/infraestructura/repositorios/ClienteRepoMongo";

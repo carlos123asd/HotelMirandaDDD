@@ -73,8 +73,8 @@ describe("Casos de uso Empleado", () => {
             StatusType.ACTIVO,
             [new Permiso('GE', 2, "staff")]
         )
-        await empleadoRepo.guardar(empleado)
-        expect(empleadoRepo.guardar).toHaveBeenCalledWith(empleado)
+        await empleadoRepo.guardar(empleado,false)
+        expect(empleadoRepo.guardar).toHaveBeenCalledWith(empleado,false)
     })
     it("eliminar con parametro correcto", async () => {
         await empleadoRepo.eliminar("1")

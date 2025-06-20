@@ -10,22 +10,17 @@ export enum estados{
     aceptada = 'aceptada' , 
     'en curso' = 'en curso' , 
     cancelada = 'cancelada'}
-
-export enum tipoReserva { 
-    administracion = 'administracion' , 
-    cliente = 'cliente' }
     
 export class Reserva{
     constructor(
-        public readonly id:String,
+        public readonly id:string,
         public estado:estados,
         public asignacion:Cliente,
         public habitacion:Habitacion,
         public checkIn:Date,
         public checkOut:Date,
-        public responsable:Empleado,
-        public readonly tipoReserva:tipoReserva,
         public totalReserva:number,
+        public responsable?:Empleado | null,
         public extras?:ServiciosExtras[] | null,
         public notasInternas?:NotasInternas[] | null
     ){}
@@ -38,7 +33,6 @@ export class Reserva{
         checkIn:Date,
         checkOut:Date,
         responsable:Empleado,
-        tipoReserva:string,
         totalReserva:number,
         extras?:ServiciosExtras[] | null,
         notasInternas?:NotasInternas[] | null
@@ -53,9 +47,8 @@ export class Reserva{
             params.habitacion,
             params.checkIn,
             params.checkOut,
-            params.responsable,
-            params.tipoReserva as tipoReserva,
             params.totalReserva,
+            params.responsable,
             params.extras,
             params.notasInternas
         )
@@ -69,9 +62,8 @@ export class Reserva{
             dto.habitacion,
             dto.checkIn,
             dto.checkOut,
-            dto.responsable,
-            dto.tipoReserva,
             totalReserva,
+            dto.responsable,
             dto.extras,
             dto.notasInternas,
         )

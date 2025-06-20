@@ -1,6 +1,6 @@
 import { Empleado, StatusType } from "../../../../contexts/administrativo/dominio/agregados/Empleado"
 import { categoriaHabitacion, Habitacion } from "../../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, ReservaAdministrativa, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
+import { estados, Reserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
 import { IReservaRepo } from "../../../../contexts/administrativo/dominio/repositorios/IReservaRepo"
 import { Permiso } from "../../../../contexts/administrativo/dominio/value-objects/Permiso"
 import { Rol } from "../../../../contexts/administrativo/dominio/value-objects/Rol"
@@ -41,16 +41,15 @@ describe("Casos de uso - Reserva Administrativa", () => {
         "password123",
         metodoPago.Tarjeta
     )
-    const reserva = new ReservaAdministrativa(
+    const reserva = new Reserva(
         "1",
         estados.aceptada,
         cliente,
         habitacion,
         new Date(),
         new Date(),
-        admin,
-        tipoReserva.administracion,
         150,
+        admin,
         null
     )
     const reservaRrepo:IReservaRepo = {
@@ -68,8 +67,8 @@ describe("Casos de uso - Reserva Administrativa", () => {
     }
 
     it("crear reserva", async () => {
-        await reservaRrepo.guardar(reserva)
-        expect(reservaRrepo.guardar).toHaveBeenCalledWith(reserva)
+        await reservaRrepo.guardar(reserva,false)
+        expect(reservaRrepo.guardar).toHaveBeenCalledWith(reserva,false)
     })
 
     it("eliminar reserva", async () => {
@@ -82,7 +81,7 @@ describe("Casos de uso - Reserva Administrativa", () => {
     it("buscar reserva por id", async () => {
         const habitacion = await reservaRrepo.buscarPorID("1")
         expect(habitacion).not.toBeNull()
-        expect(habitacion).toBeInstanceOf(ReservaAdministrativa)
+        expect(habitacion).toBeInstanceOf(Reserva)
         expect(habitacion?.id).toBe("1")
     })
 
@@ -91,7 +90,7 @@ describe("Casos de uso - Reserva Administrativa", () => {
         expect(notas).not.toBeNull()
         expect(notas).toBeInstanceOf(Array)
         expect(notas?.length).toBeGreaterThan(0)
-        expect(notas?.[0]).toBeInstanceOf(ReservaAdministrativa)
+        expect(notas?.[0]).toBeInstanceOf(Reserva)
         expect(notas?.[0].habitacion?.id).toBe("1")
     })
 })

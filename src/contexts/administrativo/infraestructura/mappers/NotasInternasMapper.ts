@@ -2,7 +2,6 @@
 
 import { HydratedDocument } from "mongoose";
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { IReservaClienteRepo } from "../../../cliente/dominio/repositorios/IReservaClienteRepo";
 import { NotasInternas } from "../../dominio/agregados/NotasInternas";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
@@ -16,8 +15,7 @@ export class NotasInternasMapper {
         deps: {
             empleadoRepo: IEmpleadoRepo,
             clienteRepo: IClienteRepo,
-            reservaClienteRepo: IReservaClienteRepo,
-            reservaAdministrativaRepo: IReservaRepo,
+            reservaRepo: IReservaRepo,
             habitacionRepo: IHabitacionRepo
         }
     ): Promise<NotasInternas> {
@@ -26,13 +24,7 @@ export class NotasInternasMapper {
 
         const cliente = doc.idCliente ? await deps.clienteRepo.buscarPorId(doc.idCliente) : null;
         const habitacion = doc.idHabitacion ? await deps.habitacionRepo.buscarPorId(doc.idHabitacion) : null;
-
-        let reserva = null;
-        if (doc.tipoReserva === 'cliente' && doc.idReserva) {
-            reserva = await deps.reservaClienteRepo.buscarPorId(doc.idReserva);
-        } else if (doc.idReserva) {
-            reserva = await deps.reservaAdministrativaRepo.buscarPorID(doc.idReserva);
-        }
+        const reserva = doc.idReserva ? await deps.reservaRepo.buscarPorID(doc.idReserva) : null;
         
         if(!cliente && !habitacion && !reserva){
             throw new Error("No hay referencia ID para este tipo de nota")
@@ -57,8 +49,7 @@ export class NotasInternasMapper {
         deps: {
             empleadoRepo: IEmpleadoRepo,
             clienteRepo: IClienteRepo,
-            reservaClienteRepo: IReservaClienteRepo,
-            reservaAdministrativaRepo: IReservaRepo,
+            reservaRepo: IReservaRepo
             habitacionRepo: IHabitacionRepo
         }
     ):Promise<NotasInternas[]> {
@@ -74,7 +65,6 @@ export class NotasInternasMapper {
             fecha: dto.fecha,
             titulo: dto.titulo,
             descripcion: dto.descripcion,
-            tipoReserva: dto.reserva?.tipoReserva ?? null,
             datosAgregados: dto.datosAgregados ? dto.datosAgregados : null,
             idCliente: dto.cliente ? dto.cliente.id : null,
             idReserva: dto.reserva ? dto.reserva.id.toString() : null,

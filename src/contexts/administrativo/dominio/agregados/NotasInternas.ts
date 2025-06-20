@@ -1,9 +1,8 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
-import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaCliente";
 import { DTONotasInternas } from "../../aplicacion/dtos/DTONotasInternas";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
-import { ReservaAdministrativa } from "./Reserva";
+import { Reserva } from "./Reserva";
 
 export enum tiposNotasInternas { 
     Habitacion = 'Habitacion' , 
@@ -20,7 +19,7 @@ export class NotasInternas{
         public descripcion:string,
         public datosAgregados?:string[] | null,
         public cliente?:Cliente | null,
-        public reserva?:(ReservaAdministrativa|ReservaCliente) | null,
+        public reserva?:Reserva | null,
         public habitacion?:Habitacion | null,
     ){}
 
@@ -33,7 +32,7 @@ export class NotasInternas{
         descripcion:string,
         datosAgregados?:string[] | null,
         cliente?:Cliente | null,
-        reserva?:(ReservaAdministrativa|ReservaCliente) | null,
+        reserva?:Reserva | null,
         habitacion?:Habitacion | null,
     }):NotasInternas{
         if(!Object.values(tiposNotasInternas).includes(params.tipo as tiposNotasInternas)){

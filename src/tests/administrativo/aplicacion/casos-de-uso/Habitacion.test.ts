@@ -99,9 +99,9 @@ describe("casos de uso Habitacion", () => {
             "D123"
         )
 
-        await repoHabitacion.guardar(habitacion)
+        await repoHabitacion.guardar(habitacion,false)
 
-        expect(repoHabitacion.guardar).toHaveBeenCalledWith(habitacion)
+        expect(repoHabitacion.guardar).toHaveBeenCalledWith(habitacion,false)
     })
 
     it("eliminar habitacion", async () => {
@@ -126,7 +126,7 @@ describe("casos de uso Habitacion", () => {
     })
 
     it("obtener todas las habitaciones", async () => {
-        const habitaciones = await repoHabitacion.todasLasHabitaciones(0)
+        const habitaciones = await repoHabitacion.todasLasHabitaciones()
         expect(habitaciones).not.toBeNull()
         expect(habitaciones?.length).toBeGreaterThan(0)
         expect(typeof(habitaciones?.values())).toBe("object")
@@ -141,7 +141,7 @@ describe("casos de uso Habitacion", () => {
     it("buscar habitaciones con filtros ", async () => {
         const habitaciones = await repoHabitacion.buscarConFiltros({
             categorias: [categoriaHabitacion.Suite]
-        }, 0)
+        })
         const todasTienenCategoriaSuite = habitaciones?.every(h => h.categoria === categoriaHabitacion.Suite)
         expect(todasTienenCategoriaSuite).toBe(true)
         expect(habitaciones).not.toBeNull()

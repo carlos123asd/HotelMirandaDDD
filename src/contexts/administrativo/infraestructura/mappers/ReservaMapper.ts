@@ -1,13 +1,13 @@
 import { HydratedDocument } from "mongoose";
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { estados, Reserva, tipoReserva } from "../../dominio/agregados/Reserva";
+import { estados, Reserva } from "../../dominio/agregados/Reserva";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { Servicios } from "../../dominio/value-objects/Servicios";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 import { IReserva } from "../interfaces/IReserva";
-import { MReserva } from "../models/ReservaAdministrativa";
+import { MReserva } from "../models/Reserva";
 
 export class ReservaMapper{
 
@@ -33,14 +33,6 @@ export class ReservaMapper{
         })
     }
 
-    private static checkTipoReserva(value:string){
-        switch(value){
-            case 'administracion': return tipoReserva.administracion
-            case 'cliente': return tipoReserva.cliente
-            default: throw new Error("Tipo de Reserva invalida")
-        }
-    }
-
     private static checkEstado = (value:string) => {
         switch(value){
             case 'pendiente': return estados.pendiente
@@ -59,8 +51,8 @@ export class ReservaMapper{
     },doc:HydratedDocument<IReserva>):Promise<Reserva>{
         const cliente = await deps.clienteRepo.buscarPorId(doc.idCliente)
         const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
-        const empleado = await deps.empleadoRepo.buscarPorId(doc.idEmpleado)
-        
+        const empleado = doc.idEmpleado ? await deps.empleadoRepo.buscarPorId(doc.idEmpleado) : null
+
         if(!cliente || !habitacion || !empleado){
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
@@ -74,9 +66,8 @@ export class ReservaMapper{
             habitacion,
             doc.checkIn,
             doc.checkOut,
-            empleado,
-            this.checkTipoReserva(doc.tipoReserva),
             doc.totalReserva,
+            empleado,
             serviciosExtras,
             notasInternas,
         )
@@ -99,9 +90,8 @@ export class ReservaMapper{
                 idHabitacion:dto.habitacion.id,
                 checkIn:dto.checkIn,
                 checkOut:dto.checkOut,
-                idEmpleado:dto.responsable.id,
-                tipoReserva:dto.tipoReserva,
                 totalReserva:dto.totalReserva,
+                idEmpleado:dto.responsable ? dto.responsable.id  : null,
                 extras:dto.extras?.map((extra) => extra.nombre),
                 idNotasInternas:dto.notasInternas?.map((notas) => notas.id),
             } 

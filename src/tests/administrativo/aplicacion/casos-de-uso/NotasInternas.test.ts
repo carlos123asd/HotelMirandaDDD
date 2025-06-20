@@ -62,8 +62,8 @@ describe("casos de uso - Notas Internas", () => {
     }
 
     it("crear nota interna", async () => {
-        await notasInternasRepo.guardar(notaInterna)
-        expect(notasInternasRepo.guardar).toHaveBeenCalledWith(notaInterna)
+        await notasInternasRepo.guardar(notaInterna,false)
+        expect(notasInternasRepo.guardar).toHaveBeenCalledWith(notaInterna,false)
     })
 
     it("eliminar nota interna", async () => {

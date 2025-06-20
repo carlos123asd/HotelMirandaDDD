@@ -1,5 +1,4 @@
 import { IClienteRepo } from "../../../cliente/dominio/repositorios/IClienteRepo";
-import { IReservaClienteRepo } from "../../../cliente/dominio/repositorios/IReservaClienteRepo";
 import { NotasInternas } from "../../dominio/agregados/NotasInternas";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
@@ -12,8 +11,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
 
     constructor(
         private readonly empleadoRepo:IEmpleadoRepo,
-        private readonly reservaAdministrativaRepo:IReservaRepo,
-        private readonly reservaClienteRepo:IReservaClienteRepo,
+        private readonly reservaRepo:IReservaRepo,
         private readonly habitacionRepo:IHabitacionRepo,
         private readonly clienteRepo:IClienteRepo
     ){}
@@ -44,8 +42,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
         return await NotasInternasMapper.desdeDocumento(doc, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
-            reservaClienteRepo: this.reservaClienteRepo,
-            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            reservaRepo: this.reservaRepo,
             habitacionRepo: this.habitacionRepo
         })
     }
@@ -57,8 +54,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
         return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
-            reservaClienteRepo: this.reservaClienteRepo,
-            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            reservaRepo: this.reservaRepo,
             habitacionRepo: this.habitacionRepo
         })
     }
@@ -70,8 +66,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
         return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
-            reservaClienteRepo: this.reservaClienteRepo,
-            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            reservaRepo: this.reservaRepo,
             habitacionRepo: this.habitacionRepo
         })
     }
@@ -83,8 +78,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
         return await NotasInternasMapper.desdeDocumentoArray(docs, {
             empleadoRepo: this.empleadoRepo,
             clienteRepo: this.clienteRepo,
-            reservaClienteRepo: this.reservaClienteRepo,
-            reservaAdministrativaRepo: this.reservaAdministrativaRepo,
+            reservaRepo: this.reservaRepo,
             habitacionRepo: this.habitacionRepo
         })
     }

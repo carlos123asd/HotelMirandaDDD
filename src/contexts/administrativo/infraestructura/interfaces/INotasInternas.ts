@@ -5,7 +5,6 @@ export interface INotasInternas {
     fecha:Date,
     titulo:string,
     descripcion:string,
-    tipoReserva?:string | null,
     datosAgregados?:string[] | null,
     idCliente?:string | null,
     idReserva?:string | null

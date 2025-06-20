@@ -5,9 +5,8 @@ export interface IReserva {
     idHabitacion:string,
     checkIn:Date,
     checkOut:Date,
-    idEmpleado:string,
-    tipoReserva:string,
     totalReserva:number,
+    idEmpleado?:string | null,
     extras?:string[] | null,
     idNotasInternas?:string[] | null,
 }

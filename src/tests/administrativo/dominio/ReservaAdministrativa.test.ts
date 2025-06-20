@@ -2,7 +2,7 @@ import { DTOReserva } from "../../../contexts/administrativo/aplicacion/dtos/DTO
 import { CalculadorPrecioReserva } from "../../../contexts/administrativo/aplicacion/servicios-de-dominio/CalculadorPrecioReserva"
 import { Empleado, StatusType } from "../../../contexts/administrativo/dominio/agregados/Empleado"
 import { categoriaHabitacion, Habitacion } from "../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, ReservaAdministrativa, tipoReserva } from "../../../contexts/administrativo/dominio/agregados/Reserva"
+import { estados, Reserva } from "../../../contexts/administrativo/dominio/agregados/Reserva"
 import { Permiso } from "../../../contexts/administrativo/dominio/value-objects/Permiso"
 import { Rol } from "../../../contexts/administrativo/dominio/value-objects/Rol"
 import { Servicios } from "../../../contexts/administrativo/dominio/value-objects/Servicios"
@@ -43,16 +43,15 @@ describe("Reserva Administrativa", () => {
             "password123",
             metodoPago.Tarjeta
         )
-        const reserva:ReservaAdministrativa = ReservaAdministrativa.crearDesdePersistencia({
+        const reserva:Reserva = Reserva.crearDesdePersistencia({
             id: "1",
             estado: estados["en curso"],
             asignacion: cliente,
             habitacion: habitacion,
             checkIn: new Date("2023-10-01"),
             checkOut: new Date("2023-10-05"),
-            responsable: responsable,
-            tipoReserva: "administracion",
             totalReserva: 150,
+            responsable: responsable,
             extras: null,
             notasInternas: null
         })
@@ -63,7 +62,6 @@ describe("Reserva Administrativa", () => {
         expect(reserva.checkIn).toBeInstanceOf(Date)
         expect(reserva.checkOut).toBeInstanceOf(Date)
         expect(reserva.responsable).toBe(responsable)
-        expect(reserva.tipoReserva).toBe("administracion")
         expect(reserva.extras).toBeNull()
         expect(reserva.notasInternas).toBeNull()
     })
@@ -110,18 +108,16 @@ describe("Reserva Administrativa", () => {
             checkIn: new Date(),
             checkOut: new Date(),
             responsable: admin,
-            tipoReserva: tipoReserva.administracion,
             extras: null,
             notasInternas: null
         }
         const totalReserva = new CalculadorPrecioReserva(dto.habitacion.precio, dto.extras, 10, dto.habitacion.oferta).calcular()
-        const reserva = ReservaAdministrativa.crearDesdeDTO(dto, totalReserva);
+        const reserva = Reserva.crearDesdeDTO(dto, totalReserva);
         expect(reserva.id).toBe(dto.id);
         expect(reserva.estado).toBe(dto.estado);
         expect(reserva.asignacion).toBe(dto.asignacion);
         expect(reserva.habitacion).toBe(dto.habitacion);
         expect(reserva.responsable).toBe(dto.responsable);
-        expect(reserva.tipoReserva).toBe(dto.tipoReserva);
         expect(reserva.checkIn).toBe(dto.checkIn);
         expect(reserva.checkOut).toBe(dto.checkOut);
         expect(reserva.extras).toBe(dto.extras);
@@ -170,21 +166,19 @@ describe("Reserva Administrativa", () => {
             checkIn: new Date(),
             checkOut: new Date(),
             responsable: admin,
-            tipoReserva: tipoReserva.administracion,
             extras: null,
             notasInternas: null
         }
         const totalReserva = new CalculadorPrecioReserva(dto.habitacion.precio, dto.extras, 10, dto.habitacion.oferta).calcular()
-        const reserva = new ReservaAdministrativa(
+        const reserva = new Reserva(
             "1",
             estados.aceptada,
             cliente,
             habitacion,
             new Date(),
             new Date(),
-            admin,
-            tipoReserva.administracion,
             totalReserva,
+            admin,
             null
         )
         reserva.modificarDesdeDTO(dto);
