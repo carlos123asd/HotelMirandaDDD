@@ -4,9 +4,13 @@ import { ClienteMapper } from "../mappers/ClienteMapper";
 import { ClienteModelo } from "../models/ClienteModelo";
 
 export class ClienteRepoMongo implements IClienteRepo{
-    async guardar(cliente: Cliente): Promise<void> {
+    async guardar(cliente: Cliente,actualizar:boolean): Promise<void> {
         const doc = ClienteMapper.aDocumento(cliente)
-        await doc.save()
+        if(actualizar){
+            await ClienteModelo.findByIdAndUpdate(doc._id, doc, { upsert:true, new:true })
+        }else{
+            await doc.save()
+        }
     }
     async eliminar(id: string): Promise<void> {
         try {

@@ -12,6 +12,6 @@ export class ModificaCliente{
             throw new Error("No se encontro a ningun cliente con este correo")
         }
         cliente.modificarDesdeDTO(dtoCliente)
-        await this.clienteRepo.guardar(cliente)
+        await this.clienteRepo.guardar(cliente,true)
     }
 }

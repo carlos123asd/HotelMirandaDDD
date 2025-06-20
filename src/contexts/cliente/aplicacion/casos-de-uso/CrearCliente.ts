@@ -13,6 +13,6 @@ export class CrearCliente{
         if(existeCliente){
             throw new Error("Ya existe un cliente con este correo")
         }
-        await this.clienteRepo.guardar(nuevoCliente)
+        await this.clienteRepo.guardar(nuevoCliente,false)
     }
 }
