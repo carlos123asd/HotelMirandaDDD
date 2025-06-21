@@ -21,7 +21,7 @@ export class  ReservaController{
             reserva.setNotasInternasRepo(notas)
             return { empleado, habitacion, cliente, reserva, notas }
     }
-    //Admin
+    
     static async crearReservaAdmin(req:Request,res:Response):Promise<void>{
        const {responsable,reserva,recargo} = req.body
        try {

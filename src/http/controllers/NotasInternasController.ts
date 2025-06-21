@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { NotasInternasRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/NotasInternasRepoMongo";
 import { EmpleadoRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/EmpleadoRepoMongo";
-import { ReservaAdministrativaRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ReservaRepoMongo";
-import { ReservaClienteRepoMongo } from "../../contexts/cliente/infraestructura/repositorios/ReservaClienteRepoMongo";
+import { ReservaRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ReservaRepoMongo";
 import { HabitacionRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/HabitacionRepoMongo";
 import { ClienteRepoMongo } from "../../contexts/cliente/infraestructura/repositorios/ClienteRepoMongo";
 import { CrearNotasInternas } from "../../contexts/administrativo/aplicacion/casos-de-uso/CrearNotasInternas";
@@ -13,14 +12,13 @@ import { BuscarNotasInternas } from "../../contexts/administrativo/aplicacion/ca
 
 export class NotasInternasController{
     private static construirRepos() {
-        const empleado = new EmpleadoRepoMongo()
-        const habitacion = new HabitacionRepoMongo()
-        const cliente = new ClienteRepoMongo()
-        const reservaCliente = new ReservaClienteRepoMongo(cliente, habitacion)
-        const reservaAdmin = new ReservaAdministrativaRepoMongo(cliente, habitacion, empleado)
-        const notas = new NotasInternasRepoMongo(empleado, reservaAdmin, reservaCliente, habitacion, cliente)
-        reservaAdmin.setNotasInternasRepo(notas)
-        return { empleado, habitacion, cliente, reservaCliente, reservaAdmin, notas }
+            const empleado = new EmpleadoRepoMongo()
+            const habitacion = new HabitacionRepoMongo()
+            const cliente = new ClienteRepoMongo()
+            const reserva = new ReservaRepoMongo(cliente, habitacion, empleado)
+            const notas = new NotasInternasRepoMongo(empleado, reserva, habitacion, cliente)
+            reserva.setNotasInternasRepo(notas)
+            return { empleado, habitacion, cliente, reserva, notas }
     }
 
     static async crearNotaInterna(req: Request, res: Response): Promise<void> {
@@ -31,8 +29,7 @@ export class NotasInternasController{
             const nuevaNotaInternaDomain = await NotasInternasMapper.desdeDocumento(nuevaNotaInterna, {
                 empleadoRepo: repos.empleado,
                 clienteRepo: repos.cliente,
-                reservaClienteRepo: repos.reservaCliente,
-                reservaAdministrativaRepo: repos.reservaAdmin,
+                reservaRepo: repos.reserva,
                 habitacionRepo: repos.habitacion
             });
             await casoDeUso.ejecutar(nuevaNotaInternaDomain);
@@ -54,8 +51,7 @@ export class NotasInternasController{
             const notasInternasModObj =  await NotasInternasMapper.desdeDocumento(notasInternasMod,{
                 empleadoRepo:repos.empleado,
                 clienteRepo:repos.cliente,
-                reservaClienteRepo:repos.reservaCliente,
-                reservaAdministrativaRepo:repos.reservaAdmin,
+                reservaRepo:repos.reserva,
                 habitacionRepo:repos.habitacion
             })
             const casoDeUso = new ModificarNotasInternas(repos.notas)
@@ -77,8 +73,7 @@ export class NotasInternasController{
             const notasInternasObj =  await NotasInternasMapper.desdeDocumento(notaInterna,{
                 empleadoRepo:repos.empleado,
                 clienteRepo:repos.cliente,
-                reservaClienteRepo:repos.reservaCliente,
-                reservaAdministrativaRepo:repos.reservaAdmin,
+                reservaRepo:repos.reserva,
                 habitacionRepo:repos.habitacion
             })
             const casoDeUso = new EliminarNotasInternas(repos.notas)
