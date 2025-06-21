@@ -7,6 +7,8 @@ import routerCliente from './routes/Cliente.routes'
 import routerNotasInternas from './routes/NotasInternas.routes'
 import routerReserva from './routes/Reserva.routes'
 import { MongooseConnection } from '../db/MongooseConnection'
+import swaggerUI from 'swagger-ui-express'
+import { swaggerObj } from './swagger/swaggerConfig'
 
 dotenv.config()
 
@@ -14,6 +16,7 @@ const app:Application = express()
 
 app.use(cors())
 app.use(express.json())
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerObj))
 
 const apiPaths = {
     empleado: '/empleado',
