@@ -86,7 +86,7 @@ export class ReservaRepoMongo implements IReservaRepo{
                 throw new Error("No se pudo eliminar esta reserva")
             }
         }else{
-            throw new Error("La reseva no se puede eliminar porque ya esta aceptada o en curso")
+            throw new Error("La reseva no se puede eliminar porque ya esta aceptada o en curso, si esta pendiente primero puedes cancelar la reserva")
         }
     }
    

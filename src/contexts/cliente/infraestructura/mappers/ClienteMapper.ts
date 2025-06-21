@@ -6,17 +6,17 @@ import { ClienteModelo } from "../models/ClienteModelo";
 export class ClienteMapper{
     static desdeDocumento(doc:HydratedDocument<ICliente>):Cliente{
         return Cliente.crearDesdePersistencia({
-            id:doc._id.toString(),
+            id:doc._id,
             nombre:doc.nombre,
             email:doc.email,
             direccion:doc.direccion,
             password:doc.password,
-            metodoPago:doc.metodoPago
+            metodoPago:doc.metodoPago,
         })
     }
     static aDocumento(cliente:Cliente){
         const doc:Partial<ICliente> = {
-            _id:cliente.id.toString(),
+            _id:cliente.id ? cliente.id.toString() : undefined,
             nombre:cliente.nombre,
             email:cliente.email,
             direccion:cliente.direccion,

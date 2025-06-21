@@ -8,7 +8,7 @@ import { BuscarCliente } from "../../contexts/cliente/aplicacion/casos-de-uso/Bu
 
 export class ClienteController{
     static async crearCliente(req:Request,res:Response):Promise<void>{
-        const {nuevoCliente} = req.body 
+        const {nuevoCliente} = req.body
         try{
             const repoMongoCliente = new ClienteRepoMongo()
             const casoDeUso = new CrearCliente(repoMongoCliente)
@@ -40,10 +40,10 @@ export class ClienteController{
         }
     }
     static async eliminarCliente(req:Request,res:Response):Promise<void>{
-        const {clienteMod} = req.body
+        const {cliente} = req.body
         try {
             const repoMongoCliente = new ClienteRepoMongo()
-            const clienteModObj = ClienteMapper.desdeDocumento(clienteMod)
+            const clienteModObj = ClienteMapper.desdeDocumento(cliente)
             const casoDeUso = new EliminarCliente(repoMongoCliente)
             await casoDeUso.ejecutar(clienteModObj)
             res.status(201).json({ mensaje: 'Cliente eliminado correctamente' })

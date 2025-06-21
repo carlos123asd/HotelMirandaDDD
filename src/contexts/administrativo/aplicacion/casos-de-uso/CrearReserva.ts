@@ -13,7 +13,8 @@ export class CrearReserva{
         if(!responsable.puedeDarAltaReserva()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para hacer reservas`);
         }
-        const existeReserva = await this.reservaRepo.buscarPorID(nuevoReservaDTO.id)
+        const existeReserva = nuevoReservaDTO.id ? 
+        await this.reservaRepo.buscarPorID(nuevoReservaDTO.id) : null
         if(existeReserva){
             throw new Error("Ya existe un reserva con esta id")
         }

@@ -67,8 +67,8 @@ export class NotasInternasMapper {
             descripcion: dto.descripcion,
             datosAgregados: dto.datosAgregados ? dto.datosAgregados : null,
             idCliente: dto.cliente ? dto.cliente.id : null,
-            idReserva: dto.reserva ? dto.reserva.id.toString() : null,
-            idHabitacion: dto.habitacion ? dto.habitacion.id.toString() : null,
+            idReserva: dto.reserva ? dto.reserva.id : null,
+            idHabitacion: dto.habitacion ? dto.habitacion.id : null,
         }
 
         return new MNotasInternas(doc)

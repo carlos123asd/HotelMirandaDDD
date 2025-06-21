@@ -13,7 +13,7 @@ export enum estados{
     
 export class Reserva{
     constructor(
-        public readonly id:string,
+        public readonly id:string | undefined,
         public estado:estados,
         public asignacion:Cliente,
         public habitacion:Habitacion,
@@ -69,9 +69,6 @@ export class Reserva{
         )
     }
     modificarDesdeDTO(dto:DTOReserva){
-        if(dto.id !== this.id){
-             throw new Error("El id de una Reserva no se pueden modificar")
-        }
         this.estado = dto.estado;
         this.asignacion = dto.asignacion;
         this.habitacion = dto.habitacion;

@@ -11,10 +11,10 @@ export class EliminarReserva{
         if(!responsable.puedeEliminarReserva()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para eliminar reservas`);
         }
-        const existeReserva = await this.reservaRepo.buscarPorID(dto.id)
+        const existeReserva = dto.id ? await this.reservaRepo.buscarPorID(dto.id) : null
         if(!existeReserva){
              throw new Error("Reserva no encontrada");
         }
-        await this.reservaRepo.eliminar(dto.id)
+        await this.reservaRepo.eliminar(String(existeReserva.id))
     }
 }

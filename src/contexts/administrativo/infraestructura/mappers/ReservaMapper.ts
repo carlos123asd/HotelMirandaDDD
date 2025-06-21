@@ -53,14 +53,14 @@ export class ReservaMapper{
         const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
         const empleado = doc.idEmpleado ? await deps.empleadoRepo.buscarPorId(doc.idEmpleado) : null
 
-        if(!cliente || !habitacion || !empleado){
+        if(!cliente || !habitacion){
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
         const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
         const notasInternas = await deps.notasInternasRepo.buscarPorReserva(doc._id)
         
         return new Reserva(
-            doc._id.toString(),
+            doc._id,
             this.checkEstado(doc.estado),
             cliente,
             habitacion,
@@ -84,7 +84,7 @@ export class ReservaMapper{
     static aDocumento(dto:Reserva){
         const doc:Partial<IReserva> =
             {
-                _id:dto.id.toString(),
+                _id:dto.id ? dto.id.toString() : undefined,
                 estado: dto.estado,
                 idCliente:dto.asignacion.id,
                 idHabitacion:dto.habitacion.id,

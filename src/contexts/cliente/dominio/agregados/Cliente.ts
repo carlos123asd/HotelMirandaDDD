@@ -6,12 +6,12 @@ export enum metodoPago {
 
 export class Cliente{
     constructor(
-        public readonly id:string,
+        public id:string | undefined,
         public nombre:string,
         public email:string,
         public direccion:string,
         public password:string,
-        public metodoPago:metodoPago
+        public metodoPago:metodoPago,
     ){}
 
     static crearDesdePersistencia(params:{
@@ -31,7 +31,7 @@ export class Cliente{
             params.email,
             params.direccion,
             params.password,
-            params.metodoPago as metodoPago
+            params.metodoPago as metodoPago,
         )
     }
 
@@ -47,9 +47,6 @@ export class Cliente{
     }
 
     modificarDesdeDTO(dto:DTOCliente){
-        if(this.id !== dto.id){
-            throw new Error("ID del cliente no se puede modificar")
-        }
         this.nombre=dto.nombre,
         this.email=dto.email,
         this.direccion=dto.direccion,

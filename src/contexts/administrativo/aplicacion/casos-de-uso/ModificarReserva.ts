@@ -11,7 +11,7 @@ export class ModificarReserva{
         if(!responsable.puedeModificarReserva()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para modificar reservas`);
         }
-        const reserva = await this.reservaRepo.buscarPorID(dto.id)
+        const reserva = dto.id ? await this.reservaRepo.buscarPorID(dto.id) : null
         if(!reserva){
             throw new Error("Reserva no encontrada")
         }
