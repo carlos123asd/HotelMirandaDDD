@@ -1,4 +1,3 @@
-import { Empleado } from "../../dominio/agregados/Empleado";
 import { Reserva } from "../../dominio/agregados/Reserva";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
 import { DTOReserva } from "../dtos/DTOReserva";
@@ -9,10 +8,7 @@ export class CrearReserva{
         private readonly reservaRepo:IReservaRepo
     ){}
 
-    async ejecutar(responsable:Empleado,nuevoReservaDTO:DTOReserva,recargo:number):Promise<void>{
-        if(!responsable.puedeDarAltaReserva()){
-            throw new Error(`Empleado ${responsable.id} no tiene permisos para hacer reservas`);
-        }
+    async ejecutar(nuevoReservaDTO:DTOReserva,recargo:number):Promise<void>{
         const existeReserva = nuevoReservaDTO.id ? 
         await this.reservaRepo.buscarPorID(nuevoReservaDTO.id) : null
         if(existeReserva){

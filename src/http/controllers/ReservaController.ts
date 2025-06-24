@@ -5,7 +5,6 @@ import { HabitacionRepoMongo } from "../../contexts/administrativo/infraestructu
 import { ClienteRepoMongo } from "../../contexts/cliente/infraestructura/repositorios/ClienteRepoMongo";
 import { ReservaMapper } from "../../contexts/administrativo/infraestructura/mappers/ReservaMapper";
 import { NotasInternasRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/NotasInternasRepoMongo";
-import { EmpleadoMapper } from "../../contexts/administrativo/infraestructura/mappers/EmpleadoMapper";
 import { ModificarReserva } from "../../contexts/administrativo/aplicacion/casos-de-uso/ModificarReserva";
 import { EliminarReserva } from "../../contexts/administrativo/aplicacion/casos-de-uso/EliminarReserva";
 import { BuscarReserva } from "../../contexts/administrativo/aplicacion/casos-de-uso/BuscarReserva";
@@ -22,19 +21,18 @@ export class  ReservaController{
             return { empleado, habitacion, cliente, reserva, notas }
     }
     
-    static async crearReservaAdmin(req:Request,res:Response):Promise<void>{
-       const {responsable,reserva,recargo} = req.body
+    static async crearReserva(req:Request,res:Response):Promise<void>{
+       const {reserva,recargo} = req.body
        try {
             const repo = ReservaController.construirRepos()
             const casoDeUso = new CrearReserva(repo.reserva)
-            const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
             const reservaObj = await ReservaMapper.desdeDocumento({
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,
                 notasInternasRepo: repo.notas
             },reserva)
-            await casoDeUso.ejecutar(responsableObj,reservaObj,recargo)
+            await casoDeUso.ejecutar(reservaObj,recargo)
             res.status(201).json({ message: "Reserva creada correctamente" })
        } catch (error) {
             if(error instanceof Error){
@@ -45,19 +43,18 @@ export class  ReservaController{
        }
     }
 
-    static async modificarReservaAdmin(req:Request,res:Response):Promise<void>{
-        const {responsable,reserva} = req.body
+    static async modificarReserva(req:Request,res:Response):Promise<void>{
+        const {reserva} = req.body
         try {
             const repo = ReservaController.construirRepos()
             const casoDeUso = new ModificarReserva(repo.reserva)
-            const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
             const reservaObj = await ReservaMapper.desdeDocumento({
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,
                 notasInternasRepo: repo.notas
             },reserva)
-        await casoDeUso.ejecutar(responsableObj,reservaObj)
+        await casoDeUso.ejecutar(reservaObj)
         res.status(201).json({ message: "Reserva modificada correctamente" })
        } catch (error) {
             if(error instanceof Error){
@@ -68,19 +65,18 @@ export class  ReservaController{
        }
     }
 
-    static async eliminarReservaAdmin(req:Request,res:Response):Promise<void>{
-        const {responsable,reserva} = req.body
+    static async eliminarReserva(req:Request,res:Response):Promise<void>{
+        const {reserva} = req.body
         try {
             const repo = ReservaController.construirRepos()
             const casoDeUso = new EliminarReserva(repo.reserva)
-            const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
             const reservaObj = await ReservaMapper.desdeDocumento({
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,
                 notasInternasRepo: repo.notas
         },reserva)
-        await casoDeUso.ejecutar(responsableObj,reservaObj)
+        await casoDeUso.ejecutar(reservaObj)
         res.status(201).json({ message: "Reserva eliminada correctamente" })
        } catch (error) {
             if(error instanceof Error){
