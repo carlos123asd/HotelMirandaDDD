@@ -22,16 +22,19 @@ const routerCliente = Router()
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
- *                 type: string
- *               email:
- *                 type: string
- *               direccion:
- *                  type: string
- *               password:
- *                  type: string
- *               metodoPago:
- *                  type: string
+ *               nuevoCliente:
+ *                 type: object
+ *                 properties:
+ *                      nombre:
+ *                          type: string
+ *                      email:
+ *                          type: string
+ *                      direccion:
+ *                          type: string
+ *                      password:
+ *                          type: string
+ *                      metodoPago:
+ *                          type: string
  *     responses:
  *       201:
  *         description: Cliente creado correctamente
@@ -52,18 +55,21 @@ routerCliente.post('/crear',ClienteController.crearCliente)
  *           schema:
  *             type: object
  *             properties:
- *               _id:
- *                 type: string
- *               nombre:
- *                 type: string
- *               email:
- *                  type: string
- *               direccion:
- *                  type: string
- *               password:
- *                  type: string
- *               metodoPago:
- *                  type: string
+ *               clienteMod:
+ *                 type: object
+ *                 properties:
+*                      _id:
+*                          type: string
+*                      nombre:
+*                          type: string
+*                      email:
+*                          type: string
+*                      direccion:
+*                          type: string
+*                      password:
+*                          type: string
+*                      metodoPago:
+*                          type: string
  *     responses:
  *       200:
  *         description: Cliente modificado correctamente
@@ -84,18 +90,21 @@ routerCliente.put('/modificar',ClienteController.modificarCliente)
  *           schema:
  *             type: object
  *             properties:
- *               _id:
- *                 type: string
- *               nombre:
- *                 type: string
- *               email:
- *                  type: string
- *               direccion:
- *                  type: string
- *               password:
- *                  type: string
- *               metodoPago:
- *                  type: string
+ *               cliente:
+ *                 type: object
+ *                 properties:
+ *                      _id:
+ *                          type: string
+ *                      nombre:
+ *                          type: string
+ *                      email:
+ *                          type: string
+ *                      direccion:
+ *                          type: string
+ *                      password:
+ *                          type: string
+ *                      metodoPago:
+ *                          type: string
  *     responses:
  *       200:
  *         description: Cliente eliminado correctamente

@@ -5,7 +5,7 @@ const routerHabitacion = Router()
 /**
  * @swagger
  * tags:
- *  name: Habitacion
+ *  name: Habitaciones
  *  description: Operaciones relacionadas con Habitaciones
  */
 
