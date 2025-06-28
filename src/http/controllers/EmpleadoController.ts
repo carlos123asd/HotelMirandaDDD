@@ -107,4 +107,18 @@ export class EmpleadoController{
             }
         }
     }
+    static async buscarTodosEmpleado(req:Request,res:Response):Promise<void>{
+        try {
+            const repoMongoEmpleado = new EmpleadoRepoMongo()
+            const casoDeUso = new BuscarEmpleado(repoMongoEmpleado)
+            const empleados = await casoDeUso.buscarTodosEmpleado()
+            res.status(201).json(empleados)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
+    }
 }

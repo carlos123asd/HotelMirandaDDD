@@ -298,5 +298,17 @@ routerEmpleado.get('/buscar/email/:email',EmpleadoController.buscarPorEmail)
  *              description: Error al encontrar un empleado por codigo
  */
 routerEmpleado.get('/buscar/codigo/:codigo',EmpleadoController.buscarPorCodigo)
-
+/**
+ * @swagger
+ * /empleado/:
+ *  get:
+ *      summary: Buscar todos los Empleados
+ *      tags: [Empleados]
+ *      response:
+ *          200:
+ *              description: Empleados encontrados correctamente
+ *          404:
+ *              description: Error al encontrar los empleados
+ */
+routerEmpleado.get('/',EmpleadoController.buscarTodosEmpleado)
 export default routerEmpleado

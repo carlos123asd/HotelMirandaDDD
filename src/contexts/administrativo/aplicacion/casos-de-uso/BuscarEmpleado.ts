@@ -29,4 +29,12 @@ export class BuscarEmpleado{
         }
         return empleado 
     }
+
+    async buscarTodosEmpleado():Promise<Empleado[]>{
+        const empleados = await this.empleadoRepo.buscarTodosEmpleado()
+        if(!empleados){
+            throw new Error("No se encontro empleados")
+        }
+        return empleados
+    }
 }

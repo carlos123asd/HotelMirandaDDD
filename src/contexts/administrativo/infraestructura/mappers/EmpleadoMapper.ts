@@ -46,4 +46,8 @@ export class EmpleadoMapper{
         }
         return new MEmpleado(doc)
     }
+
+    static arrayDocumento(doc:HydratedDocument<IEmpleado>[]):Empleado[]{
+            return doc.map((empleado:HydratedDocument<IEmpleado>) => this.desdeDocumento(empleado)) 
+    }
 }
