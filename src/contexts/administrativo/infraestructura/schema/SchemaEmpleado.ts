@@ -3,7 +3,8 @@ import IEmpleado from "../interfaces/IEmpleado";
 
 const PermisoSchema = new Schema({
   codigo: { type: String, enum: ['ADM', 'GR', 'GE', 'GH'], required: true },
-  nivel: { type: Number, enum: [1, 2, 3], required: true }
+  nivel: { type: Number, enum: [1, 2, 3], required: true },
+  descripcion: {type: String, required: true}
 }, { _id: false });
 
 export const SchemaEmpleado = new Schema<IEmpleado>({
@@ -15,6 +16,6 @@ export const SchemaEmpleado = new Schema<IEmpleado>({
   nombre: { type: String, required: true },
   password: { type: String, required: true },
   rol: { type: String, enum: ['admin', 'staff'], required: true },
+  status: {type:String, enum: ['inactivo','activo']},
   permisosExtra: { type: [PermisoSchema], default: [] },
-  status: {type:String, enum: ['inactivo','activo']}
 });

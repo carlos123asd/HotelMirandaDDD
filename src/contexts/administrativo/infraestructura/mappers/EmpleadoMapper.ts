@@ -15,6 +15,7 @@ export class EmpleadoMapper{
             }
     }
     static desdeDocumento(doc:HydratedDocument<IEmpleado>):Empleado{
+        console.log(doc)
         return new Empleado(
             doc._id,
             doc.email,
@@ -41,8 +42,8 @@ export class EmpleadoMapper{
             nombre: dto.nombre,
             password: dto.password,
             rol: dto.rol.codigo,
+            status: dto.status,
             permisosExtra: dto.permisosExtra ? Permiso.toPrimitive(dto.permisosExtra) : [],
-            status: dto.status
         }
         return new MEmpleado(doc)
     }

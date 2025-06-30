@@ -1,8 +1,9 @@
 import {faker} from "@faker-js/faker"
 import { MEmpleado } from "../../contexts/administrativo/infraestructura/models/EmpleadoModelo"
+import IEmpleado from "../../contexts/administrativo/infraestructura/interfaces/IEmpleado"
 
 export const seedEmpleados = async (count = 2) => {
-    const empleados = []
+    const empleados:IEmpleado[] = []
 
     for(let i = 0; i < count; i++){
         empleados.push({
@@ -15,7 +16,7 @@ export const seedEmpleados = async (count = 2) => {
             password: faker.internet.password({ length: 12 }),
             rol: faker.helpers.arrayElement(['admin', 'staff']),
             permisosExtra: faker.helpers.arrayElements([
-                { codigo: 'ADM', nivel: 3 },
+                { codigo: 'ADM', nivel: 3, descripcion: 'testing' },
             ]),
             status: faker.helpers.arrayElement(['activo', 'inactivo'])
         })
