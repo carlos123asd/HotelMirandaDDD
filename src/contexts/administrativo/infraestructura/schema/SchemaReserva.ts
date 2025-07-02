@@ -11,4 +11,7 @@ export const SchemaReserva: Schema<IReserva> = new Schema<IReserva>({
     idEmpleado: { type:String, required:false },
     extras: { type:[String], required:false },
     idNotasInternas: { type:[String], required:false },
+    peticion: { type:String,  required:false }
+}, {
+    timestamps: true
 })

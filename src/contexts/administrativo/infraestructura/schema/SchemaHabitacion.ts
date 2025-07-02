@@ -11,4 +11,6 @@ export const SchemaHabitacion = new Schema<IHabitacion>({
     imagenes: { type:[String], required:true },
     piso: { type:String, required:true },
     codigo: { type:String, required:true, unique:true }
+},{
+    timestamps: true
 })

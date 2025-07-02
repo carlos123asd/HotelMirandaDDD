@@ -2,7 +2,7 @@ import {faker} from "@faker-js/faker"
 import { MEmpleado } from "../../contexts/administrativo/infraestructura/models/EmpleadoModelo"
 import IEmpleado from "../../contexts/administrativo/infraestructura/interfaces/IEmpleado"
 
-export const seedEmpleados = async (count = 2) => {
+export const seedEmpleados = async (count = 20) => {
     const empleados:IEmpleado[] = []
 
     for(let i = 0; i < count; i++){
@@ -18,7 +18,7 @@ export const seedEmpleados = async (count = 2) => {
             permisosExtra: faker.helpers.arrayElements([
                 { codigo: 'ADM', nivel: 3, descripcion: 'testing' },
             ]),
-            status: faker.helpers.arrayElement(['activo', 'inactivo'])
+            status: faker.helpers.arrayElement(['activo', 'inactivo', 'suspendido'])
         })
     }
     await MEmpleado.deleteMany({});

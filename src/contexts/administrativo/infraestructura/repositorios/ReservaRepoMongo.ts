@@ -20,6 +20,22 @@ export class ReservaRepoMongo implements IReservaRepo{
         this.notasInternasRepo = repo;
     }
 
+     async buscarTodasReservas(): Promise<Reserva[] | null> {
+        const docs = await MReserva.find()
+        if(!docs){
+            return null
+        }
+        if (!this.notasInternasRepo) {
+            throw new Error("notasInternasRepo is not set");
+        }
+        return ReservaMapper.desdeDocumentoArray({
+            clienteRepo:this.clienteRepo,
+            habitacionRepo:this.habitacionRepo,
+            empleadoRepo:this.empleadoRepo,
+            notasInternasRepo:this.notasInternasRepo
+        },docs)
+    }
+
     async buscarPorID(id: string): Promise<Reserva | null> {
         const doc = await MReserva.findById(id)
         if(!doc){
@@ -39,9 +55,6 @@ export class ReservaRepoMongo implements IReservaRepo{
 
     async buscarPorCliente(idCliente: string): Promise<Reserva[] | null> {
         const docs = await MReserva.find({ idCliente:idCliente })
-        if (!this.notasInternasRepo) {
-            throw new Error("notasInternasRepo is not set");
-        }
         if (!this.notasInternasRepo) {
             throw new Error("notasInternasRepo is not set");
         }

@@ -29,4 +29,13 @@ export class BuscarReserva{
         }
         return reservas
     }
+
+    async buscarTodasReservas():Promise<Reserva[]>{
+        const reservas = await this.reservaRepo.buscarTodasReservas()
+        if(!reservas){
+            throw new Error("No se encontro reservas")
+        }
+        return reservas
+    }
+    
 }

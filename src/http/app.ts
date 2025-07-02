@@ -10,6 +10,9 @@ import { MongooseConnection } from '../db/MongooseConnection'
 import swaggerUI from 'swagger-ui-express'
 import { swaggerObj } from './swagger/swaggerConfig'
 import { seedEmpleados } from '../scripts/seed/empleado.seed'
+import { seedReservas } from '../scripts/seed/reserva.seed'
+import { seedCliente } from '../scripts/seed/cliente.seed'
+import { seedHabitacion } from '../scripts/seed/habitacion.seed'
 
 dotenv.config()
 
@@ -40,7 +43,10 @@ app.use(apiPaths.reserva,routerReserva)
 const startServer = async () => {
     try {
         await MongooseConnection.connect();
-        await seedEmpleados()
+        //await seedEmpleados()
+        //await seedReservas()
+        //await seedCliente()
+        //await seedHabitacion()
         const port = process.env?.PORT ? Number(process.env.PORT) : 3000;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);

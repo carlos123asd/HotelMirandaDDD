@@ -16,6 +16,8 @@ export const SchemaEmpleado = new Schema<IEmpleado>({
   nombre: { type: String, required: true },
   password: { type: String, required: true },
   rol: { type: String, enum: ['admin', 'staff'], required: true },
-  status: {type:String, enum: ['inactivo','activo']},
+  status: {type:String, enum: ['inactivo','activo','suspendido']},
   permisosExtra: { type: [PermisoSchema], default: [] },
+}, {
+  timestamps: true
 });

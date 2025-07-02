@@ -103,6 +103,7 @@ export class  ReservaController{
             }
        }
     }
+
     static async buscarPorCliente(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
@@ -118,6 +119,7 @@ export class  ReservaController{
             }
        }
     }
+
     static async buscarPorHabitacion(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
@@ -132,5 +134,20 @@ export class  ReservaController{
                 res.status(404).json({ error: String(error) })
             }
        }
+    }
+
+    static async buscarTodasReservas(req:Request,res:Response):Promise<void>{
+        try {
+            const repo = ReservaController.construirRepos()
+            const casoDeUso = new BuscarReserva(repo.reserva)
+            const reservas = await casoDeUso.buscarTodasReservas()
+            res.status(201).json(reservas)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
     }
 }

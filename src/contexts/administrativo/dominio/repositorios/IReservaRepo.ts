@@ -5,5 +5,6 @@ export interface IReservaRepo {
     buscarPorCliente(idCliente:string):Promise<Reserva[]|null>;
     buscarPorHabitacion(idHabitacion:string):Promise<Reserva[]|null>;
     guardar(reserva:Reserva,modificar:boolean):Promise<void>;
+    buscarTodasReservas():Promise<Reserva[] | null>;
     eliminar(id:String):Promise<void>;
 }

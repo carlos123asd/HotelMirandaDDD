@@ -22,7 +22,8 @@ export class Reserva{
         public totalReserva:number,
         public responsable?:Empleado | null,
         public extras?:ServiciosExtras[] | null,
-        public notasInternas?:NotasInternas[] | null
+        public notasInternas?:NotasInternas[] | null,
+        public peticion?:string | null
     ){}
 
     static crearDesdePersistencia(params:{
@@ -36,6 +37,7 @@ export class Reserva{
         totalReserva:number,
         extras?:ServiciosExtras[] | null,
         notasInternas?:NotasInternas[] | null
+        peticion?:string | null
     }):Reserva{
         if(!Object.values(estados).includes(params.estado as estados)){
             throw new Error("Estado de reserva invalida")
@@ -50,7 +52,8 @@ export class Reserva{
             params.totalReserva,
             params.responsable,
             params.extras,
-            params.notasInternas
+            params.notasInternas,
+            params.peticion
         )
     }
 
@@ -66,6 +69,7 @@ export class Reserva{
             dto.responsable,
             dto.extras,
             dto.notasInternas,
+            dto.peticion
         )
     }
     modificarDesdeDTO(dto:DTOReserva){
@@ -78,5 +82,6 @@ export class Reserva{
         this.extras = dto.extras;
         this.notasInternas = dto.notasInternas;
         this.totalReserva = dto.totalReserva ? dto.totalReserva : this.totalReserva;
+        this.peticion = dto.peticion ? dto.peticion : this.peticion;
     }
 }

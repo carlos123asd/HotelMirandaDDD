@@ -11,4 +11,6 @@ export const SchemaNotasInternas = new Schema<INotasInternas>({
     idCliente: { type:String, required:false },
     idReserva: { type:String, required:false },
     idHabitacion: { type:String, required:false },
+},{
+    timestamps: true
 })

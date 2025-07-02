@@ -15,7 +15,6 @@ export class EmpleadoMapper{
             }
     }
     static desdeDocumento(doc:HydratedDocument<IEmpleado>):Empleado{
-        console.log(doc)
         return new Empleado(
             doc._id,
             doc.email,

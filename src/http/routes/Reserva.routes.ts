@@ -210,4 +210,17 @@ routerReserva.get('/buscar/cliente/:id',ReservaController.buscarPorCliente)
  *              description: Error al encontrar una Reserva por IDHabitacion 
  */
 routerReserva.get('/buscar/habitacion/:id',ReservaController.buscarPorHabitacion)
+/**
+ * @swagger
+ * /reserva/:
+ *  get:
+ *      summary: Buscar todas las Reservas
+ *      tags: [Reservas]
+ *      response:
+ *          200:
+ *              description: Reservas encontradas correctamente
+ *          404:
+ *              description: Error al encontrar Reservas
+ */
+routerReserva.get('/',ReservaController.buscarTodasReservas)
 export default routerReserva
