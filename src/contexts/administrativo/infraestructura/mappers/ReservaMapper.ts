@@ -70,7 +70,9 @@ export class ReservaMapper{
             empleado,
             serviciosExtras,
             notasInternas,
-            doc.peticion
+            doc.peticion,
+            doc.createdAt,
+            doc.updatedAt
         )
     }
     static async desdeDocumentoArray(deps:{
@@ -95,7 +97,9 @@ export class ReservaMapper{
                 idEmpleado:dto.responsable ? dto.responsable.id  : null,
                 extras:dto.extras?.map((extra) => extra.nombre),
                 idNotasInternas:dto.notasInternas?.map((notas) => notas.id),
-                peticion:dto.peticion
+                peticion:dto.peticion,
+                createdAt:dto.createdAt,
+                updatedAt:dto.updatedAt
             } 
         return new MReserva(doc)
     }

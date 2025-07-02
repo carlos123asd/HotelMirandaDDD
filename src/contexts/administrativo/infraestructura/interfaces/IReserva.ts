@@ -9,5 +9,7 @@ export interface IReserva {
     idEmpleado?:string | null,
     extras?:string[] | null,
     idNotasInternas?:string[] | null,
-    peticion?:string | null
+    peticion?:string | null,
+    createdAt?:Date | null,
+    updatedAt?:Date | null
 }

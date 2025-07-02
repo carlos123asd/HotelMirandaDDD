@@ -17,4 +17,6 @@ export type DTOReserva = {
     extras?:ServiciosExtras[] | null,
     notasInternas?:NotasInternas[] | null,
     peticion?:string | null,
+    createdAt?:Date | null,
+    updatedAt?:Date | null
 }
