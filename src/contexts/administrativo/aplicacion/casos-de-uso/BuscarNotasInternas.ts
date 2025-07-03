@@ -37,4 +37,12 @@ export class BuscarNotasInternas{
         }
         return notas
     }
+
+    async buscarTodasLasNotas():Promise<NotasInternas[]>{
+        const notas = await this.NotasInternasRepo.buscarTodasLasNotas()
+        if(!notas){
+            throw new Error("No hay notas que mostrar")
+        }
+        return notas
+    }
 }

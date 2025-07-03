@@ -7,4 +7,5 @@ export interface INotasInternasRepo {
     buscarPorHabitacion(idHabitacion:string):Promise<NotasInternas[] | null>;
     buscarPorCliente(idCliente:string):Promise<NotasInternas[] | null>;
     buscarPorReserva(idReserva:string):Promise<NotasInternas[] | null>;
+    buscarTodasLasNotas():Promise<NotasInternas[] | null>;
 }

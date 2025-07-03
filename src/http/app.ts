@@ -13,6 +13,7 @@ import { seedEmpleados } from '../scripts/seed/empleado.seed'
 import { seedReservas } from '../scripts/seed/reserva.seed'
 import { seedCliente } from '../scripts/seed/cliente.seed'
 import { seedHabitacion } from '../scripts/seed/habitacion.seed'
+import { seedNotas } from '../scripts/seed/notas.seed'
 
 dotenv.config()
 
@@ -47,6 +48,7 @@ const startServer = async () => {
         //await seedReservas()
         //await seedCliente()
         //await seedHabitacion()
+        //await seedNotas()
         const port = process.env?.PORT ? Number(process.env.PORT) : 3000;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);

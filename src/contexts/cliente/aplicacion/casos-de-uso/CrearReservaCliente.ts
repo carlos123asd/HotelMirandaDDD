@@ -9,6 +9,9 @@ export class CrearReservaCliente{
     ){}
 
     async ejecutar(dtoReserva:DTOReserva, recargo:number):Promise<void>{
+        if (!dtoReserva.id) {
+            throw new Error("El ID de la reserva es requerido");
+        }
         const reservaEncontrada = await this.reservaRepo.buscarPorID(dtoReserva.id)
         if(reservaEncontrada){
             throw new Error("Ya existe una reserva con este ID")

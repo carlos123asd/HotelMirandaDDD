@@ -6,7 +6,7 @@ import { estados } from "../../dominio/agregados/Reserva";
 import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 
 export type DTOReserva = {
-    id:string | undefined,
+    id?:string,
     estado:estados,
     asignacion:Cliente,
     habitacion:Habitacion,

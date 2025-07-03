@@ -1,8 +1,7 @@
-import { ReservaCliente } from "../../../cliente/dominio/agregados/ReservaCliente";
-import { ReservaAdministrativa } from "../../dominio/agregados/Reserva";
+import { Reserva } from "../../dominio/agregados/Reserva";
 
 export class VerificadorDisponibilidad{
-    static verificar(fechaInicio:Date,fechaFinal:Date,reservasActuales:[ReservaAdministrativa|ReservaCliente]):boolean{
-        return !reservasActuales.some((reserva:ReservaAdministrativa|ReservaCliente) => (fechaInicio < reserva.checkOut && fechaFinal > reserva.checkIn))
+    static verificar(fechaInicio:Date,fechaFinal:Date,reservasActuales:[Reserva]):boolean{
+        return !reservasActuales.some((reserva:Reserva) => (fechaInicio < reserva.checkOut && fechaFinal > reserva.checkIn))
     }
 }

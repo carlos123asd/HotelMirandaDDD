@@ -63,6 +63,9 @@ describe("Casos de uso - Reserva Administrativa", () => {
         ),
         buscarPorHabitacion: jest.fn().mockReturnValue(
             [reserva]
+        ),
+        buscarTodasReservas: jest.fn().mockReturnValue(
+            [reserva]
         )
     }
 

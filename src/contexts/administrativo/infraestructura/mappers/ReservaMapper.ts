@@ -81,7 +81,7 @@ export class ReservaMapper{
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
     },docs:HydratedDocument<IReserva>[]):Promise<Reserva[]>{
-        return Promise.all(docs.map(async (doc:any) => this.desdeDocumento(deps,doc)))
+        return Promise.all(docs.map((doc:any) => this.desdeDocumento(deps,doc)))
     }
 
     static aDocumento(dto:Reserva){

@@ -12,7 +12,7 @@ describe("Cliente",() => {
             metodoPago.Tarjeta
         )
         const clienteDesdePersistencia = Cliente.crearDesdePersistencia({
-            id: cliente.id,
+            id: cliente.id!,
             nombre: cliente.nombre,
             email: cliente.email,
             direccion: cliente.direccion,

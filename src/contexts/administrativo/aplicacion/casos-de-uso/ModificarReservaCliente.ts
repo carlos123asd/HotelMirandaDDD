@@ -1,21 +1,25 @@
-import { IReservaClienteRepo } from "../../../cliente/dominio/repositorios/IReservaClienteRepo";
-import { DTOReservaCliente } from "../../../cliente/aplicacion/dtos/DTOReservaCliente";
+
 import { Empleado } from "../../dominio/agregados/Empleado";
+import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
+import { DTOReserva } from "../dtos/DTOReserva";
 
 export class ModificarReservaCliente{
     constructor(
-        private readonly reservaRepo:IReservaClienteRepo
+        private readonly reservaRepo:IReservaRepo
     ){}
 
-    async ejecutar(responsable:Empleado,dtoReserva:DTOReservaCliente):Promise<void>{
+    async ejecutar(responsable:Empleado,dtoReserva:DTOReserva):Promise<void>{
          if(!responsable.puedeModificarReserva()){
             throw new Error(`Empleado ${responsable.id} no tiene permisos para modificar reservas`);
         }
-        const reserva = await this.reservaRepo.buscarPorId(dtoReserva.id)
+        if (!dtoReserva.id) {
+            throw new Error("El ID de la reserva es requerido para modificarla");
+        }
+        const reserva = await this.reservaRepo.buscarPorID(dtoReserva.id)
         if(!reserva){
             throw new Error("No se enconto ninguna reserva con este ID para modificar")
         }
         reserva.modificarDesdeDTO(dtoReserva)
-        await this.reservaRepo.guardar(reserva)
+        await this.reservaRepo.guardar(reserva,true)
     }
 }

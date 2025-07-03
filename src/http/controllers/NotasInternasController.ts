@@ -148,4 +148,18 @@ export class NotasInternasController{
             }
         }
     }
+    static async buscarTodasLasNotas(req:Request,res:Response):Promise<void>{
+        try {
+            const repos = NotasInternasController.construirRepos();
+            const casoDeUso = new BuscarNotasInternas(repos.notas)
+            const NotasEncontradas = await casoDeUso.buscarTodasLasNotas()
+            res.status(201).json(NotasEncontradas)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
+    }
 }

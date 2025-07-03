@@ -22,9 +22,11 @@ export class NotasInternasMapper {
         const responsable = await deps.empleadoRepo.buscarPorId(doc.idResponsable);
         if (!responsable) throw new Error("Responsable no encontrado");
 
-        const cliente = doc.idCliente ? await deps.clienteRepo.buscarPorId(doc.idCliente) : null;
-        const habitacion = doc.idHabitacion ? await deps.habitacionRepo.buscarPorId(doc.idHabitacion) : null;
-        const reserva = doc.idReserva ? await deps.reservaRepo.buscarPorID(doc.idReserva) : null;
+        const [cliente, habitacion, reserva] = await Promise.all([
+            doc.idCliente ? deps.clienteRepo.buscarPorId(doc.idCliente) : Promise.resolve(null),
+            doc.idHabitacion ? deps.habitacionRepo.buscarPorId(doc.idHabitacion) : Promise.resolve(null),
+            doc.idReserva ? deps.reservaRepo.buscarPorID(doc.idReserva) : Promise.resolve(null),
+        ]);
         
         if(!cliente && !habitacion && !reserva){
             throw new Error("No hay referencia ID para este tipo de nota")
@@ -53,7 +55,7 @@ export class NotasInternasMapper {
             habitacionRepo: IHabitacionRepo
         }
     ):Promise<NotasInternas[]> {
-        return Promise.all(docs.map(async (doc:HydratedDocument<INotasInternas>) => this.desdeDocumento(doc,deps))  
+        return Promise.all(docs.map((doc:HydratedDocument<INotasInternas>) => this.desdeDocumento(doc,deps))  
         )
     }
 

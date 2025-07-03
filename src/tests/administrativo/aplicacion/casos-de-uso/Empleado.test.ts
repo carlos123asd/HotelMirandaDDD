@@ -57,7 +57,22 @@ describe("Casos de uso Empleado", () => {
                 )
             )
         ),
-        eliminar: jest.fn()
+        eliminar: jest.fn(),
+        buscarTodosEmpleado: jest.fn().mockResolvedValue([
+            new Empleado(
+                "1",
+                "juan.perez@example.com",
+                "photo.com",
+                new Date(),
+                "12345",
+                "1998CM",
+                "Juan Perez",
+                "password123",
+                Rol.STAFF,
+                StatusType.ACTIVO,
+                [new Permiso('GE', 2, "staff")]
+            )
+        ])
     }
     it("crear empleado con el tipo Correcto", async() => {
         const empleado =new Empleado(

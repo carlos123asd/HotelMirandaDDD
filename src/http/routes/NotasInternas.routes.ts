@@ -228,4 +228,17 @@ routerNotasInternas.get('/buscar/cliente/:id',NotasInternasController.buscarPorC
  *              description: Error al encontrar una Nota Interna por IDReserva 
  */
 routerNotasInternas.get('/buscar/reserva/:id',NotasInternasController.buscarPorReserva)
+/**
+ * @swagger
+ * /notasInternas/:
+ *  get:
+ *      summary: Buscar Todas las Notas
+ *      tags: [Notas Internas]
+ *      response:
+ *          200:
+ *              description: Notas encontradas correctamente
+ *          404:
+ *              description: Error al buscar Notas
+ */
+routerNotasInternas.get('/',NotasInternasController.buscarTodasLasNotas)
 export default routerNotasInternas

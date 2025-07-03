@@ -58,6 +58,9 @@ describe("casos de uso - Notas Internas", () => {
         ),
         buscarPorReserva: jest.fn().mockReturnValue(
             [notaInterna]
+        ),
+        buscarTodasLasNotas: jest.fn().mockReturnValue(
+            [notaInterna]
         )
     }
 

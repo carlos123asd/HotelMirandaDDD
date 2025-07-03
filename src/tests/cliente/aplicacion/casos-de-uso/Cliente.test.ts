@@ -21,8 +21,8 @@ describe("Casos de uso - Cliente", () => {
         )
     }
     it("crear un cliente", async () => {
-        await ClienteRepo.guardar(cliente)
-        expect(ClienteRepo.guardar).toHaveBeenCalledWith(cliente)
+        await ClienteRepo.guardar(cliente,false)
+        expect(ClienteRepo.guardar).toHaveBeenCalledWith(cliente, false)
     })
     it("buscar un cliente por ID", async () => {
         const result = await ClienteRepo.buscarPorId("1")

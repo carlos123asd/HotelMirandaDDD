@@ -1,9 +1,8 @@
 import { categoriaHabitacion, Habitacion } from "../../../../contexts/administrativo/dominio/agregados/Habitacion"
-import { estados, tipoReserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
+import { estados, Reserva } from "../../../../contexts/administrativo/dominio/agregados/Reserva"
+import { IReservaRepo } from "../../../../contexts/administrativo/dominio/repositorios/IReservaRepo"
 import { Servicios } from "../../../../contexts/administrativo/dominio/value-objects/Servicios"
 import { Cliente, metodoPago } from "../../../../contexts/cliente/dominio/agregados/Cliente"
-import { ReservaCliente } from "../../../../contexts/cliente/dominio/agregados/ReservaCliente"
-import { IReservaClienteRepo } from "../../../../contexts/cliente/dominio/repositorios/IReservaClienteRepo"
 
 describe("Casos de uso - Reserva Cliente", () => {
     const habitacion = new Habitacion(
@@ -27,40 +26,45 @@ describe("Casos de uso - Reserva Cliente", () => {
         metodoPago.Tarjeta
     )
     
-    const reservaCliente = new ReservaCliente(
+    const reservaCliente = new Reserva(
         "1",
+        estados.pendiente,
         cliente,
         habitacion,
         new Date(),
         new Date(),
-        tipoReserva.cliente,
-        estados.pendiente,
-        150,
+        120,
+        null,
+        null,
+        null,
+        null,
         null
     )
 
-    const reservaClienteRepo:IReservaClienteRepo = {
+    const reservaClienteRepo:IReservaRepo = {
         guardar: jest.fn(),
         eliminar: jest.fn(),
-        buscarPorId: jest.fn().mockResolvedValue(
+        buscarPorID: jest.fn().mockResolvedValue(
             Promise.resolve(reservaCliente)
         ),
         buscarPorCliente: jest.fn().mockResolvedValue(
             Promise.resolve([reservaCliente])
-        )
+        ),
+        buscarPorHabitacion: jest.fn(),
+        buscarTodasReservas: jest.fn()
     }
 
     it("crear una reserva", async () => {
-        await reservaClienteRepo.guardar(reservaCliente)
-        expect(reservaClienteRepo.guardar).toHaveBeenCalledWith(reservaCliente)
+        await reservaClienteRepo.guardar(reservaCliente,false)
+        expect(reservaClienteRepo.guardar).toHaveBeenCalledWith(reservaCliente, false)
     })
 
     it("buscar una reserva por ID", async () => {
-        const result = await reservaClienteRepo.buscarPorId("1")
+        const result = await reservaClienteRepo.buscarPorID("1")
         expect(result).not.toBeNull()
-        expect(reservaClienteRepo.buscarPorId).toHaveBeenCalledWith("1")
+        expect(reservaClienteRepo.buscarPorID).toHaveBeenCalledWith("1")
         expect(result?.id).toBe("1")
-        expect(result).toBeInstanceOf(ReservaCliente)
+        expect(result).toBeInstanceOf(Reserva)
     })
 
     it("buscar reservas por cliente ID", async () => {
@@ -69,7 +73,7 @@ describe("Casos de uso - Reserva Cliente", () => {
         expect(reservaClienteRepo.buscarPorCliente).toHaveBeenCalledWith("1")
         expect(result?.length).toBeGreaterThan(0)
         expect(result?.[0].id).toBe("1")
-        expect(result?.[0]).toBeInstanceOf(ReservaCliente)
+        expect(result?.[0]).toBeInstanceOf(Reserva)
     })
 
     it("eliminar una reserva", async () => {

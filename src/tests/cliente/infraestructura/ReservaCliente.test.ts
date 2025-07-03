@@ -1,69 +1,68 @@
 import {faker} from "@faker-js/faker"
-import { IReservaCliente } from "../../../contexts/cliente/infraestructura/interfaces/IReservaCliente"
-import { ReservaClienteModelo } from "../../../contexts/cliente/infraestructura/models/ReservaClienteModelo"
+import mongoose from "mongoose"
+import { IReserva } from "../../../contexts/administrativo/infraestructura/interfaces/IReserva"
+import { MReserva } from "../../../contexts/administrativo/infraestructura/models/Reserva"
+import { estados } from "../../../contexts/administrativo/dominio/agregados/Reserva"
 
 describe("Infraestructura - Test de Integracion Reserva Cliente", () => {
-    it("Debe crear una reserva y recuperarla", async () => {
-        const fakeReserva:IReservaCliente = {
-            _id: faker.string.uuid(),
+    it("Debe crear una reserva", async () => {
+        const fakeReserva:IReserva = {
+            _id: new mongoose.Types.ObjectId().toString(),
+            estado:estados.aceptada,
             idCliente: faker.string.uuid(),
             idHabitacion: faker.string.uuid(),
             checkIn: faker.date.recent(),
             checkOut: faker.date.future(),
-            tipoReserva: "cliente",
-            estadoReserva: "pendiente",
             totalReserva: faker.number.int({min: 1000, max: 5000}),
-            extras: null,
+            idEmpleado: null,
         }
-        const reserva = new ReservaClienteModelo(fakeReserva)
+        const reserva = new MReserva(fakeReserva)
         await reserva.save()
 
-        const found = await ReservaClienteModelo.findById(reserva._id)
+        const found = await MReserva.findById(reserva._id)
         expect(found).not.toBeNull()
-        expect(found?._id).toBe(fakeReserva._id)
+        expect(found?._id?.toString()).toBe(fakeReserva._id)
     })
 
     it("Debe actualizar una reserva", async () => {
-        const fakeReserva:IReservaCliente = {
-            _id: faker.string.uuid(),
+        const fakeReserva:IReserva = {
+            _id: new mongoose.Types.ObjectId().toString(),
+            estado:estados.aceptada,
             idCliente: faker.string.uuid(),
             idHabitacion: faker.string.uuid(),
             checkIn: faker.date.recent(),
             checkOut: faker.date.future(),
-            tipoReserva: "cliente",
-            estadoReserva: "pendiente",
             totalReserva: faker.number.int({min: 1000, max: 5000}),
-            extras: null,
+            idEmpleado: null,
         }
-        const reserva = new ReservaClienteModelo(fakeReserva)
+        const reserva = new MReserva(fakeReserva)
         await reserva.save()
 
-        reserva.estadoReserva = "aceptada"
+        reserva.estado = "aceptada"
         await reserva.save()
 
-        const found = await ReservaClienteModelo.findById(reserva._id)
+        const found = await MReserva.findById(reserva._id)
         expect(found).not.toBeNull()
-        expect(found?.estadoReserva).toBe("aceptada")
+        expect(found?.estado).toBe("aceptada")
     })
 
     it("Debe eliminar una reserva", async () => {
-        const fakeReserva:IReservaCliente = {
-            _id: faker.string.uuid(),
+        const fakeReserva:IReserva = {
+            _id: new mongoose.Types.ObjectId().toString(),
+            estado:estados.aceptada,
             idCliente: faker.string.uuid(),
             idHabitacion: faker.string.uuid(),
             checkIn: faker.date.recent(),
             checkOut: faker.date.future(),
-            tipoReserva: "cliente",
-            estadoReserva: "pendiente",
             totalReserva: faker.number.int({min: 1000, max: 5000}),
-            extras: null,
+            idEmpleado: null,
         }
-        const reserva = new ReservaClienteModelo(fakeReserva)
+        const reserva = new MReserva(fakeReserva)
         await reserva.save()
 
-        await ReservaClienteModelo.deleteOne({_id: reserva._id})
+        await MReserva.deleteOne({_id: reserva._id})
 
-        const found = await ReservaClienteModelo.findById(reserva._id)
+        const found = await MReserva.findById(reserva._id)
         expect(found).toBeNull()
     })
 })

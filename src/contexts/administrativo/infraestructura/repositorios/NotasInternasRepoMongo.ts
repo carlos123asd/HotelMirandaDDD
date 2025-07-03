@@ -70,7 +70,7 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    async buscarPorReserva(idReserva: string): Promise<NotasInternas[] | null> {
+    async buscarPorReserva(idReserva: string):Promise<NotasInternas[] | null> {
         const docs = await MNotasInternas.find({ idReserva: idReserva })
         if (!docs || docs.length === 0) {
             return null
@@ -82,5 +82,16 @@ export class NotasInternasRepoMongo implements INotasInternasRepo{
             habitacionRepo: this.habitacionRepo
         })
     }
-    
+    async buscarTodasLasNotas():Promise<NotasInternas[] | null>{
+        const docs = await MNotasInternas.find();
+        if(!docs || docs.length === 0){
+            return null
+        }
+        return await NotasInternasMapper.desdeDocumentoArray(docs,{
+            empleadoRepo: this.empleadoRepo,
+            clienteRepo: this.clienteRepo,
+            reservaRepo: this.reservaRepo,
+            habitacionRepo: this.habitacionRepo
+        })
+    }
 }
