@@ -57,7 +57,7 @@ export class ReservaMapper{
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
         const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
-        const notasInternas = await deps.notasInternasRepo.buscarPorReserva(doc._id)
+        const notasInternas = doc.idNotasInternas ? await deps.notasInternasRepo.buscarPorReserva(doc._id) : null
         
         return new Reserva(
             doc._id,

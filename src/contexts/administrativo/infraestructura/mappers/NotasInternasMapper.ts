@@ -55,6 +55,7 @@ export class NotasInternasMapper {
             habitacionRepo: IHabitacionRepo
         }
     ):Promise<NotasInternas[]> {
+        console.log(docs)
         return Promise.all(docs.map((doc:HydratedDocument<INotasInternas>) => this.desdeDocumento(doc,deps))  
         )
     }
