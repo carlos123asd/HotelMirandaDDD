@@ -4,6 +4,17 @@ import { ClienteMapper } from "../mappers/ClienteMapper";
 import { ClienteModelo } from "../models/ClienteModelo";
 
 export class ClienteRepoMongo implements IClienteRepo{
+    async buscarTodo(): Promise<Cliente[] | null> {
+        try {
+            const docs = await ClienteModelo.find();
+            if (!docs || docs.length === 0) {
+                return null;
+            }
+            return ClienteMapper.arrayDocumento(docs)
+        } catch (error) {
+            throw new Error("Error al buscar todos los clientes");
+        }
+    }
     async guardar(cliente: Cliente,actualizar:boolean): Promise<void> {
         const doc = ClienteMapper.aDocumento(cliente)
         if(actualizar){

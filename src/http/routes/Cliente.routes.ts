@@ -152,4 +152,17 @@ routerCliente.get('/buscar/id/:id',ClienteController.buscarPorId)
  *         description: Error al buscar un cliente por email
  */
 routerCliente.get('/buscar/email/:email',ClienteController.buscarPorEmail)
+/**
+ * @swagger
+ * /cliente/:
+ *  get:
+ *      summary: Buscar todos los Clientes
+ *      tags: [Clientes]
+ *      response:
+ *          200:
+ *              description: Clientes encontrados correctamente
+ *          404:
+ *              description: Error al encontrar los Clientes
+ */
+routerCliente.get('/',ClienteController.buscarTodosClientes)
 export default routerCliente

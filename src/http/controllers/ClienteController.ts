@@ -86,4 +86,18 @@ export class ClienteController{
             }
         }  
     }
+    static async buscarTodosClientes(req:Request,res:Response):Promise<void>{
+        try {
+            const repoMongoCliente = new ClienteRepoMongo()
+            const casoDeUso = new BuscarCliente(repoMongoCliente)
+            const clientes = await casoDeUso.buscarTodosClientes()
+            res.status(201).json(clientes)
+        }catch (error) {
+            if(error instanceof Error){
+                res.status(404).json({ error: error.message })
+            }else{
+                res.status(404).json({ mensaje: String(error) })
+            }
+        }
+    }
 }

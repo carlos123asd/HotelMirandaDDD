@@ -25,4 +25,7 @@ export class ClienteMapper{
         }
         return new ClienteModelo(doc)
     }
+    static arrayDocumento(doc:HydratedDocument<ICliente>[]):Cliente[]{
+        return doc.map((cliente:HydratedDocument<ICliente>) => this.desdeDocumento(cliente)) 
+    }
 }

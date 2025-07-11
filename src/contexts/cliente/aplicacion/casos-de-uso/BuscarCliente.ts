@@ -21,4 +21,12 @@ export class BuscarCliente{
         }
         return cliente
     }
+
+     async buscarTodosClientes():Promise<Cliente[]>{
+        const clientes = await this.clienteRepo.buscarTodo()
+        if(!clientes){
+            throw new Error("No se encontro empleados")
+        }
+        return clientes
+    }
 }

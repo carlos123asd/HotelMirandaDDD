@@ -9,7 +9,8 @@ import { BuscarEmpleado } from "../../contexts/administrativo/aplicacion/casos-d
 export class EmpleadoController{
     static async crearEmpleado(req:Request,res:Response):Promise<void>{
         const {responsable,nuevoEmpleado} = req.body
-        
+        console.log(responsable)
+        console.log(nuevoEmpleado)
         try{
             const repoMongoEmpleado = new EmpleadoRepoMongo()
             const casoDeUso = new CrearEmpleado(repoMongoEmpleado)
