@@ -4,6 +4,7 @@ import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
 import { IReservaRepo } from "../../dominio/repositorios/IReservaRepo";
+import { IServicioRepo } from "../../dominio/repositorios/IServicioRepo";
 import { ReservaMapper } from "../mappers/ReservaMapper";
 import { MReserva } from "../models/Reserva";
 
@@ -11,6 +12,7 @@ export class ReservaRepoMongo implements IReservaRepo{
     private notasInternasRepo?:INotasInternasRepo
 
     constructor(
+        private readonly servicioRepo:IServicioRepo,
         private readonly clienteRepo:IClienteRepo,
         private readonly habitacionRepo:IHabitacionRepo,
         private readonly empleadoRepo:IEmpleadoRepo,
@@ -29,6 +31,7 @@ export class ReservaRepoMongo implements IReservaRepo{
             throw new Error("notasInternasRepo is not set");
         }
         return ReservaMapper.desdeDocumentoArray({
+            servicioRepo:this.servicioRepo,
             clienteRepo:this.clienteRepo,
             habitacionRepo:this.habitacionRepo,
             empleadoRepo:this.empleadoRepo,
@@ -46,6 +49,7 @@ export class ReservaRepoMongo implements IReservaRepo{
         }
 
         return ReservaMapper.desdeDocumento({
+            servicioRepo:this.servicioRepo,
             clienteRepo:this.clienteRepo,
             habitacionRepo:this.habitacionRepo,
             empleadoRepo:this.empleadoRepo,
@@ -59,6 +63,7 @@ export class ReservaRepoMongo implements IReservaRepo{
             throw new Error("notasInternasRepo is not set");
         }
         return ReservaMapper.desdeDocumentoArray({
+            servicioRepo:this.servicioRepo,
             clienteRepo:this.clienteRepo,
             habitacionRepo:this.habitacionRepo,
             empleadoRepo:this.empleadoRepo,
@@ -74,6 +79,7 @@ export class ReservaRepoMongo implements IReservaRepo{
             throw new Error("notasInternasRepo is not set");
         }
          return ReservaMapper.desdeDocumentoArray({
+            servicioRepo:this.servicioRepo,
             clienteRepo:this.clienteRepo,
             habitacionRepo:this.habitacionRepo,
             empleadoRepo:this.empleadoRepo,

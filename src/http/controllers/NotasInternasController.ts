@@ -9,13 +9,15 @@ import { NotasInternasMapper } from "../../contexts/administrativo/infraestructu
 import { ModificarNotasInternas } from "../../contexts/administrativo/aplicacion/casos-de-uso/ModificarNotasInternas";
 import { EliminarNotasInternas } from "../../contexts/administrativo/aplicacion/casos-de-uso/EliminarNotasInternas";
 import { BuscarNotasInternas } from "../../contexts/administrativo/aplicacion/casos-de-uso/BuscarNotasInternas";
+import { ServicioRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ServicioRepoMongo";
 
 export class NotasInternasController{
     private static construirRepos() {
+            const servicio = new ServicioRepoMongo();
             const empleado = new EmpleadoRepoMongo()
-            const habitacion = new HabitacionRepoMongo()
+            const habitacion = new HabitacionRepoMongo(servicio)
             const cliente = new ClienteRepoMongo()
-            const reserva = new ReservaRepoMongo(cliente, habitacion, empleado)
+            const reserva = new ReservaRepoMongo(servicio, cliente, habitacion, empleado)
             const notas = new NotasInternasRepoMongo(empleado, reserva, habitacion, cliente)
             reserva.setNotasInternasRepo(notas)
             return { empleado, habitacion, cliente, reserva, notas }

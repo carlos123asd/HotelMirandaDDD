@@ -1,9 +1,9 @@
 import { Cliente } from "../../../cliente/dominio/agregados/Cliente";
 import { DTOReserva } from "../../aplicacion/dtos/DTOReserva";
-import { ServiciosExtras } from "../value-objects/ServiciosExtras";
 import { Empleado } from "./Empleado";
 import { Habitacion } from "./Habitacion";
 import { NotasInternas } from "./NotasInternas";
+import { Servicio } from "./Servicio";
 
 export enum estados{ 
     pendiente = 'pendiente' , 
@@ -21,7 +21,7 @@ export class Reserva{
         public checkOut:Date,
         public totalReserva:number,
         public responsable?:Empleado | null,
-        public extras?:ServiciosExtras[] | null,
+        public extras?:Servicio[] | null,
         public notasInternas?:NotasInternas[] | null,
         public peticion?:string | null,
         public createdAt?:Date | null,
@@ -37,7 +37,7 @@ export class Reserva{
         checkOut:Date,
         responsable:Empleado,
         totalReserva:number,
-        extras?:ServiciosExtras[] | null,
+        extras?:Servicio[] | null,
         notasInternas?:NotasInternas[] | null,
         peticion?:string | null,
         createdAt?:Date | null,

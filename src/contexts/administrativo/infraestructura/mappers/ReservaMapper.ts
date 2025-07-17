@@ -4,34 +4,11 @@ import { estados, Reserva } from "../../dominio/agregados/Reserva";
 import { IEmpleadoRepo } from "../../dominio/repositorios/IEmpleadoRepo";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { INotasInternasRepo } from "../../dominio/repositorios/INotasInternasRepo";
-import { Servicios } from "../../dominio/value-objects/Servicios";
-import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
 import { IReserva } from "../interfaces/IReserva";
 import { MReserva } from "../models/Reserva";
+import { IServicioRepo } from "../../dominio/repositorios/IServicioRepo";
 
 export class ReservaMapper{
-
-    private static comprobarServicio(value:string):Servicios{
-        switch(value){
-            case Servicios.BUFFET.nombre: return Servicios.BUFFET
-            case Servicios.SPA.nombre: return Servicios.SPA
-            case Servicios.PISCINA.nombre: return Servicios.PISCINA
-            case Servicios.GIMNASIO.nombre: return Servicios.GIMNASIO
-            case Servicios.LAVANDERIA.nombre: return Servicios.LAVANDERIA
-            case Servicios.TRANSPORTE.nombre: return Servicios.TRANSPORTE
-            case Servicios.TOUR.nombre: return Servicios.TOUR
-            case Servicios.TV.nombre: return Servicios.TV
-            case Servicios.WIFI.nombre: return Servicios.WIFI
-            default:
-                throw new Error(`Servicio desconocido: ${value}`);
-        }
-    }
-
-    private static serviciosExtras(values:string[]):ServiciosExtras[]{
-        return values.map((servicio:string) => {
-            return this.comprobarServicio(servicio)    
-        })
-    }
 
     private static checkEstado = (value:string) => {
         switch(value){
@@ -44,11 +21,13 @@ export class ReservaMapper{
     }
 
     static async desdeDocumento(deps:{
+        servicioRepo:IServicioRepo,
         clienteRepo:IClienteRepo,
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,
         notasInternasRepo:INotasInternasRepo
     },doc:HydratedDocument<IReserva>):Promise<Reserva>{
+        const serviciosExtras = [];
         const cliente = await deps.clienteRepo.buscarPorId(doc.idCliente)
         const habitacion = await deps.habitacionRepo.buscarPorId(doc.idHabitacion)
         const empleado = doc.idEmpleado ? await deps.empleadoRepo.buscarPorId(doc.idEmpleado) : null
@@ -56,7 +35,13 @@ export class ReservaMapper{
         if(!cliente || !habitacion){
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
-        const serviciosExtras = doc.extras ? this.serviciosExtras(doc.extras) : null
+        for (const servicioRef of doc.extras || []) {
+            const servicio = await deps.servicioRepo.obtenerPorId(servicioRef);
+            if (!servicio) {
+                throw new Error(`Servicio no encontrado: ${servicioRef}`);
+            }
+            serviciosExtras.push(servicio);
+        }   
         const notasInternas = doc.idNotasInternas ? await deps.notasInternasRepo.buscarPorReserva(doc._id) : null
         
         return new Reserva(
@@ -76,6 +61,7 @@ export class ReservaMapper{
         )
     }
     static async desdeDocumentoArray(deps:{
+        servicioRepo:IServicioRepo,
         clienteRepo:IClienteRepo,
         habitacionRepo:IHabitacionRepo,
         empleadoRepo:IEmpleadoRepo,

@@ -3,8 +3,15 @@ import { Habitacion } from "../../dominio/agregados/Habitacion";
 import { IHabitacionRepo } from "../../dominio/repositorios/IHabitacionRepo";
 import { HabitacionMapper } from "../mappers/HabitacionMapper";
 import { MHabitacion } from "../models/HabitacionModelo";
+import { IServicioRepo } from "../../dominio/repositorios/IServicioRepo";
 
 export class HabitacionRepoMongo implements IHabitacionRepo{
+    private servicioRepo: IServicioRepo;
+
+    constructor(servicioRepo: IServicioRepo) {
+        this.servicioRepo = servicioRepo;
+    }
+
     async ContarHabitaciones(): Promise<number> {
         try {
             const numHabitaciones = await MHabitacion.countDocuments({});
@@ -29,7 +36,7 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         if(!docs){
             return null
         }
-        return HabitacionMapper.arrayDocumento(docs)
+        return HabitacionMapper.arrayDocumento({ servicioRepo: this.servicioRepo }, docs)
     }
    
     async guardar(habitacion: Habitacion, modificar:boolean): Promise<void> {
@@ -45,21 +52,21 @@ export class HabitacionRepoMongo implements IHabitacionRepo{
         if(!doc){
             return null
         }
-        return HabitacionMapper.desdeDocumento(doc)
+        return HabitacionMapper.desdeDocumento({ servicioRepo: this.servicioRepo },doc)
     }
     async buscarPorCodigo(codigo: String): Promise<Habitacion | null> {
         const doc = await MHabitacion.findOne({ codigo: codigo })
         if(!doc){
             return null
         }
-        return HabitacionMapper.desdeDocumento(doc)
+        return HabitacionMapper.desdeDocumento({ servicioRepo: this.servicioRepo },doc)
     }
     async todasLasHabitaciones(): Promise<Habitacion[] | null> {
         const doc = await MHabitacion.find();
         if(!doc){
             return null
         }
-        return HabitacionMapper.arrayDocumento(doc)
+        return HabitacionMapper.arrayDocumento({ servicioRepo: this.servicioRepo },doc)
     }
     
     async eliminar(id: String): Promise<void> {

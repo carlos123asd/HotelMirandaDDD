@@ -9,16 +9,18 @@ import { ModificarReserva } from "../../contexts/administrativo/aplicacion/casos
 import { EliminarReserva } from "../../contexts/administrativo/aplicacion/casos-de-uso/EliminarReserva";
 import { BuscarReserva } from "../../contexts/administrativo/aplicacion/casos-de-uso/BuscarReserva";
 import { ReservaRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ReservaRepoMongo";
+import { ServicioRepoMongo } from "../../contexts/administrativo/infraestructura/repositorios/ServicioRepoMongo";
 
 export class  ReservaController{
     private static construirRepos() {
+            const servicio = new ServicioRepoMongo();
             const empleado = new EmpleadoRepoMongo()
-            const habitacion = new HabitacionRepoMongo()
+            const habitacion = new HabitacionRepoMongo(servicio)
             const cliente = new ClienteRepoMongo()
-            const reserva = new ReservaRepoMongo(cliente, habitacion, empleado)
+            const reserva = new ReservaRepoMongo(servicio, cliente, habitacion, empleado)
             const notas = new NotasInternasRepoMongo(empleado, reserva, habitacion, cliente)
             reserva.setNotasInternasRepo(notas)
-            return { empleado, habitacion, cliente, reserva, notas }
+            return { empleado, habitacion, cliente, reserva, notas, servicio }
     }
     
     static async crearReserva(req:Request,res:Response):Promise<void>{
@@ -27,6 +29,7 @@ export class  ReservaController{
             const repo = ReservaController.construirRepos()
             const casoDeUso = new CrearReserva(repo.reserva)
             const reservaObj = await ReservaMapper.desdeDocumento({
+                servicioRepo: repo.servicio,
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,
@@ -49,6 +52,7 @@ export class  ReservaController{
             const repo = ReservaController.construirRepos()
             const casoDeUso = new ModificarReserva(repo.reserva)
             const reservaObj = await ReservaMapper.desdeDocumento({
+                servicioRepo: repo.servicio,
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,
@@ -71,6 +75,7 @@ export class  ReservaController{
             const repo = ReservaController.construirRepos()
             const casoDeUso = new EliminarReserva(repo.reserva)
             const reservaObj = await ReservaMapper.desdeDocumento({
+                servicioRepo: repo.servicio,
                 clienteRepo: repo.cliente,
                 habitacionRepo: repo.habitacion,
                 empleadoRepo: repo.empleado,

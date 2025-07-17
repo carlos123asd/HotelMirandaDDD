@@ -1,5 +1,5 @@
 import { DTOHabitacion } from "../../aplicacion/dtos/DTOHabitacion";
-import { Servicios } from "../value-objects/Servicios";
+import { Servicio } from "./Servicio";
 
 export enum categoriaHabitacion {
     'Habitacion Simple' = 'Habitacion Simple' ,
@@ -18,7 +18,7 @@ export class Habitacion{
         public precio:number,
         public oferta:number,
         public categoria:categoriaHabitacion,
-        public servicios:Servicios[],
+        public servicios:Servicio[],
         public imagenes:string[],
         public readonly piso:string,
         public readonly codigo:string
@@ -31,7 +31,7 @@ export class Habitacion{
         precio:number,
         oferta:number,
         categoria:string,
-        servicios:Servicios[],
+        servicios:Servicio[],
         imagenes:string[],
         piso:string,
         codigo:string

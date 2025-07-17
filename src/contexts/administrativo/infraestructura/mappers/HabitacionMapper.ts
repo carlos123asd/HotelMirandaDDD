@@ -2,25 +2,21 @@ import { HydratedDocument } from "mongoose";
 import { Habitacion } from "../../dominio/agregados/Habitacion";
 import IHabitacion from "../interfaces/IHabitacion";
 import { MHabitacion } from "../models/HabitacionModelo";
-import { Servicios } from "../../dominio/value-objects/Servicios";
+import { IServicioRepo } from "../../dominio/repositorios/IServicioRepo";
 
 export class HabitacionMapper{
-    private static checkServicios(value:string){
-        switch(value){
-            case 'restaurante': return Servicios.BUFFET
-            case 'spa': return Servicios.SPA
-            case 'piscina': return Servicios.PISCINA
-            case 'gimnasio': return Servicios.GIMNASIO
-            case 'lavanderia': return Servicios.LAVANDERIA
-            case 'transporte': return Servicios.TRANSPORTE
-            case 'tour': return Servicios.TOUR
-            case 'TV': return Servicios.TV
-            case 'WIFI': return Servicios.WIFI
-            default: throw new Error("Servicio Invalido")
-        }
-    }
 
-    static desdeDocumento(doc:HydratedDocument<IHabitacion>):Habitacion{
+    static async desdeDocumento(deps:{
+        servicioRepo:IServicioRepo
+    },doc:HydratedDocument<IHabitacion>): Promise<Habitacion> {
+        const servicios = [];
+        for (const servicioRef of doc.servicios) {
+            const servicio = await deps.servicioRepo.obtenerPorId(servicioRef);
+            if (!servicio) {
+                throw new Error(`Servicio no encontrado: ${servicioRef}`);
+            }
+            servicios.push(servicio);
+        }
         return Habitacion.crearDesdePersistencia({
             id:doc._id,
             nombre:doc.nombre,
@@ -28,30 +24,32 @@ export class HabitacionMapper{
             precio:doc.precio,
             oferta:doc.oferta,
             categoria:doc.categoria,
-            servicios:doc.servicios.map((servicio) => this.checkServicios(servicio)),
+            servicios:servicios,
             imagenes:doc.imagenes,
             piso:doc.piso,
             codigo:doc.codigo
         })
     }
-
-    static arrayDocumento(doc:HydratedDocument<IHabitacion>[]):Habitacion[]{
-        return doc.map((habitacion:HydratedDocument<IHabitacion>) => this.desdeDocumento(habitacion)) 
+    static async arrayDocumento(deps: { servicioRepo: IServicioRepo }, doc:HydratedDocument<IHabitacion>[]): Promise<Habitacion[]> {
+        return Promise.all(doc.map((habitacion:HydratedDocument<IHabitacion>) => this.desdeDocumento(deps, habitacion)));
     }
 
-    static aDocumento(dto:Habitacion){
-        const doc:Partial<IHabitacion> = {
+    static aDocumento(dto: Habitacion) {
+        const doc: Partial<IHabitacion> = {
             _id: dto.id,
             nombre: dto.nombre,
             descripcion: dto.descripcion,
             precio: dto.precio,
             oferta: dto.oferta,
             categoria: dto.categoria,
-            servicios: dto.servicios.map((servicio) => servicio.nombre),
+            servicios: dto.servicios.map(servicio => servicio.id),
             imagenes: dto.imagenes,
             piso: dto.piso,
             codigo: dto.codigo
-        }
-        return new MHabitacion(doc)
+        };
+
+        return new MHabitacion(doc);
     }
 }
+
+
