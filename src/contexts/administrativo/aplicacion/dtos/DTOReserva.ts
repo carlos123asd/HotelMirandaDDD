@@ -3,7 +3,7 @@ import { Empleado } from "../../dominio/agregados/Empleado";
 import { Habitacion } from "../../dominio/agregados/Habitacion";
 import { NotasInternas } from "../../dominio/agregados/NotasInternas";
 import { estados } from "../../dominio/agregados/Reserva";
-import { ServiciosExtras } from "../../dominio/value-objects/ServiciosExtras";
+import { Servicio } from "../../dominio/agregados/Servicio";
 
 export type DTOReserva = {
     id?:string,
@@ -14,7 +14,7 @@ export type DTOReserva = {
     checkOut:Date,
     responsable?:Empleado | null,
     totalReserva?:number | null,
-    extras?:ServiciosExtras[] | null,
+    extras?:Servicio[] | null,
     notasInternas?:NotasInternas[] | null,
     peticion?:string | null,
     createdAt?:Date | null,

@@ -1,19 +1,20 @@
+import { HydratedDocument } from "mongoose";
 import { Servicio } from "../../dominio/agregados/Servicio";
 import { IServicio } from "../interfaces/IServicio";
 import { MServicio } from "../models/Servicio";
 
 export class ServicioMapper {
-    static desdeDocumento(doc: any): Servicio {
+    static desdeDocumento(doc:HydratedDocument<IServicio>): Servicio {
         return Servicio.crearDesdePersistencia({
             id: doc._id,
             nombre: doc.nombre,
             descripcion: doc.descripcion,
             precio: doc.precio,
-            imagen: doc.imagenes
+            imagen: doc.imagen
         });
     }
 
-    static arrayDocumento(docs: any[]): Servicio[] {
+    static arrayDocumento(docs: HydratedDocument<IServicio>[]): Servicio[] {
         return docs.map((doc) => this.desdeDocumento(doc));
     }
 

@@ -1,4 +1,4 @@
-import { DTOExtra } from "../../aplicacion/dtos/DTOExtra"
+import { DTOServicio } from "../../aplicacion/dtos/DTOServicio"
 
 export class Servicio{
     constructor(
@@ -25,7 +25,7 @@ export class Servicio{
         )
     }
 
-    static crearDesdeDTO(dto:DTOExtra):Servicio{
+    static crearDesdeDTO(dto:DTOServicio):Servicio{
         return new Servicio(
             dto.id,
             dto.nombre,
@@ -35,7 +35,7 @@ export class Servicio{
         )
     }
 
-    modificarDesdeDTO(dto:DTOExtra):void{
+    modificarDesdeDTO(dto:DTOServicio):void{
         this.nombre = dto.nombre;
         this.descripcion = dto.descripcion;
         this.precio = dto.precio;

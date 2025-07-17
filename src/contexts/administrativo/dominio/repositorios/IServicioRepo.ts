@@ -1,8 +1,8 @@
 import { Servicio } from "../agregados/Servicio";
 
 export interface IServicioRepo {
-    guardar(extra:Servicio):Promise<void>;
+    guardar(extra:Servicio, modificar:boolean):Promise<void>;
     obtenerPorId(id:string):Promise<Servicio|null>;
-    obtenerTodos():Promise<Servicio[]>;
+    obtenerTodos():Promise<Servicio[]|null>;
     eliminar(id:string):Promise<void>;
 }

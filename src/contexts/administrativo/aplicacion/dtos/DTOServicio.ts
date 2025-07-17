@@ -1,4 +1,4 @@
-export interface DTOExtra {
+export interface DTOServicio {
     id: string;
     nombre: string;
     descripcion: string;
