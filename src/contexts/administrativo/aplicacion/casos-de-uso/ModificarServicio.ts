@@ -6,7 +6,7 @@ export class ModificarServicio {
         private readonly servicioRepo: IServicioRepo
     ){}
 
-    async modificarServicio(dto: DTOServicio): Promise<void> {
+    async ejecutar(dto: DTOServicio): Promise<void> {
         const servicioExistente = await this.servicioRepo.obtenerPorId(dto.id);
         if (!servicioExistente) {
             throw new Error("No existe un servicio con este ID");

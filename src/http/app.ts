@@ -14,6 +14,7 @@ import { seedReservas } from '../scripts/seed/reserva.seed'
 import { seedCliente } from '../scripts/seed/cliente.seed'
 import { seedHabitacion } from '../scripts/seed/habitacion.seed'
 import { seedNotas } from '../scripts/seed/notas.seed'
+import routerServicio from './routes/Sevicio.routes'
 
 dotenv.config()
 
@@ -29,7 +30,8 @@ const apiPaths = {
     habitacion: '/habitacion',
     notasInternas: '/notasInternas',
     reserva: '/reserva',
-    cliente: '/cliente'
+    cliente: '/cliente',
+    servicios: '/servicio'
 }
 
 app.get('/',(req:Request,res:Response) => {
@@ -41,6 +43,7 @@ app.use(apiPaths.habitacion,routerHabitacion)
 app.use(apiPaths.cliente,routerCliente)
 app.use(apiPaths.notasInternas,routerNotasInternas)
 app.use(apiPaths.reserva,routerReserva)
+app.use(apiPaths.servicios,routerServicio)
 
 const startServer = async () => {
     try {
