@@ -6,6 +6,7 @@ import routerHabitacion from './routes/Habitacion.router'
 import routerCliente from './routes/Cliente.routes'
 import routerNotasInternas from './routes/NotasInternas.routes'
 import routerReserva from './routes/Reserva.routes'
+import routerServicio from './routes/Servicio.routes'
 import { MongooseConnection } from '../db/MongooseConnection'
 import swaggerUI from 'swagger-ui-express'
 import { swaggerObj } from './swagger/swaggerConfig'
@@ -14,7 +15,7 @@ import { seedReservas } from '../scripts/seed/reserva.seed'
 import { seedCliente } from '../scripts/seed/cliente.seed'
 import { seedHabitacion } from '../scripts/seed/habitacion.seed'
 import { seedNotas } from '../scripts/seed/notas.seed'
-import routerServicio from './routes/Sevicio.routes'
+import { seedServicios } from '../scripts/seed/servicios.seed'
 
 dotenv.config()
 
@@ -53,6 +54,7 @@ const startServer = async () => {
         //await seedCliente()
         //await seedHabitacion()
         //await seedNotas()
+        //await seedServicios()
         const port = process.env?.PORT ? Number(process.env.PORT) : 3000;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);

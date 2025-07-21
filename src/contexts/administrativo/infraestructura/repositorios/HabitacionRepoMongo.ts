@@ -6,11 +6,10 @@ import { MHabitacion } from "../models/HabitacionModelo";
 import { IServicioRepo } from "../../dominio/repositorios/IServicioRepo";
 
 export class HabitacionRepoMongo implements IHabitacionRepo{
-    private servicioRepo: IServicioRepo;
 
-    constructor(servicioRepo: IServicioRepo) {
-        this.servicioRepo = servicioRepo;
-    }
+    constructor(
+        private readonly servicioRepo: IServicioRepo
+    ){}
 
     async ContarHabitaciones(): Promise<number> {
         try {

@@ -35,6 +35,7 @@ export class  ReservaController{
                 empleadoRepo: repo.empleado,
                 notasInternasRepo: repo.notas
             },reserva)
+            console.log(reservaObj)
             await casoDeUso.ejecutar(reservaObj,recargo)
             res.status(201).json({ message: "Reserva creada correctamente" })
        } catch (error) {

@@ -14,7 +14,7 @@ export class BuscarReserva{
         return reserva
     }
 
-     async buscarPorCliente(clienteId:string):Promise<Reserva[]>{
+    async buscarPorCliente(clienteId:string):Promise<Reserva[]>{
         const reservas = await this.reservaRepo.buscarPorCliente(clienteId)
         if(!reservas){
             throw new Error("No se encontro ninguna Reserva para este Cliente")

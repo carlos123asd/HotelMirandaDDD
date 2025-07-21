@@ -17,7 +17,7 @@ export class HabitacionControllers{
     static async crearHabitacion(req:Request,res:Response):Promise<void>{
         const {responsable,nuevaHabitacion} = req.body
         try{
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const casoDeUso = new CrearHabitacion(repoMongoHabitacion)
             const responsableDomain = EmpleadoMapper.desdeDocumento(responsable);
             const nuevaHabitacionDomain = await HabitacionMapper.desdeDocumento(
@@ -37,7 +37,7 @@ export class HabitacionControllers{
     static async modificarHabitacion(req:Request,res:Response):Promise<void>{
         const {responsable,habitacionMod} = req.body
         try {
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
             const habitacionModObj = await HabitacionMapper.desdeDocumento( { servicioRepo: new ServicioRepoMongo() },habitacionMod)
             const casoDeUso = new ModificarHabitacion(repoMongoHabitacion)
@@ -54,7 +54,8 @@ export class HabitacionControllers{
     static async eliminarHabitacion(req:Request,res:Response):Promise<void>{
         const {responsable,habitacion} = req.body
         try {
-            const { habitacion: repoMongoHabitacion, servicio: repoMongoServicio } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
+            const repoMongoServicio = HabitacionControllers.construirRepos().servicio;
             const responsableObj = EmpleadoMapper.desdeDocumento(responsable)
             const habitacionObj = await HabitacionMapper.desdeDocumento({ servicioRepo: repoMongoServicio }, habitacion)
             const casoDeUso = new EliminarHabitacion(repoMongoHabitacion)
@@ -71,7 +72,7 @@ export class HabitacionControllers{
     static async buscarPorID(req:Request,res:Response):Promise<void>{
         const {id} = req.params
         try {
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const casoDeUso = new BuscarHabitacion(repoMongoHabitacion)
             const habitacionEncontrada = await casoDeUso.buscarPorID(id)
             res.status(201).json(habitacionEncontrada)
@@ -86,7 +87,7 @@ export class HabitacionControllers{
     static async buscarPorCodigo(req:Request,res:Response):Promise<void>{
         const {codigo} = req.params
         try {
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const casoDeUso = new BuscarHabitacion(repoMongoHabitacion)
             const habitacionEncontrada = await casoDeUso.buscarPorCodigo(codigo)
             res.status(201).json(habitacionEncontrada)
@@ -102,7 +103,7 @@ export class HabitacionControllers{
         const {filtro} = req.params
         const filtroArray = filtro.split("-")
         try {
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const casoDeUso = new BuscarHabitacion(repoMongoHabitacion)
             const habitacionEncontrada = await casoDeUso.buscarPorFiltro({
                 categorias: filtroArray[0] ? filtroArray[0].split(",") : null,
@@ -120,10 +121,10 @@ export class HabitacionControllers{
     }
     static async buscarTodasLasHabitaciones(req:Request,res:Response):Promise<void>{
         try {
-            const { habitacion: repoMongoHabitacion } = this.construirRepos();
+            const repoMongoHabitacion = HabitacionControllers.construirRepos().habitacion;
             const casoDeUso = new BuscarHabitacion(repoMongoHabitacion)
-            const habitacionEncontradas = await casoDeUso.buscarTodasLasHabitaciones()
-            res.status(201).json(habitacionEncontradas)
+            const habitacionesEncontradas = await casoDeUso.buscarTodasLasHabitaciones()
+            res.status(201).json(habitacionesEncontradas)
         }catch (error) {
             if(error instanceof Error){
                 res.status(404).json({ error: error.message })

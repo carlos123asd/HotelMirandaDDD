@@ -22,7 +22,7 @@ export class ReservaRepoMongo implements IReservaRepo{
         this.notasInternasRepo = repo;
     }
 
-     async buscarTodasReservas(): Promise<Reserva[] | null> {
+    async buscarTodasReservas(): Promise<Reserva[] | null> {
         const docs = await MReserva.find()
         if(!docs){
             return null

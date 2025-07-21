@@ -35,13 +35,17 @@ export class ReservaMapper{
         if(!cliente || !habitacion){
             throw new Error("No se encontro coincidencias para este Cliente, faltan datos relevates como cliente,habitacion,empleado")
         }
-        for (const servicioRef of doc.extras || []) {
-            const servicio = await deps.servicioRepo.obtenerPorId(servicioRef);
-            if (!servicio) {
-                throw new Error(`Servicio no encontrado: ${servicioRef}`);
-            }
-            serviciosExtras.push(servicio);
-        }   
+        
+        if (Array.isArray(doc.extras) && doc.extras.length > 1) {
+            for (const servicioRef of doc.extras) {
+                const servicio = await deps.servicioRepo.obtenerPorId(servicioRef);
+                if (!servicio) {
+                    throw new Error(`Servicio no encontrado: ${servicioRef}`);
+                }
+                serviciosExtras.push(servicio);
+            }   
+        }
+        
         const notasInternas = doc.idNotasInternas ? await deps.notasInternasRepo.buscarPorReserva(doc._id) : null
         
         return new Reserva(

@@ -13,10 +13,7 @@ export const seedHabitacion = async (count = 10) => {
       precio: faker.number.float({ min: 50, max: 500}),
       oferta: faker.number.float({ min: 0, max: 50}),
       categoria: faker.helpers.arrayElement(['Suite', 'Deluxe', 'Familiar', 'Presidencial']),
-      servicios: faker.helpers.arrayElements(
-        ['WIFI', 'TV', 'tour', 'transporte', 'lavanderia', 'gimnasio'],
-        { min: 2, max: 5 }
-      ),
+      servicios: ["9cc3bb5699fcbd15e5b55a8d","f7ce1bd873bf44e4af4f3fdd"],
       imagenes: Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () =>
         faker.image.urlPicsumPhotos()
       ),
