@@ -1,5 +1,5 @@
 import { categoriaHabitacion } from "../../dominio/agregados/Habitacion"
-import { Servicios } from "../../dominio/value-objects/Servicios"
+import { Servicio } from "../../dominio/agregados/Servicio"
 
 export type DTOHabitacion = {
     id:string,
@@ -8,7 +8,7 @@ export type DTOHabitacion = {
     precio:number,
     oferta:number,
     categoria:categoriaHabitacion,
-    servicios:Servicios[],
+    servicios:Servicio[],
     imagenes:string[],
     piso:string,
     codigo?:string | null
